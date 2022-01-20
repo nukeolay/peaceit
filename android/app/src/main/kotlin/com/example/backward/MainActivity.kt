@@ -1,4 +1,4 @@
-package com.qumyz.backward
+package com.qumyz.makeitdark
 
 import io.flutter.embedding.android.FlutterActivity
 

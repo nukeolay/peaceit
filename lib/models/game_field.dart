@@ -18,6 +18,17 @@ class GameField with ChangeNotifier {
       Cell(3, 3, true),
     ],
     [
+      Cell(1, 1, true),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2, true),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ],
+    [
       Cell(1, 1),
       Cell(2, 1, true),
       Cell(3, 1, true),
@@ -76,6 +87,60 @@ class GameField with ChangeNotifier {
       Cell(4, 4, true),
     ],
     [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(4, 1, true),
+      Cell(5, 1, true),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(4, 2, true),
+      Cell(5, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+      Cell(4, 3, true),
+      Cell(5, 3, true),
+      Cell(1, 4, true),
+      Cell(2, 4, true),
+      Cell(3, 4, true),
+      Cell(4, 4),
+      Cell(5, 4, true),
+      Cell(1, 5, true),
+      Cell(2, 5, true),
+      Cell(3, 5, true),
+      Cell(4, 5, true),
+      Cell(5, 5),
+    ],
+    [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(4, 1),
+      Cell(5, 1),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(4, 2),
+      Cell(5, 2),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3, true),
+      Cell(4, 3),
+      Cell(5, 3),
+      Cell(1, 4),
+      Cell(2, 4),
+      Cell(3, 4),
+      Cell(4, 4),
+      Cell(5, 4),
+      Cell(1, 5),
+      Cell(2, 5),
+      Cell(3, 5),
+      Cell(4, 5),
+      Cell(5, 5, true),
+    ],
+    [
       Cell(1, 1, true),
       Cell(2, 1),
       Cell(3, 1),
@@ -104,10 +169,8 @@ class GameField with ChangeNotifier {
     ]
   ];
 
-  List<Cell> tempLevel = [];
+  late List<Cell> currentLevel = [];
   bool canTap = true;
-
-  late List<Cell> cells;
   // late int xLast;
   // late int yLast;
   int levelsNumber = 0;
@@ -116,18 +179,12 @@ class GameField with ChangeNotifier {
   bool isWin = false;
 
   GameField() {
-    cells = levels[level];
-    setTempLevel();
+    setCurrentLevel();
     levelsNumber = levels.length;
   }
 
-  void setTempLevel() {
-    tempLevel =
-        [...cells].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
-  }
-
-  void loadTempLevel() {
-    cells = [...tempLevel]
+  void setCurrentLevel() {
+    currentLevel = [...levels[level]]
         .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
         .toList();
   }
@@ -136,15 +193,14 @@ class GameField with ChangeNotifier {
     isWin = false;
     movesNumber = 0;
     level++;
-    cells = levels[level];
-    setTempLevel();
+    setCurrentLevel();
     notifyListeners();
   }
 
   void restart() {
     isWin = false;
     movesNumber = 0;
-    loadTempLevel();
+    setCurrentLevel();
     notifyListeners();
   }
 
@@ -167,13 +223,13 @@ class GameField with ChangeNotifier {
 
   int blackNumber() {
     int result = 0;
-    for (Cell cell in cells) {
+    for (Cell cell in currentLevel) {
       if (cell.isBlack) result++;
     }
     return result;
   }
 
-  void pressCell(int x, int y) async {
+  void pressCell(int x, int y) {
     if (canTap) {
       getCellByCoordinates(x, y).switchIt();
       List<Cell> cellsToSwitch = nearestCells(x, y);
@@ -182,19 +238,19 @@ class GameField with ChangeNotifier {
         cell.switchIt();
       }
       notifyListeners();
-      if (blackNumber() == cells.length) {
-        isWin = true;
-      }
-      notifyListeners();
+
       canTap = false;
-      Timer(const Duration(milliseconds: 301), () {
+      Timer(const Duration(milliseconds: 350), () {
         canTap = true;
+        if (blackNumber() == currentLevel.length) {
+          isWin = true;
+        }
         notifyListeners();
       });
     }
   }
 
   Cell getCellByCoordinates(int x, int y) {
-    return cells.firstWhere((cell) => cell.x == x && cell.y == y);
+    return currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 }

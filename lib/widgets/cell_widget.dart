@@ -5,17 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 
-import 'package:backward/models/app_theme.dart';
-import 'package:backward/models/cell.dart';
-import 'package:backward/models/game_field.dart';
+import 'package:makeitdark/models/app_theme.dart';
+import 'package:makeitdark/models/cell.dart';
+import 'package:makeitdark/models/game_field.dart';
 
 class CellWidget extends StatefulWidget {
   final Cell _cell;
-  final double cellWidth;
 
   const CellWidget(
-    this._cell,
-    this.cellWidth, {
+    this._cell, {
     Key? key,
   }) : super(key: key);
 
@@ -82,18 +80,16 @@ class _CellWidgetState extends State<CellWidget> {
   }
 
   Widget customCell(_isBlack) {
-    return ClipRect(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
             color: _isBlack
                 ? context.read<AppTheme>().cardFront.withOpacity(0.5)
                 : context.read<AppTheme>().cardBack.withOpacity(0.5),
           ),
-          // height: widget.cellWidth,
-          // width: widget.cellWidth,
         ),
       ),
     );

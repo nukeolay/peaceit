@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qumyz.backward">
+    package="com.qumyz.makeitdark">
    <application
-        android:label="backward"
+        android:label="makeitdark"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

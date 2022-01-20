@@ -1,11 +1,17 @@
-import 'package:backward/models/app_theme.dart';
-import 'package:backward/models/game_field.dart';
-import 'package:backward/screens/home_screen.dart';
+import 'package:makeitdark/models/app_theme.dart';
+import 'package:makeitdark/models/game_field.dart';
+import 'package:makeitdark/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   runApp(const MyApp());
 }
 
@@ -14,9 +20,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -28,8 +31,9 @@ class MyApp extends StatelessWidget {
       ],
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'backward',
+        title: '[make it dark]',
         theme: ThemeData(
+          primarySwatch: Colors.grey,
           scaffoldBackgroundColor: context.read<AppTheme>().background,
           textButtonTheme: TextButtonThemeData(
             style: ButtonStyle(
