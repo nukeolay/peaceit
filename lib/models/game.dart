@@ -1,50 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:makeitdark/models/cell.dart';
 import 'package:makeitdark/models/game_field.dart';
 import 'package:makeitdark/models/level.dart';
 
 class Game with ChangeNotifier {
-  final List<Level> levels;
-  final GameField gameField;
-  Level? currentLevel;
+  final List<Level> _levels;
+  late GameField _gameField;
   int currentLevelNumber = 0;
   bool _isWin = false;
+  bool _isInit = true;
+  bool isGameStarted = false;
+  int helpFlips = 3;
 
-  Game({
-    required this.levels,
-    required this.gameField,
-  });
+  Game(this._levels);
 
-  int get levelsNumber => levels.length;
+  GameField get gameField => _gameField;
+
+  set gameField(GameField gameField) {
+    _gameField = gameField;
+    if (_isInit) {
+      _gameField.setLevel(currentLevel.cells);
+      _isInit = false;
+    }
+    _isWin = _gameField.isAllBlack;
+    notifyListeners();
+  }
+
+  Level get currentLevel => _levels[currentLevelNumber];
+
+  List<Level> get levels => _levels;
+
+  int get levelsNumber => _levels.length;
 
   bool get isWin => _isWin;
 
-  void setCurrentLevel() {
-    currentLevel = Level(
-      cells: [
-        ...levels[currentLevelNumber]
-            .cells
-            .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
-            .toList()
-      ],
-      bestResult: levels[currentLevelNumber].bestResult,
-      goodResult: levels[currentLevelNumber].goodResult,
-      badResult: levels[currentLevelNumber].badResult,
-    );
+  int rating() {
+    if (_gameField.movesNumber <= currentLevel.bestResult) return 3;
+    if (_gameField.movesNumber <= currentLevel.goodResult) return 2;
+    return 1;
   }
 
   void nextLevel() {
     _isWin = false;
-    gameField!.movesNumber = 0;
     currentLevelNumber++;
-    setCurrentLevel();
+    _gameField.setLevel(currentLevel.cells);
     notifyListeners();
   }
 
   void restart() {
     _isWin = false;
-    gameField!.movesNumber = 0;
-    setCurrentLevel();
+    _gameField.resetField();
     notifyListeners();
   }
 }

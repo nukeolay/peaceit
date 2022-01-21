@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme with ChangeNotifier {
-  Color background = Colors.grey.shade900;
+  Color background = Colors.black87;
   Color cardFront = Colors.black87;
   Color cardBack = Colors.white70;
   Color appBar = Colors.transparent;

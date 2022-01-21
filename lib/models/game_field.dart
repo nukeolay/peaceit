@@ -5,202 +5,28 @@ import 'package:flutter/material.dart';
 import 'cell.dart';
 
 class GameField with ChangeNotifier {
-  List<List<Cell>> levels = [
-    [
-      Cell(1, 1, true),
-      Cell(2, 1),
-      Cell(3, 1, true),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2),
-      Cell(1, 3, true),
-      Cell(2, 3),
-      Cell(3, 3, true),
-    ],
-    [
-      Cell(1, 1, true),
-      Cell(2, 1, true),
-      Cell(3, 1, true),
-      Cell(1, 2),
-      Cell(2, 2, true),
-      Cell(3, 2, true),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3, true),
-    ],
-    [
-      Cell(1, 1),
-      Cell(2, 1, true),
-      Cell(3, 1, true),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2, true),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3),
-    ],
-    [
-      Cell(1, 1),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3),
-    ],
-    [
-      Cell(1, 1),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(4, 1),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2, true),
-      Cell(4, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3),
-      Cell(4, 3),
-      Cell(1, 4, true),
-      Cell(2, 4),
-      Cell(3, 4),
-      Cell(4, 4),
-    ],
-    [
-      Cell(1, 1, true),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(4, 1, true),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2),
-      Cell(4, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3),
-      Cell(4, 3),
-      Cell(1, 4, true),
-      Cell(2, 4),
-      Cell(3, 4),
-      Cell(4, 4, true),
-    ],
-    [
-      Cell(1, 1),
-      Cell(2, 1, true),
-      Cell(3, 1, true),
-      Cell(4, 1, true),
-      Cell(5, 1, true),
-      Cell(1, 2, true),
-      Cell(2, 2),
-      Cell(3, 2, true),
-      Cell(4, 2, true),
-      Cell(5, 2, true),
-      Cell(1, 3, true),
-      Cell(2, 3, true),
-      Cell(3, 3),
-      Cell(4, 3, true),
-      Cell(5, 3, true),
-      Cell(1, 4, true),
-      Cell(2, 4, true),
-      Cell(3, 4, true),
-      Cell(4, 4),
-      Cell(5, 4, true),
-      Cell(1, 5, true),
-      Cell(2, 5, true),
-      Cell(3, 5, true),
-      Cell(4, 5, true),
-      Cell(5, 5),
-    ],
-    [
-      Cell(1, 1, true),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(4, 1),
-      Cell(5, 1),
-      Cell(1, 2),
-      Cell(2, 2, true),
-      Cell(3, 2),
-      Cell(4, 2),
-      Cell(5, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3, true),
-      Cell(4, 3),
-      Cell(5, 3),
-      Cell(1, 4),
-      Cell(2, 4),
-      Cell(3, 4),
-      Cell(4, 4),
-      Cell(5, 4),
-      Cell(1, 5),
-      Cell(2, 5),
-      Cell(3, 5),
-      Cell(4, 5),
-      Cell(5, 5, true),
-    ],
-    [
-      Cell(1, 1, true),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(4, 1),
-      Cell(5, 1),
-      Cell(1, 2),
-      Cell(2, 2, true),
-      Cell(3, 2),
-      Cell(4, 2),
-      Cell(5, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3, true),
-      Cell(4, 3),
-      Cell(5, 3),
-      Cell(1, 4),
-      Cell(2, 4),
-      Cell(3, 4),
-      Cell(4, 4, true),
-      Cell(5, 4),
-      Cell(1, 5),
-      Cell(2, 5),
-      Cell(3, 5),
-      Cell(4, 5),
-      Cell(5, 5, true),
-    ]
-  ];
-
-  late List<Cell> currentLevel = [];
+  List<Cell> _currentLevel = [];
+  List<Cell> _originalLevel = [];
   bool canTap = true;
-  // late int xLast;
-  // late int yLast;
-  int levelsNumber = 0;
-  int level = 0;
   int movesNumber = 0;
-  bool isWin = false;
+  bool isAllBlack = false;
 
-  GameField() {
-    setCurrentLevel();
-    levelsNumber = levels.length;
-  }
+  GameField();
 
-  void setCurrentLevel() {
-    currentLevel = [...levels[level]]
-        .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
-        .toList();
-  }
-
-  void nextLevel() {
-    isWin = false;
+  void setLevel(List<Cell> level) {
+    _currentLevel =
+        [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
+    _originalLevel =
+        [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
     movesNumber = 0;
-    level++;
-    setCurrentLevel();
-    notifyListeners();
+    isAllBlack = false;
   }
 
-  void restart() {
-    isWin = false;
-    movesNumber = 0;
-    setCurrentLevel();
+  List<Cell> get currentLevel => _currentLevel;
+
+  void resetField() {
+    isAllBlack = false;
+    setLevel(_originalLevel);
     notifyListeners();
   }
 
@@ -223,7 +49,7 @@ class GameField with ChangeNotifier {
 
   int blackNumber() {
     int result = 0;
-    for (Cell cell in currentLevel) {
+    for (Cell cell in _currentLevel) {
       if (cell.isBlack) result++;
     }
     return result;
@@ -242,8 +68,24 @@ class GameField with ChangeNotifier {
       canTap = false;
       Timer(const Duration(milliseconds: 350), () {
         canTap = true;
-        if (blackNumber() == currentLevel.length) {
-          isWin = true;
+        if (blackNumber() == _currentLevel.length) {
+          isAllBlack = true;
+        }
+        notifyListeners();
+      });
+    }
+  }
+
+  void singleFlip(int x, int y) {
+    if (canTap) {
+      getCellByCoordinates(x, y).switchIt();
+      movesNumber++;
+      notifyListeners();
+      canTap = false;
+      Timer(const Duration(milliseconds: 350), () {
+        canTap = true;
+        if (blackNumber() == _currentLevel.length) {
+          isAllBlack = true;
         }
         notifyListeners();
       });
@@ -251,6 +93,6 @@ class GameField with ChangeNotifier {
   }
 
   Cell getCellByCoordinates(int x, int y) {
-    return currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
+    return _currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 }

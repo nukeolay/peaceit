@@ -1,33 +1,15 @@
-import 'dart:math';
-
-import 'package:makeitdark/models/cell.dart';
-import 'package:makeitdark/models/game_field.dart';
-import 'package:makeitdark/widgets/cell_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:makeitdark/routes/routes.dart';
+import 'package:makeitdark/models/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    GameField gameField = Provider.of<GameField>(context);
-    List<Cell> cells = gameField.currentLevel;
-    int currentLevel = gameField.level;
-    int movesNumber = gameField.movesNumber;
-    int levelsNumber = gameField.levelsNumber;
-    bool isWin = gameField.isWin;
-    int length = sqrt(cells.length).toInt();
-    double width = MediaQuery.of(context).size.width;
-    double cellWidth = width / length - 10;
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: context.read<AppTheme>().background,
-      //   shadowColor: Colors.transparent,
-      //   centerTitle: true,
-      //   title: const Text('make it dark!'),
-      // ),
       body: Container(
+        width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/bg.png'),
@@ -35,101 +17,35 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: isWin
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'ПОБЕДА',
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      Text(
-                        'уровень пройден за $movesNumber хода(ов)',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 50),
-                      currentLevel + 1 == levelsNumber
-                          ? const Text(
-                              'вы прошли игру',
-                              style: TextStyle(color: Colors.white),
-                            )
-                          : TextButton(
-                              onPressed: () => gameField.nextLevel(),
-                              child: const Text(
-                                'следующий уровень',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                    ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Spacer(),
+                TextButton(
+                  child: Text(
+                    '[make it dark]',
+                    style: TextStyle(
+                        color: context.read<AppTheme>().background,
+                        fontSize: 30),
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 20,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '[make it dark]',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.white.withOpacity(0.7),
-                        ),
-                      ),
-                      GridView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: cells.length,
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: length,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 0,
-                        ),
-                        padding: const EdgeInsets.all(0.0),
-                        itemBuilder: (context, index) => Center(
-                          child: SizedBox(
-                            width: cellWidth,
-                            height: cellWidth,
-                            child: CellWidget(cells[index]),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'уровень: ${currentLevel + 1}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'ходы: $movesNumber',
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              HapticFeedback.heavyImpact();
-                              gameField.restart();
-                            },
-                            icon: const Icon(
-                              Icons.replay_rounded,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  onPressed: () {
+                    Navigator.of(context).pushReplacementNamed(Routes.game);
+                  },
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(
+                        context.read<AppTheme>().background),
+                    backgroundColor: MaterialStateProperty.all(
+                      context.read<AppTheme>().cardBack,
+                    ),
                   ),
                 ),
+                const Spacer(),
+              ],
+            ),
+          ),
         ),
       ),
     );

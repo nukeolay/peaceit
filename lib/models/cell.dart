@@ -12,4 +12,9 @@ class Cell {
   void switchIt() {
     isBlack = !isBlack;
   }
+
+  @override
+  String toString() {
+    return 'Cell[x: $x, y: $y, isBlack: $isBlack]';
+  }
 }

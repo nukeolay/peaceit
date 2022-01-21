@@ -13,7 +13,7 @@ class Levels {
       Cell(1, 3, true),
       Cell(2, 3),
       Cell(3, 3, true),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 1, goodResult: 4),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1, true),
@@ -24,7 +24,7 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3, true),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 1, goodResult: 4),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1, true),
@@ -35,7 +35,7 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 4, goodResult: 7),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1),
@@ -46,7 +46,7 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 5, goodResult: 8),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1),
@@ -64,7 +64,7 @@ class Levels {
       Cell(2, 4),
       Cell(3, 4),
       Cell(4, 4),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 4, goodResult: 7),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -82,7 +82,7 @@ class Levels {
       Cell(2, 4),
       Cell(3, 4),
       Cell(4, 4, true),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 4, goodResult: 7),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1, true),
@@ -109,7 +109,7 @@ class Levels {
       Cell(3, 5, true),
       Cell(4, 5, true),
       Cell(5, 5),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 5, goodResult: 8),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -136,7 +136,7 @@ class Levels {
       Cell(3, 5),
       Cell(4, 5),
       Cell(5, 5, true),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 5, goodResult: 8),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -163,6 +163,6 @@ class Levels {
       Cell(3, 5),
       Cell(4, 5),
       Cell(5, 5, true),
-    ], bestResult: 1, goodResult: 1, badResult: 1),
+    ], bestResult: 10, goodResult: 15),
   ];
 }
