@@ -1,14 +1,14 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/models/game.dart';
+import 'package:makeitdark/core/models/app_theme.dart';
+import 'package:makeitdark/core/models/cell.dart';
+import 'package:makeitdark/core/models/game.dart';
+import 'package:makeitdark/core/models/game_field.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
-
-import 'package:makeitdark/models/app_theme.dart';
-import 'package:makeitdark/models/cell.dart';
-import 'package:makeitdark/models/game_field.dart';
 
 class CellWidget extends StatefulWidget {
   final Cell _cell;
@@ -30,7 +30,7 @@ class _CellWidgetState extends State<CellWidget> {
   late bool _isFlipped;
   bool _isInit = true;
   bool _canTap = true;
-  // bool _isSingleFlip = false;
+  bool _isSingleFlipOn = false;
 
   @override
   void initState() {
@@ -47,6 +47,7 @@ class _CellWidgetState extends State<CellWidget> {
       _isFlipped = widget._cell.isBlack;
       _isInit = false;
     }
+    _isSingleFlipOn = _game.isSingleFlipOn;
     super.didChangeDependencies();
   }
 
@@ -67,6 +68,8 @@ class _CellWidgetState extends State<CellWidget> {
       HapticFeedback.heavyImpact();
       _gamefield.singleFlip(widget._cell.x, widget._cell.y);
       _controller.toggleCard();
+      _game.isSingleFlipOn = false;
+      _game.singleFlips--;
     }
   }
 
@@ -79,8 +82,7 @@ class _CellWidgetState extends State<CellWidget> {
     _canTap = _gamefield.canTap;
     return GestureDetector(
       onTap: () {
-        flipCard();
-        // singleFlipCard();
+        _isSingleFlipOn ? singleFlipCard() : flipCard();
       },
       child: FlipCard(
         speed: 300,

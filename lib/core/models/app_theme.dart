@@ -6,6 +6,7 @@ class AppTheme with ChangeNotifier {
   Color cardBack = Colors.white70;
   Color appBar = Colors.transparent;
   Color buttonTextColor = Colors.white;
+  Color accentColor = Colors.amberAccent;
 
   // Color background = Colors.yellow.shade800;
   // Color cardFront = Colors.black87;

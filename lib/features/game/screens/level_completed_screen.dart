@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:makeitdark/core/models/app_theme.dart';
+import 'package:makeitdark/core/models/game.dart';
+import 'package:makeitdark/core/models/game_field.dart';
+import 'package:makeitdark/core/routes/routes.dart';
 
-import 'package:makeitdark/models/app_theme.dart';
-import 'package:makeitdark/models/game.dart';
-import 'package:makeitdark/models/game_field.dart';
-import 'package:makeitdark/routes/routes.dart';
 import 'package:makeitdark/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -31,41 +31,19 @@ class LevelCompletedScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.star_rounded,
-                      color: context.read<AppTheme>().buttonTextColor,
-                      size: 36,
-                    ),
-                    Icon(
-                      rating >= 2
-                          ? Icons.star_rounded
-                          : Icons.star_outline_rounded,
-                      color: context.read<AppTheme>().buttonTextColor,
-                      size: 36,
-                    ),
-                    Icon(
-                      rating == 3
-                          ? Icons.star_rounded
-                          : Icons.star_outline_rounded,
-                      color: context.read<AppTheme>().buttonTextColor,
-                      size: 36,
-                    ),
-                  ],
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'ПОБЕДА',
-                    style: TextStyle(fontSize: 30),
-                  ),
-                ),
+                RatingRow(rating: rating),
+                // if (rating == 3)
+                //   const Padding(
+                //     padding: EdgeInsets.all(8.0),
+                //     child: Text(
+                //       '+1 одиночный поворот',
+                //       style: TextStyle(fontSize: 22),
+                //     ),
+                //   ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'уровень ${currentLevel + 1} пройден за $movesNumber ${Utils.wordEnding(movesNumber)}',
+                    'уровень пройден за $movesNumber ${Utils.wordEnding(movesNumber)}',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
@@ -107,6 +85,43 @@ class LevelCompletedScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RatingRow extends StatelessWidget {
+  const RatingRow({
+    Key? key,
+    required this.rating,
+  }) : super(key: key);
+
+  final int rating;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.star_rounded,
+          color: context.read<AppTheme>().buttonTextColor,
+          size: 36,
+        ),
+        Icon(
+          rating >= 2
+              ? Icons.star_rounded
+              : Icons.star_outline_rounded,
+          color: context.read<AppTheme>().buttonTextColor,
+          size: 36,
+        ),
+        Icon(
+          rating == 3
+              ? Icons.star_rounded
+              : Icons.star_outline_rounded,
+          color: context.read<AppTheme>().buttonTextColor,
+          size: 36,
+        ),
+      ],
     );
   }
 }

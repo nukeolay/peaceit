@@ -1,5 +1,5 @@
-import 'package:makeitdark/models/cell.dart';
-import 'package:makeitdark/models/level.dart';
+import 'package:makeitdark/core/models/cell.dart';
+import 'package:makeitdark/core/models/level.dart';
 
 class Levels {
   static List<Level> allLevels = [
@@ -13,7 +13,7 @@ class Levels {
       Cell(1, 3, true),
       Cell(2, 3),
       Cell(3, 3, true),
-    ], bestResult: 1, goodResult: 4),
+    ], bestResult: 1, goodResult: 4, id: '3x3a'),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1, true),
@@ -24,7 +24,7 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3, true),
-    ], bestResult: 1, goodResult: 4),
+    ], bestResult: 1, goodResult: 4, id: '3x3b'),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1, true),
@@ -35,7 +35,7 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3),
-    ], bestResult: 4, goodResult: 7),
+    ], bestResult: 4, goodResult: 7, id: '3x3c'),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1),
@@ -46,7 +46,18 @@ class Levels {
       Cell(1, 3),
       Cell(2, 3),
       Cell(3, 3),
-    ], bestResult: 5, goodResult: 8),
+    ], bestResult: 5, goodResult: 8, id: '3x3d'),
+    Level(cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+    ], bestResult: 3, goodResult: 6, id: '3x3e'),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1),
@@ -64,7 +75,7 @@ class Levels {
       Cell(2, 4),
       Cell(3, 4),
       Cell(4, 4),
-    ], bestResult: 4, goodResult: 7),
+    ], bestResult: 4, goodResult: 7, id: '4x4a'),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -82,7 +93,7 @@ class Levels {
       Cell(2, 4),
       Cell(3, 4),
       Cell(4, 4, true),
-    ], bestResult: 4, goodResult: 7),
+    ], bestResult: 4, goodResult: 7, id: '4x4b'),
     Level(cells: [
       Cell(1, 1),
       Cell(2, 1, true),
@@ -109,7 +120,7 @@ class Levels {
       Cell(3, 5, true),
       Cell(4, 5, true),
       Cell(5, 5),
-    ], bestResult: 5, goodResult: 8),
+    ], bestResult: 5, goodResult: 8, id: '5x5a'),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -136,7 +147,7 @@ class Levels {
       Cell(3, 5),
       Cell(4, 5),
       Cell(5, 5, true),
-    ], bestResult: 5, goodResult: 8),
+    ], bestResult: 5, goodResult: 8, id: '5x5b'),
     Level(cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -163,6 +174,71 @@ class Levels {
       Cell(3, 5),
       Cell(4, 5),
       Cell(5, 5, true),
-    ], bestResult: 10, goodResult: 15),
+    ], bestResult: 10, goodResult: 15, id: '5x5c'),
+
+
+
+
+
+
+
+ Level(cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1, true),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], bestResult: 1, goodResult: 4, id: 'x1'),
+    Level(cells: [
+      Cell(1, 1, true),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2, true),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], bestResult: 1, goodResult: 4, id: 'x2'),
+    Level(cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+    ], bestResult: 4, goodResult: 7, id: 'x3'),
+    Level(cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+    ], bestResult: 5, goodResult: 8, id: 'x4'),
+    Level(cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+    ], bestResult: 3, goodResult: 6, id: 'x5'),
+
+
+
   ];
 }

@@ -1,9 +1,10 @@
-import 'package:makeitdark/routes/custom_route.dart';
-import 'package:makeitdark/models/app_theme.dart';
-import 'package:makeitdark/models/game.dart';
-import 'package:makeitdark/models/game_field.dart';
-import 'package:makeitdark/models/levels.dart';
-import 'package:makeitdark/routes/routes.dart';
+import 'package:makeitdark/core/models/user_data.dart';
+import 'package:makeitdark/core/routes/custom_route.dart';
+import 'package:makeitdark/core/models/app_theme.dart';
+import 'package:makeitdark/core/models/game.dart';
+import 'package:makeitdark/core/models/game_field.dart';
+import 'package:makeitdark/core/models/levels.dart';
+import 'package:makeitdark/core/routes/routes.dart';
 import 'package:makeitdark/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,13 +34,17 @@ class MyApp extends StatelessWidget {
           create: (context) => AppTheme(),
         ),
         ChangeNotifierProvider(
+          create: (context) => UserData(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
           create: (context) => GameField(),
           lazy: false,
         ),
-        ChangeNotifierProxyProvider<GameField, Game>(
+        ChangeNotifierProxyProvider2<GameField, UserData, Game>(
           create: (context) => Game(Levels.allLevels),
-          update: (context, gameField, previousGame) =>
-              previousGame!..gameField = gameField,
+          update: (context, gameField, userData, previousGame) =>
+              previousGame!..initGame(gameField, userData),
           lazy: false,
         ),
       ],
