@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:makeitdark/core/models/app_theme.dart';
 import 'package:makeitdark/core/models/cell.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
 class MenuLevelCard extends StatelessWidget {
@@ -52,6 +53,15 @@ class MenuLevelCard extends StatelessWidget {
                           ? context.read<AppTheme>().cardFront.withOpacity(0.8)
                           : context.read<AppTheme>().cardBack.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(4.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: context
+                              .read<AppTheme>()
+                              .cardBack
+                              .withOpacity(0.05),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
                     margin: const EdgeInsets.all(1.0),
                   ),

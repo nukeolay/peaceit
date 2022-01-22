@@ -9,7 +9,7 @@ class Routes {
   static const String game = '/game-screen';
   static const String test = '/test-screen';
   static const String levelCompleted = '/level-completed-screen';
-  static const String select_level_menu = '/select-level-menu-screen';
+  static const String selectLevelMenu = '/select-level-menu-screen';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     return MaterialPageRoute(
@@ -22,7 +22,7 @@ class Routes {
             return const GameScreen();
           case levelCompleted:
             return const LevelCompletedScreen();
-          case select_level_menu:
+          case selectLevelMenu:
             return const SelectLevelMenuScreen();
           default:
             return const HomeScreen();

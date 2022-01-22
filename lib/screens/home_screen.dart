@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:makeitdark/core/models/app_theme.dart';
@@ -38,15 +40,15 @@ class HomeScreen extends StatelessWidget {
                     Navigator.of(context).pushReplacementNamed(Routes.game);
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 HomeScreenButton(
                   text: '[выбор уровня]',
                   function: () {
                     HapticFeedback.heavyImpact();
-                    Navigator.of(context).pushNamed(Routes.select_level_menu);
+                    Navigator.of(context).pushNamed(Routes.selectLevelMenu);
                   },
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 HomeScreenButton(
                   text: '[как играть]',
                   function: () {
@@ -76,18 +78,37 @@ class HomeScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: Text(
-        text,
-        style:
-            TextStyle(color: context.read<AppTheme>().background, fontSize: 30),
-      ),
-      onPressed: () => {function()},
-      style: ButtonStyle(
-        overlayColor:
-            MaterialStateProperty.all(context.read<AppTheme>().accentColor),
-        backgroundColor: MaterialStateProperty.all(
-          context.read<AppTheme>().cardBack,
+    return ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: 
+                 context.read<AppTheme>().cardBack.withOpacity(0.5),
+            boxShadow: [
+              BoxShadow(
+                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                blurRadius: 6.0,
+              ),
+            ],
+          ),
+          child: TextButton(
+            child: Text(
+              text,
+              style:
+                  TextStyle(color: context.read<AppTheme>().background, fontSize: 26),
+            ),
+            onPressed: () => {function()},
+            style: ButtonStyle(
+              overlayColor:
+                  MaterialStateProperty.all(context.read<AppTheme>().accentColor),
+              backgroundColor: MaterialStateProperty.all(
+                Colors.transparent,
+              ),
+            ),
+          ),
         ),
       ),
     );

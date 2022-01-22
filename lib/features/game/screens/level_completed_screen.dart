@@ -14,7 +14,6 @@ class LevelCompletedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Game game = context.read<Game>();
     GameField gameField = game.gameField;
-    int currentLevel = game.currentLevelNumber;
     int movesNumber = gameField.movesNumber;
     int rating = game.rating();
     return Scaffold(

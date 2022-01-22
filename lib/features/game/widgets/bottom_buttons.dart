@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:makeitdark/core/models/app_theme.dart';
@@ -22,49 +24,86 @@ class _BottomButtonsState extends State<BottomButtons> {
   }
 
   void _showPauseDialog() {
+    double width = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: context.read<AppTheme>().background.withOpacity(0.6),
-        shape: RoundedRectangleBorder(
+      builder: (ctx) => Align(
+        alignment: Alignment.center,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
-        ),
-        title: Text(
-          'ПАУЗА',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: context.read<AppTheme>().buttonTextColor),
-        ),
-        elevation: 0,
-        actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextButton(
-              onPressed: () {
-                HapticFeedback.heavyImpact();
-                Navigator.of(context).pushReplacementNamed(Routes.home);
-              },
-              child: Text(
-                'Выйти',
-                style: TextStyle(
-                  color: context.read<AppTheme>().buttonTextColor,
-                ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: Container(
+              height: width / 3,
+              width: width / 1.5,
+              decoration: BoxDecoration(
+                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                boxShadow: [
+                  BoxShadow(
+                    color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                    blurRadius: 6.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'ПАУЗА',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: context.read<AppTheme>().buttonTextColor,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TextButton(
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.of(context)
+                                .pushReplacementNamed(Routes.home);
+                          },
+                          child: Text(
+                            'Выйти',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: context.read<AppTheme>().buttonTextColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TextButton(
+                          onPressed: () {
+                            HapticFeedback.heavyImpact();
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Text(
+                            'Продолжить',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: context.read<AppTheme>().buttonTextColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              HapticFeedback.heavyImpact();
-              Navigator.of(ctx).pop();
-            },
-            child: Text(
-              'Продолжить',
-              style: TextStyle(
-                color: context.read<AppTheme>().buttonTextColor,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

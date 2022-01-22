@@ -104,6 +104,12 @@ class _CellWidgetState extends State<CellWidget> {
             color: _isBlack
                 ? context.read<AppTheme>().cardFront.withOpacity(0.5)
                 : context.read<AppTheme>().cardBack.withOpacity(0.5),
+            boxShadow: [
+              BoxShadow(
+                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                blurRadius: 6.0,
+              ),
+            ],
           ),
         ),
       ),
