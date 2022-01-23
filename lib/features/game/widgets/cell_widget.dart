@@ -25,7 +25,7 @@ class CellWidget extends StatefulWidget {
 class _CellWidgetState extends State<CellWidget> {
   late FlipCardController _controller;
   late final Game _game;
-  late final GameField _gamefield;
+  late final GameField _gameField;
   late bool _isBlack;
   late bool _isFlipped;
   bool _isInit = true;
@@ -42,7 +42,7 @@ class _CellWidgetState extends State<CellWidget> {
   void didChangeDependencies() {
     if (_isInit) {
       _game = Provider.of<Game>(context);
-      _gamefield = _game.gameField;
+      _gameField = _game.gameField;
       _isBlack = widget._cell.isBlack;
       _isFlipped = widget._cell.isBlack;
       _isInit = false;
@@ -52,24 +52,27 @@ class _CellWidgetState extends State<CellWidget> {
   }
 
   void flipCard() {
+    print('flipCard');
     if (_canTap) {
       HapticFeedback.heavyImpact();
-      _gamefield.pressCell(widget._cell.x, widget._cell.y);
+      _gameField.pressCell(widget._cell.x, widget._cell.y);
       _controller.toggleCard();
     }
   }
 
   void flipThisCard() {
+    print('flip this');
     _controller.toggleCard();
   }
 
   void singleFlipCard() {
+    print('singleFlipCard');
     if (_canTap) {
       HapticFeedback.heavyImpact();
-      _gamefield.singleFlip(widget._cell.x, widget._cell.y);
+      _gameField.singleFlip(widget._cell.x, widget._cell.y);
       _controller.toggleCard();
+      _game.singleFlipsDecrement();
       _game.isSingleFlipOn = false;
-      _game.singleFlips--;
     }
   }
 
@@ -79,7 +82,7 @@ class _CellWidgetState extends State<CellWidget> {
       flipThisCard();
       _isFlipped = !_isFlipped;
     }
-    _canTap = _gamefield.canTap;
+    _canTap = _gameField.canTap;
     return GestureDetector(
       onTap: () {
         _isSingleFlipOn ? singleFlipCard() : flipCard();

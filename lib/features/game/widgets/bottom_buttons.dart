@@ -1,11 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:makeitdark/core/models/app_theme.dart';
 import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/routes/routes.dart';
-import 'package:provider/provider.dart';
+import 'package:makeitdark/core/widgets/custom_alert_dialog.dart';
 
 class BottomButtons extends StatefulWidget {
   const BottomButtons({Key? key}) : super(key: key);
@@ -15,11 +15,11 @@ class BottomButtons extends StatefulWidget {
 }
 
 class _BottomButtonsState extends State<BottomButtons> {
-  late Game game;
+  late Game _game;
 
   @override
   void didChangeDependencies() {
-    game = Provider.of<Game>(context);
+    _game = Provider.of<Game>(context);
     super.didChangeDependencies();
   }
 
@@ -27,83 +27,20 @@ class _BottomButtonsState extends State<BottomButtons> {
     double width = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
-      builder: (ctx) => Align(
-        alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              height: width / 3,
-              width: width / 1.5,
-              decoration: BoxDecoration(
-                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                boxShadow: [
-                  BoxShadow(
-                    color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                    blurRadius: 6.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'ПАУЗА',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: context.read<AppTheme>().buttonTextColor,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextButton(
-                          onPressed: () {
-                            HapticFeedback.heavyImpact();
-                            Navigator.of(context)
-                                .pushReplacementNamed(Routes.home);
-                          },
-                          child: Text(
-                            'Выйти',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: context.read<AppTheme>().buttonTextColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: TextButton(
-                          onPressed: () {
-                            HapticFeedback.heavyImpact();
-                            Navigator.of(ctx).pop();
-                          },
-                          child: Text(
-                            'Продолжить',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: context.read<AppTheme>().buttonTextColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+      builder: (context) => CustomAlertDialog(
+height: width / 2,
+        width: width / 1.1,
+        text: 'ПАУЗА',
+        leftButtontext: 'Выйти',
+        leftButtonFunction: () {
+          HapticFeedback.heavyImpact();
+          Navigator.of(context).pushReplacementNamed(Routes.home);
+        },
+        rightButtontext: 'Продолжить',
+        rightButtonFunction: () {
+          HapticFeedback.heavyImpact();
+          Navigator.of(context).pop();
+        },
       ),
     );
   }
@@ -125,13 +62,13 @@ class _BottomButtonsState extends State<BottomButtons> {
           ),
         ),
         IconButton(
-          onPressed: game.singleFlips > 0
+          onPressed: _game.singleFlips > 0
               ? () {
                   HapticFeedback.heavyImpact();
-                  game.useSingeFlip();
+                  _game.useSingeFlip();
                 }
               : null,
-          icon: game.isSingleFlipOn
+          icon: _game.isSingleFlipOn
               ? CircleAvatar(
                   child: Icon(
                     Icons.flip,
@@ -142,7 +79,7 @@ class _BottomButtonsState extends State<BottomButtons> {
               : Icon(
                   Icons.flip,
                   size: 30,
-                  color: game.singleFlips == 0
+                  color: _game.singleFlips == 0
                       ? context
                           .read<AppTheme>()
                           .buttonTextColor
@@ -153,7 +90,7 @@ class _BottomButtonsState extends State<BottomButtons> {
         IconButton(
           onPressed: () {
             HapticFeedback.heavyImpact();
-            game.restart();
+            _game.restartLevel();
           },
           icon: Icon(
             Icons.replay_rounded,

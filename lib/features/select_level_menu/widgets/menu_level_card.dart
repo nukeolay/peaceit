@@ -37,36 +37,66 @@ class MenuLevelCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GridView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: cells.length,
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: length,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                ),
-                itemBuilder: (context, index) => Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: cells[index].isBlack
-                          ? context.read<AppTheme>().cardFront.withOpacity(0.8)
-                          : context.read<AppTheme>().cardBack.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(4.0),
-                      boxShadow: [
-                        BoxShadow(
+              canBePlayed
+                  ? GridView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: cells.length,
+                      shrinkWrap: true,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: length,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
+                      ),
+                      itemBuilder: (context, index) => Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: cells[index].isBlack
+                                ? context
+                                    .read<AppTheme>()
+                                    .cardFront
+                                    .withOpacity(0.8)
+                                : context
+                                    .read<AppTheme>()
+                                    .cardBack
+                                    .withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(4.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: context
+                                    .read<AppTheme>()
+                                    .cardBack
+                                    .withOpacity(0.05),
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                          ),
+                          margin: const EdgeInsets.all(1.0),
+                        ),
+                      ),
+                    )
+                  : Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
                           color: context
                               .read<AppTheme>()
-                              .cardBack
-                              .withOpacity(0.05),
-                          blurRadius: 6.0,
+                              .background
+                              .withOpacity(0.5),
                         ),
-                      ],
+                        child: Text(
+                          '?',
+                          style: TextStyle(
+                            color: context
+                                .read<AppTheme>()
+                                .buttonTextColor
+                                .withOpacity(0.8),
+                            fontSize: 30,
+                          ),
+                        ),
+                      ),
                     ),
-                    margin: const EdgeInsets.all(1.0),
-                  ),
-                ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -76,7 +106,7 @@ class MenuLevelCard extends StatelessWidget {
                         : Icons.star_outline_rounded,
                     color: canBePlayed
                         ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().buttonTextColor,
+                        : context.read<AppTheme>().cardBack,
                     size: 20,
                   ),
                   Icon(
@@ -85,7 +115,7 @@ class MenuLevelCard extends StatelessWidget {
                         : Icons.star_outline_rounded,
                     color: canBePlayed
                         ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().buttonTextColor,
+                        : context.read<AppTheme>().cardBack,
                     size: 20,
                   ),
                   Icon(
@@ -94,7 +124,7 @@ class MenuLevelCard extends StatelessWidget {
                         : Icons.star_outline_rounded,
                     color: canBePlayed
                         ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().buttonTextColor,
+                        : context.read<AppTheme>().cardBack,
                     size: 20,
                   ),
                 ],

@@ -27,8 +27,6 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   void didChangeDependencies() {
-    // final String levelId = ModalRoute.of(context)!.settings.arguments as String;
-    // print(levelId);
     game = Provider.of<Game>(context);
     gameField = game.gameField;
     cells = gameField.currentLevel;

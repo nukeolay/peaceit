@@ -66,7 +66,7 @@ class GameField with ChangeNotifier {
       notifyListeners();
 
       canTap = false;
-      Timer(const Duration(milliseconds: 350), () {
+      Timer(const Duration(milliseconds: 310), () {
         canTap = true;
         if (blackNumber() == _currentLevel.length) {
           isAllBlack = true;
@@ -82,7 +82,7 @@ class GameField with ChangeNotifier {
       movesNumber++;
       notifyListeners();
       canTap = false;
-      Timer(const Duration(milliseconds: 350), () {
+      Timer(const Duration(milliseconds: 310), () {
         canTap = true;
         if (blackNumber() == _currentLevel.length) {
           isAllBlack = true;

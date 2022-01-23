@@ -1,39 +1,84 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData with ChangeNotifier {
-  late Map<String, CompletedLevel>
-      completedLevels; // TODO в ключе хранить id уровня
-  late int singleFlips;
-  bool _isinit = true;
+  late Map<String, CompletedLevel> completedLevels;
+  late int _singleFlips;
 
-  UserData() {
-    if (_isinit) {
-      loadUserData();
-      _isinit = false;
+  UserData();
+
+  // completedLevels methods
+  int getLevelRatingById(String levelId) {
+    return completedLevels[levelId]!.rating;
+  }
+
+  void setLevelRatingById({
+    required String levelId,
+    required int rating,
+  }) {
+    completedLevels[levelId]!.rating = rating;
+  }
+
+  bool isLevelCompleted(String levelId) {
+    return completedLevels.keys.contains(levelId);
+  }
+
+  void setCompletedLevel(CompletedLevel completedLevel) {
+    completedLevels[completedLevel.id] = completedLevel;
+  }
+
+  // singleFlips methods
+  int get singleFlips => _singleFlips;
+
+  void singleFlipsDecrement() {
+    _singleFlips--;
+    saveUserData();
+  }
+
+  void singleFlipsIncrement() {
+    _singleFlips++;
+    saveUserData();
+  }
+
+  // user data persistance
+  Future<void> loadUserData() async {
+    completedLevels = {};
+    _singleFlips = 3;
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    try {
+      final tempUserData =
+          UserData.fromJson(jsonDecode(_prefs.getString('userData')!));
+      completedLevels = tempUserData.completedLevels;
+      _singleFlips = tempUserData._singleFlips;
+    } catch (error) {
+      completedLevels = {};
+      _singleFlips = 3;
     }
   }
 
-  Future<void> loadUserData() async {
-    // TODO await грузим из sharedPreferences
-    // если не загрузился, singleFlips = 3, copmletedLevel = {}
-    completedLevels = {
-      '3x3a': CompletedLevel(
-        id: '3x3a',
-        moves: 1,
-        rating: 3,
-      ),
-      '3x3b': CompletedLevel(
-        id: '3x3a',
-        moves: 5,
-        rating: 1,
-      )
-    };
-    singleFlips = 9;
+  Future<void> saveUserData() async {
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.setString('userData', jsonEncode(this));
   }
 
-  Future<void> saveUserData() async {
-    //TODO await сохраняем в sharedPreferences
+  Future<void> removeData() async {
+    completedLevels = {};
+    _singleFlips = 3;
+    final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    await _prefs.clear();
   }
+
+  UserData.fromJson(Map<String, dynamic> json)
+      : completedLevels = (json['completedLevels'] as Map<String, dynamic>)
+            .map((id, value) => MapEntry(id, CompletedLevel.fromJson(value))),
+        _singleFlips = json['singleFlips'] as int;
+
+  Map<String, dynamic> toJson() => {
+        'completedLevels': completedLevels,
+        'singleFlips': _singleFlips,
+      };
 }
 
 class CompletedLevel {
@@ -46,4 +91,20 @@ class CompletedLevel {
     required this.moves,
     required this.rating,
   });
+
+  CompletedLevel.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as String,
+        moves = json['moves'] as int,
+        rating = json['rating'] as int;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'moves': moves,
+        'rating': rating,
+      };
+
+  @override
+  String toString() {
+    return 'ID: $id, MOVES: $moves, RATING: $rating';
+  }
 }

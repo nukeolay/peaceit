@@ -12,7 +12,6 @@ class Game with ChangeNotifier {
   bool _isInit = true;
   bool isSingleFlipOn = false;
   bool isGameStarted = false;
-  late int singleFlips = 0;
 
   Game(this._levels);
 
@@ -20,52 +19,63 @@ class Game with ChangeNotifier {
 
   UserData get userData => _userData;
 
-  void initGame(GameField gameField, UserData userData) {
+  void initGame(GameField gameField, UserData userData) async {
     _gameField = gameField;
     _userData = userData;
     if (_isInit) {
       _gameField.setLevel(currentLevel.cells);
-      singleFlips = _userData.singleFlips;
+      await _userData.loadUserData();
       _isInit = false;
     }
     _isWin = _gameField.isAllBlack;
     if (_isWin) {
-      if (_userData.completedLevels.keys.contains(currentLevelId)) {
+      if (_userData.isLevelCompleted(currentLevelId)) {
         // если этот уровень уже был пройден
-        int _currentLevelRating =
-            _userData.completedLevels[currentLevelId]!.rating;
+        int _currentLevelRating = _userData.getLevelRatingById(currentLevelId);
         switch (_currentLevelRating) {
           case 1:
-            _userData.completedLevels[currentLevelId]!.rating = rating();
+            _userData.setLevelRatingById(
+                levelId: currentLevelId, rating: rating());
             if (rating() == 3) {
-              singleFlips++;
-              _userData.singleFlips++;
+              _userData.singleFlipsIncrement();
             }
-            _userData.saveUserData(); // TODO тут асинхронность
+            await _userData.saveUserData(); // TODO тут асинхронность
             break;
           case 2:
             if (rating() == 3) {
-              _userData.completedLevels[currentLevelId]!.rating = rating();
-              singleFlips++;
-              _userData.singleFlips++;
+              _userData.setLevelRatingById(
+                  levelId: currentLevelId, rating: rating());
+              _userData.singleFlipsIncrement();
             }
-            _userData.saveUserData(); // TODO тут асинхронность
+            await _userData.saveUserData(); // TODO тут асинхронность
             break;
         }
       } else {
-        // если этот уровень не был пройден
-        _userData.completedLevels[currentLevelId] = CompletedLevel(
+        // если этот уровень не был пройден ранее
+        _userData.setCompletedLevel(
+          CompletedLevel(
             id: currentLevelId,
             moves: _gameField.movesNumber,
-            rating: rating());
+            rating: rating(),
+          ),
+        );
         if (rating() == 3) {
-          singleFlips++;
-          _userData.singleFlips++;
+          _userData.singleFlipsIncrement();
         }
-        _userData.saveUserData(); // TODO тут асинхронность
+        await _userData.saveUserData(); // TODO тут асинхронность
       }
     }
     notifyListeners();
+  }
+
+  int get singleFlips => _userData.singleFlips;
+
+  void singleFlipsDecrement() {
+    _userData.singleFlipsDecrement();
+  }
+
+  void singleFlipsIncrement() {
+    _userData.singleFlipsIncrement();
   }
 
   void useSingeFlip() {
@@ -102,16 +112,25 @@ class Game with ChangeNotifier {
     notifyListeners();
   }
 
+  void restartLevel() {
+    _isWin = false;
+    _gameField.resetField();
+    notifyListeners();
+  }
+
+  void removeData() {
+    _userData.removeData();
+    currentLevelNumber = 0;
+    _isWin = false;
+    isSingleFlipOn = false;
+    isGameStarted = false;
+    notifyListeners();
+  }
+
   void setLevelById(String id) {
     _isWin = false;
     currentLevelNumber = levels.indexWhere((level) => level.id == id);
     _gameField.setLevel(levels.firstWhere((level) => level.id == id).cells);
-    notifyListeners();
-  }
-
-  void restart() {
-    _isWin = false;
-    _gameField.resetField();
     notifyListeners();
   }
 }

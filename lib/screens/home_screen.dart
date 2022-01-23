@@ -79,14 +79,15 @@ class HomeScreenButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-
+      borderRadius: BorderRadius.circular(8.0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
+          padding: const EdgeInsets.all(0.0),
+          margin: const EdgeInsets.all(0.0),
           decoration: BoxDecoration(
-            color: 
-                 context.read<AppTheme>().cardBack.withOpacity(0.5),
+            color: //Colors.red,
+                context.read<AppTheme>().cardBack.withOpacity(0.5),
             boxShadow: [
               BoxShadow(
                 color: context.read<AppTheme>().cardBack.withOpacity(0.05),
@@ -97,13 +98,13 @@ class HomeScreenButton extends StatelessWidget {
           child: TextButton(
             child: Text(
               text,
-              style:
-                  TextStyle(color: context.read<AppTheme>().background, fontSize: 26),
+              style: TextStyle(
+                  color: context.read<AppTheme>().background, fontSize: 26),
             ),
             onPressed: () => {function()},
             style: ButtonStyle(
-              overlayColor:
-                  MaterialStateProperty.all(context.read<AppTheme>().accentColor),
+              overlayColor: MaterialStateProperty.all(
+                  context.read<AppTheme>().accentColor),
               backgroundColor: MaterialStateProperty.all(
                 Colors.transparent,
               ),

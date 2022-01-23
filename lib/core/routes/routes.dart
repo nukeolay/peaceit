@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:makeitdark/features/game/screens/game_screen.dart';
-import 'package:makeitdark/features/select_level_menu/screens/menu_screen.dart';
+import 'package:makeitdark/features/select_level_menu/screens/select_level_menu_screen.dart';
 import 'package:makeitdark/screens/home_screen.dart';
 import 'package:makeitdark/features/game/screens/level_completed_screen.dart';
 

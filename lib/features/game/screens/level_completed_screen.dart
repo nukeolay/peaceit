@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:makeitdark/core/models/app_theme.dart';
 import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/models/game_field.dart';
 import 'package:makeitdark/core/routes/routes.dart';
-
-import 'package:makeitdark/utils/utils.dart';
-import 'package:provider/provider.dart';
+import 'package:makeitdark/core/utils/utils.dart';
 
 class LevelCompletedScreen extends StatelessWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class LevelCompletedScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         HapticFeedback.heavyImpact();
-                        game.restart();
+                        game.restartLevel();
                         Navigator.of(context).pushReplacementNamed(Routes.game);
                       },
                       icon: const Icon(
@@ -107,16 +107,12 @@ class RatingRow extends StatelessWidget {
           size: 36,
         ),
         Icon(
-          rating >= 2
-              ? Icons.star_rounded
-              : Icons.star_outline_rounded,
+          rating >= 2 ? Icons.star_rounded : Icons.star_outline_rounded,
           color: context.read<AppTheme>().buttonTextColor,
           size: 36,
         ),
         Icon(
-          rating == 3
-              ? Icons.star_rounded
-              : Icons.star_outline_rounded,
+          rating == 3 ? Icons.star_rounded : Icons.star_outline_rounded,
           color: context.read<AppTheme>().buttonTextColor,
           size: 36,
         ),
