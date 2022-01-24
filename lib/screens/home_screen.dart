@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Game game = Provider.of<Game>(context, listen: false);
-
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -30,9 +30,25 @@ class HomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Spacer(),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(30.0),
+                    width: width,
+                    child: FittedBox(
+                      child: Text(
+                        '[make it dark]',
+                        style: TextStyle(
+                          color: context
+                              .read<AppTheme>()
+                              .buttonTextColor
+                              .withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 HomeScreenButton(
-                  text: '[make it dark]',
+                  text: 'ИГРАТЬ',
                   function: () {
                     HapticFeedback.heavyImpact();
                     int lastLevelIndex = game.userData.completedLevels.length;
@@ -42,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 HomeScreenButton(
-                  text: '[выбор уровня]',
+                  text: 'УРОВНИ',
                   function: () {
                     HapticFeedback.heavyImpact();
                     Navigator.of(context).pushNamed(Routes.selectLevelMenu);
@@ -50,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 HomeScreenButton(
-                  text: '[как играть]',
+                  text: 'ПРАВИЛА',
                   function: () {
                     // HapticFeedback.heavyImpact();
                     // Navigator.of(context).pushNamed(Routes.select_level_menu);
@@ -78,16 +94,17 @@ class HomeScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
+          width: width * 0.6,
           padding: const EdgeInsets.all(0.0),
           margin: const EdgeInsets.all(0.0),
           decoration: BoxDecoration(
-            color: //Colors.red,
-                context.read<AppTheme>().cardBack.withOpacity(0.5),
+            color: context.read<AppTheme>().cardBack.withOpacity(0.5),
             boxShadow: [
               BoxShadow(
                 color: context.read<AppTheme>().cardBack.withOpacity(0.05),

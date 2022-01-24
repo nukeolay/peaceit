@@ -7,18 +7,31 @@ import 'cell.dart';
 class GameField with ChangeNotifier {
   List<Cell> _currentLevel = [];
   List<Cell> _originalLevel = [];
+  List<Cell> _originalSolutionCells = [];
+  List<Cell> _solutionCells = [];
   bool canTap = true;
   int movesNumber = 0;
   bool isAllBlack = false;
+  Cell? solutionCell;
 
   GameField();
 
-  void setLevel(List<Cell> level) {
+  void setLevel({
+    required List<Cell> level,
+    required List<Cell> solution,
+  }) {
     _currentLevel =
         [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
     _originalLevel =
         [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
+    _originalSolutionCells = [...solution]
+        .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
+        .toList();
+    _solutionCells = [...solution]
+        .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
+        .toList();
     movesNumber = 0;
+    solutionCell = null;
     isAllBlack = false;
   }
 
@@ -26,23 +39,35 @@ class GameField with ChangeNotifier {
 
   void resetField() {
     isAllBlack = false;
-    setLevel(_originalLevel);
+    setLevel(
+      level: _originalLevel,
+      solution: _originalSolutionCells,
+    );
+    solutionCell = null;
     notifyListeners();
+  }
+
+  void getSolution() {
+    if (_solutionCells.isNotEmpty) {
+      solutionCell = _solutionCells.removeAt(0);
+    } else {
+      solutionCell = null;
+    }
   }
 
   List<Cell> nearestCells(int x, int y) {
     List<Cell> result = [];
     try {
-      result.add(getCellByCoordinates(x, y - 1));
+      result.add(_getCellByCoordinates(x, y - 1));
     } catch (error) {}
     try {
-      result.add(getCellByCoordinates(x, y + 1));
+      result.add(_getCellByCoordinates(x, y + 1));
     } catch (error) {}
     try {
-      result.add(getCellByCoordinates(x - 1, y));
+      result.add(_getCellByCoordinates(x - 1, y));
     } catch (error) {}
     try {
-      result.add(getCellByCoordinates(x + 1, y));
+      result.add(_getCellByCoordinates(x + 1, y));
     } catch (error) {}
     return result;
   }
@@ -56,29 +81,33 @@ class GameField with ChangeNotifier {
   }
 
   void pressCell(int x, int y) {
-    if (canTap) {
-      getCellByCoordinates(x, y).switchIt();
-      List<Cell> cellsToSwitch = nearestCells(x, y);
-      movesNumber++;
-      for (Cell cell in cellsToSwitch) {
-        cell.switchIt();
-      }
-      notifyListeners();
-
-      canTap = false;
-      Timer(const Duration(milliseconds: 310), () {
-        canTap = true;
-        if (blackNumber() == _currentLevel.length) {
-          isAllBlack = true;
+    if (solutionCell == Cell(x, y) || solutionCell == null) {
+      if (canTap) {
+        _getCellByCoordinates(x, y).switchIt();
+        List<Cell> cellsToSwitch = nearestCells(x, y);
+        movesNumber++;
+        for (Cell cell in cellsToSwitch) {
+          cell.switchIt();
+        }
+        if (solutionCell != null) {
+          getSolution();
         }
         notifyListeners();
-      });
+        canTap = false;
+        Timer(const Duration(milliseconds: 310), () {
+          canTap = true;
+          if (blackNumber() == _currentLevel.length) {
+            isAllBlack = true;
+          }
+          notifyListeners();
+        });
+      }
     }
   }
 
   void singleFlip(int x, int y) {
     if (canTap) {
-      getCellByCoordinates(x, y).switchIt();
+      _getCellByCoordinates(x, y).switchIt();
       movesNumber++;
       notifyListeners();
       canTap = false;
@@ -92,7 +121,7 @@ class GameField with ChangeNotifier {
     }
   }
 
-  Cell getCellByCoordinates(int x, int y) {
+  Cell _getCellByCoordinates(int x, int y) {
     return _currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 }

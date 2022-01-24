@@ -31,6 +31,8 @@ class _CellWidgetState extends State<CellWidget> {
   bool _isInit = true;
   bool _canTap = true;
   bool _isSingleFlipOn = false;
+  bool _isFlash = false;
+  Cell? _solutionCell;
 
   @override
   void initState() {
@@ -48,25 +50,33 @@ class _CellWidgetState extends State<CellWidget> {
       _isInit = false;
     }
     _isSingleFlipOn = _game.isSingleFlipOn;
+    _solutionCell = _gameField.solutionCell;
+    if (widget._cell == _solutionCell) {
+      _isFlash = true;
+      _canTap = true;
+    } else {
+      _isFlash = false;
+      _canTap = false;
+    }
     super.didChangeDependencies();
   }
 
   void flipCard() {
-    print('flipCard');
     if (_canTap) {
       HapticFeedback.heavyImpact();
       _gameField.pressCell(widget._cell.x, widget._cell.y);
-      _controller.toggleCard();
+      // поворачиваем карту только если сейчас не режим решения
+      if (widget._cell == _solutionCell || _solutionCell == null) {
+        _controller.toggleCard();
+      }
     }
   }
 
   void flipThisCard() {
-    print('flip this');
     _controller.toggleCard();
   }
 
   void singleFlipCard() {
-    print('singleFlipCard');
     if (_canTap) {
       HapticFeedback.heavyImpact();
       _gameField.singleFlip(widget._cell.x, widget._cell.y);
@@ -104,9 +114,11 @@ class _CellWidgetState extends State<CellWidget> {
         filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
         child: Container(
           decoration: BoxDecoration(
-            color: _isBlack
-                ? context.read<AppTheme>().cardFront.withOpacity(0.5)
-                : context.read<AppTheme>().cardBack.withOpacity(0.5),
+            color: _isFlash
+                ? context.read<AppTheme>().accentColor.withOpacity(0.5)
+                : _isBlack
+                    ? context.read<AppTheme>().cardFront.withOpacity(0.5)
+                    : context.read<AppTheme>().cardBack.withOpacity(0.5),
             boxShadow: [
               BoxShadow(
                 color: context.read<AppTheme>().cardBack.withOpacity(0.05),

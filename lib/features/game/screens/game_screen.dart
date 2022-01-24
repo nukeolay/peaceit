@@ -78,10 +78,6 @@ class _GameScreenState extends State<GameScreen> {
                             bottomData: 'уровень',
                           ),
                           TopInfoElement(
-                            topData: '${game.singleFlips}',
-                            bottomData: 'одиночные\nповороты',
-                          ),
-                          TopInfoElement(
                             topData: '$movesNumber',
                             bottomData: 'количество\nходов',
                           ),
@@ -100,6 +96,27 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ],
                 ),
+                // Expanded(
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           TopInfoElement(
+                //             topData: '${game.singleFlips}',
+                //             bottomData: 'одиночные\nповороты',
+                //           ),
+                //           TopInfoElement(
+                //             topData: '${game.solutionsNumber}',
+                //             bottomData: 'решения',
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const Spacer(),
                 const BottomButtons(),
               ],

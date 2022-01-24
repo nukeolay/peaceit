@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:makeitdark/core/models/cell.dart';
 import 'package:makeitdark/core/models/game_field.dart';
 import 'package:makeitdark/core/models/level.dart';
 import 'package:makeitdark/core/models/user_data.dart';
@@ -11,7 +12,6 @@ class Game with ChangeNotifier {
   bool _isWin = false;
   bool _isInit = true;
   bool isSingleFlipOn = false;
-  bool isGameStarted = false;
 
   Game(this._levels);
 
@@ -23,7 +23,10 @@ class Game with ChangeNotifier {
     _gameField = gameField;
     _userData = userData;
     if (_isInit) {
-      _gameField.setLevel(currentLevel.cells);
+      _gameField.setLevel(
+        level: currentLevel.cells,
+        solution: currentLevel.solution,
+      );
       await _userData.loadUserData();
       _isInit = false;
     }
@@ -39,7 +42,7 @@ class Game with ChangeNotifier {
             if (rating() == 3) {
               _userData.singleFlipsIncrement();
             }
-            await _userData.saveUserData(); // TODO тут асинхронность
+            await _userData.saveUserData();
             break;
           case 2:
             if (rating() == 3) {
@@ -47,7 +50,7 @@ class Game with ChangeNotifier {
                   levelId: currentLevelId, rating: rating());
               _userData.singleFlipsIncrement();
             }
-            await _userData.saveUserData(); // TODO тут асинхронность
+            await _userData.saveUserData();
             break;
         }
       } else {
@@ -62,7 +65,7 @@ class Game with ChangeNotifier {
         if (rating() == 3) {
           _userData.singleFlipsIncrement();
         }
-        await _userData.saveUserData(); // TODO тут асинхронность
+        await _userData.saveUserData();
       }
     }
     notifyListeners();
@@ -78,7 +81,25 @@ class Game with ChangeNotifier {
     _userData.singleFlipsIncrement();
   }
 
-  void useSingeFlip() {
+  bool canUseSingleFlips() {
+    return singleFlips != 0 && gameField.solutionCell == null;
+  }
+
+  int get solutionsNumber => _userData.solutionsNumber;
+
+  void solutionsNumberDecrement() {
+    _userData.solutionsNumberDecrement();
+  }
+
+  void solutionsNumberIncrement() {
+    _userData.solutionsNumberIncrement();
+  }
+
+  bool canUseSolution() {
+    return solutionsNumber != 0 && gameField.solutionCell == null;
+  }
+
+  void useSingleFlip() {
     if (singleFlips > 0) {
       if (isSingleFlipOn) {
         isSingleFlipOn = false;
@@ -86,6 +107,13 @@ class Game with ChangeNotifier {
         isSingleFlipOn = true;
       }
       notifyListeners();
+    }
+  }
+
+  void useSolution() {
+    if (solutionsNumber > 0) {
+      restartLevel();
+      _gameField.getSolution();
     }
   }
 
@@ -107,14 +135,19 @@ class Game with ChangeNotifier {
 
   void nextLevel() {
     _isWin = false;
+    isSingleFlipOn = false;
     currentLevelNumber++;
-    _gameField.setLevel(currentLevel.cells);
+    _gameField.setLevel(
+      level: currentLevel.cells,
+      solution: currentLevel.solution,
+    );
     notifyListeners();
   }
 
   void restartLevel() {
     _isWin = false;
     _gameField.resetField();
+    isSingleFlipOn = false;
     notifyListeners();
   }
 
@@ -123,14 +156,20 @@ class Game with ChangeNotifier {
     currentLevelNumber = 0;
     _isWin = false;
     isSingleFlipOn = false;
-    isGameStarted = false;
     notifyListeners();
   }
 
   void setLevelById(String id) {
     _isWin = false;
     currentLevelNumber = levels.indexWhere((level) => level.id == id);
-    _gameField.setLevel(levels.firstWhere((level) => level.id == id).cells);
+    _gameField.setLevel(
+      level: getLevelById(id).cells,
+      solution: getLevelById(id).solution,
+    );
     notifyListeners();
+  }
+
+  Level getLevelById(String id) {
+    return levels.firstWhere((level) => level.id == id);
   }
 }

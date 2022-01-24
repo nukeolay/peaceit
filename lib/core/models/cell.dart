@@ -17,4 +17,15 @@ class Cell {
   String toString() {
     return 'Cell[x: $x, y: $y, isBlack: $isBlack]';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Cell &&
+          runtimeType == other.runtimeType &&
+          x == other.x &&
+          y == other.y;
+
+  @override
+  int get hashCode => (x + y).hashCode;
 }

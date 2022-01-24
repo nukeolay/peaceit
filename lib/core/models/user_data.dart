@@ -6,6 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserData with ChangeNotifier {
   late Map<String, CompletedLevel> completedLevels;
   late int _singleFlips;
+  late int _solutionsNumber;
+
+  static const int _initialSingleFlips = 2;
+  static const int _initialsolutionsNumber = 50;
 
   UserData();
 
@@ -42,19 +46,34 @@ class UserData with ChangeNotifier {
     saveUserData();
   }
 
+  // solutionsNumber methods
+  int get solutionsNumber => _solutionsNumber;
+
+  void solutionsNumberDecrement() {
+    _solutionsNumber--;
+    saveUserData();
+  }
+
+  void solutionsNumberIncrement() {
+    _solutionsNumber++;
+    saveUserData();
+  }
+
   // user data persistance
   Future<void> loadUserData() async {
-    completedLevels = {};
-    _singleFlips = 3;
+    // completedLevels = {};
+    // _singleFlips = 1;
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
     try {
       final tempUserData =
           UserData.fromJson(jsonDecode(_prefs.getString('userData')!));
       completedLevels = tempUserData.completedLevels;
       _singleFlips = tempUserData._singleFlips;
+      _solutionsNumber = tempUserData._solutionsNumber;
     } catch (error) {
       completedLevels = {};
-      _singleFlips = 3;
+      _singleFlips = _initialSingleFlips;
+      _solutionsNumber = _initialsolutionsNumber;
     }
   }
 
@@ -65,7 +84,8 @@ class UserData with ChangeNotifier {
 
   Future<void> removeData() async {
     completedLevels = {};
-    _singleFlips = 3;
+    _singleFlips = _initialSingleFlips;
+    _solutionsNumber = _initialsolutionsNumber;
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
     await _prefs.clear();
   }
@@ -73,11 +93,13 @@ class UserData with ChangeNotifier {
   UserData.fromJson(Map<String, dynamic> json)
       : completedLevels = (json['completedLevels'] as Map<String, dynamic>)
             .map((id, value) => MapEntry(id, CompletedLevel.fromJson(value))),
-        _singleFlips = json['singleFlips'] as int;
+        _singleFlips = json['singleFlips'] as int,
+        _solutionsNumber = json['solutionsNumber'] as int;
 
   Map<String, dynamic> toJson() => {
         'completedLevels': completedLevels,
         'singleFlips': _singleFlips,
+        'solutionsNumber': _solutionsNumber,
       };
 }
 
