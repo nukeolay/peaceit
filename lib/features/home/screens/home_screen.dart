@@ -1,11 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:makeitdark/core/models/app_theme.dart';
 import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/routes/routes.dart';
-import 'package:provider/provider.dart';
+import 'package:makeitdark/core/widgets/custom_text_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                HomeScreenButton(
+                CustomTextButton(
                   text: 'ИГРАТЬ',
                   function: () {
                     HapticFeedback.heavyImpact();
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 50),
-                HomeScreenButton(
+                CustomTextButton(
                   text: 'УРОВНИ',
                   function: () {
                     HapticFeedback.heavyImpact();
@@ -65,66 +65,24 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 50),
-                HomeScreenButton(
-                  text: 'ПРАВИЛА',
+                CustomTextButton(
+                  text: 'КАК ИГРАТЬ',
                   function: () {
-                    // HapticFeedback.heavyImpact();
-                    // Navigator.of(context).pushNamed(Routes.select_level_menu);
+                    HapticFeedback.heavyImpact();
+                    Navigator.of(context).pushNamed(Routes.howToPlay);
                   },
                 ),
+                // const SizedBox(height: 50),
+                // HomeScreenButton(
+                //   text: 'РЕДАКТОР',
+                //   function: () {
+                //     HapticFeedback.heavyImpact();
+                //     game.setLevelById('new');
+                //     Navigator.of(context).pushNamed(Routes.levelConstructor);
+                //   },
+                // ),
                 const Spacer(),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class HomeScreenButton extends StatelessWidget {
-  const HomeScreenButton({
-    required this.text,
-    required this.function,
-    Key? key,
-  }) : super(key: key);
-
-  final String text;
-  final Function function;
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
-          width: width * 0.6,
-          padding: const EdgeInsets.all(0.0),
-          margin: const EdgeInsets.all(0.0),
-          decoration: BoxDecoration(
-            color: context.read<AppTheme>().cardBack.withOpacity(0.5),
-            boxShadow: [
-              BoxShadow(
-                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: TextButton(
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: context.read<AppTheme>().background, fontSize: 26),
-            ),
-            onPressed: () => {function()},
-            style: ButtonStyle(
-              overlayColor: MaterialStateProperty.all(
-                  context.read<AppTheme>().accentColor),
-              backgroundColor: MaterialStateProperty.all(
-                Colors.transparent,
-              ),
             ),
           ),
         ),

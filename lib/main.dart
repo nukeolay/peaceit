@@ -5,7 +5,7 @@ import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/models/game_field.dart';
 import 'package:makeitdark/core/models/levels.dart';
 import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/screens/home_screen.dart';
+import 'package:makeitdark/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

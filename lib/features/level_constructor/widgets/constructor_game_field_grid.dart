@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/features/game/widgets/cell_widget.dart';
 import 'package:makeitdark/features/game/widgets/disable_multitouch.dart';
+import 'package:makeitdark/features/level_constructor/widgets/constructor_cell_widget.dart';
 
-class GameFieldGrid extends StatelessWidget {
-  const GameFieldGrid({
+class ConstructorGameFieldGrid extends StatelessWidget {
+  const ConstructorGameFieldGrid({
     Key? key,
     required this.cells,
+    required this.inputCells,
     required this.length,
     required this.cellWidth,
   }) : super(key: key);
 
   final List<Cell> cells;
+  final List<Cell> inputCells;
+
   final int length;
   final double cellWidth;
 
@@ -32,7 +35,7 @@ class GameFieldGrid extends StatelessWidget {
           child: SizedBox(
             width: cellWidth,
             height: cellWidth,
-            child: CellWidget(cells[index]),
+            child: ConstructorCellWidget(cells[index], inputCells),
           ),
         ),
       ),

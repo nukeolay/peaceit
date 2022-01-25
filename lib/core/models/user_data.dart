@@ -9,7 +9,7 @@ class UserData with ChangeNotifier {
   late int _solutionsNumber;
 
   static const int _initialSingleFlips = 2;
-  static const int _initialsolutionsNumber = 50;
+  static const int _initialsolutionsNumber = 2; // TODO заменить на 2
 
   UserData();
 

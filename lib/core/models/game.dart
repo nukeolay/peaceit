@@ -62,6 +62,10 @@ class Game with ChangeNotifier {
             rating: rating(),
           ),
         );
+        if ((currentLevelNumber + 1) != 0 &&
+            ((currentLevelNumber + 1) % 10 == 0)) {
+          _userData.solutionsNumberIncrement();
+        }
         if (rating() == 3) {
           _userData.singleFlipsIncrement();
         }
@@ -126,6 +130,8 @@ class Game with ChangeNotifier {
   int get levelsNumber => _levels.length;
 
   bool get isWin => _isWin;
+
+  bool get isGameFinished => levelsNumber == currentLevelNumber + 1;
 
   int rating() {
     if (_gameField.movesNumber <= currentLevel.bestResult) return 3;

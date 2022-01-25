@@ -68,8 +68,14 @@ class LevelCompletedScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         HapticFeedback.heavyImpact();
-                        game.nextLevel();
-                        Navigator.of(context).pushReplacementNamed(Routes.game);
+                        if (game.isGameFinished) {
+                          Navigator.of(context)
+                              .pushReplacementNamed(Routes.gameFinished);
+                        } else {
+                          game.nextLevel();
+                          Navigator.of(context)
+                              .pushReplacementNamed(Routes.game);
+                        }
                       },
                       icon: const Icon(
                         Icons.arrow_forward_ios_rounded,

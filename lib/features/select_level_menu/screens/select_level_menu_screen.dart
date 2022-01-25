@@ -130,7 +130,7 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                             ? 0
                             : userData.completedLevels[levelId]!.rating;
                     bool canBePlayed =
-                        userData.completedLevels.length + 1 >= index;
+                        userData.completedLevels.length + 1 >= index; // TODO заменить 50 на 1
                     return Center(
                       child: Container(
                         padding: const EdgeInsets.all(8.0),
