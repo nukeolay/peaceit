@@ -47,18 +47,18 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                CustomTextButton(
-                  text: 'ИГРАТЬ',
-                  function: () {
-                    HapticFeedback.heavyImpact();
-                    int lastLevelIndex = game.userData.completedLevels.length;
-                    game.setLevelById(game.levels[lastLevelIndex].id);
-                    Navigator.of(context).pushReplacementNamed(Routes.game);
-                  },
-                ),
+                // CustomTextButton(
+                //   text: 'ИГРАТЬ',
+                //   function: () {
+                //     HapticFeedback.heavyImpact();
+                //     int lastLevelIndex = game.userData.completedLevels.length;
+                //     game.setLevelById(game.levels[lastLevelIndex].id);
+                //     Navigator.of(context).pushReplacementNamed(Routes.game);
+                //   },
+                // ),
                 const SizedBox(height: 50),
                 CustomTextButton(
-                  text: 'УРОВНИ',
+                  text: 'Играть',
                   function: () {
                     HapticFeedback.heavyImpact();
                     Navigator.of(context).pushNamed(Routes.selectLevelMenu);
@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 50),
                 CustomTextButton(
-                  text: 'КАК ИГРАТЬ',
+                  text: 'Правила',
                   function: () {
                     HapticFeedback.heavyImpact();
                     Navigator.of(context).pushNamed(Routes.howToPlay);
