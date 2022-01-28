@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:makeitdark/core/constants/initial_game_settings.dart';
+import 'package:makeitdark/core/models/game.dart';
+import 'package:makeitdark/core/models/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData with ChangeNotifier {
@@ -8,22 +11,9 @@ class UserData with ChangeNotifier {
   late int _singleFlips;
   late int _solutionsNumber;
 
-  static const int _initialSingleFlips = 2;
-  static const int _initialsolutionsNumber = 2; // TODO заменить на 2
-
   UserData();
 
   // completedLevels methods
-  int getLevelRatingById(String levelId) {
-    return completedLevels[levelId]!.rating;
-  }
-
-  void setLevelRatingById({
-    required String levelId,
-    required int rating,
-  }) {
-    completedLevels[levelId]!.rating = rating;
-  }
 
   bool isLevelCompleted(String levelId) {
     return completedLevels.keys.contains(levelId);
@@ -33,36 +23,13 @@ class UserData with ChangeNotifier {
     completedLevels[completedLevel.id] = completedLevel;
   }
 
-  // singleFlips methods
+  // help methods
   int get singleFlips => _singleFlips;
 
-  void singleFlipsDecrement() {
-    _singleFlips--;
-    saveUserData();
-  }
-
-  void singleFlipsIncrement() {
-    _singleFlips++;
-    saveUserData();
-  }
-
-  // solutionsNumber methods
   int get solutionsNumber => _solutionsNumber;
-
-  void solutionsNumberDecrement() {
-    _solutionsNumber--;
-    saveUserData();
-  }
-
-  void solutionsNumberIncrement() {
-    _solutionsNumber++;
-    saveUserData();
-  }
 
   // user data persistance
   Future<void> loadUserData() async {
-    // completedLevels = {};
-    // _singleFlips = 1;
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
     try {
       final tempUserData =
@@ -72,22 +39,21 @@ class UserData with ChangeNotifier {
       _solutionsNumber = tempUserData._solutionsNumber;
     } catch (error) {
       completedLevels = {};
-      _singleFlips = _initialSingleFlips;
-      _solutionsNumber = _initialsolutionsNumber;
+      _singleFlips = InitialGameSettings.singleFlips;
+      _solutionsNumber = InitialGameSettings.solutionsNumber;
     }
   }
 
-  Future<void> saveUserData() async {
+  Future<void> saveUserData(Game game) async {
     final SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _singleFlips = game.singleFlips;
+    _solutionsNumber = game.solutionsNumber;
+    List<Level> _levels = game.allLevels;
+    for (Level level in _levels) {
+      completedLevels[level.id] =
+          CompletedLevel(id: level.id, rating: level.rating);
+    }
     await _prefs.setString('userData', jsonEncode(this));
-  }
-
-  Future<void> removeData() async {
-    completedLevels = {};
-    _singleFlips = _initialSingleFlips;
-    _solutionsNumber = _initialsolutionsNumber;
-    final SharedPreferences _prefs = await SharedPreferences.getInstance();
-    await _prefs.clear();
   }
 
   UserData.fromJson(Map<String, dynamic> json)
@@ -105,28 +71,24 @@ class UserData with ChangeNotifier {
 
 class CompletedLevel {
   String id;
-  int moves;
   int rating;
 
   CompletedLevel({
     required this.id,
-    required this.moves,
     required this.rating,
   });
 
   CompletedLevel.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,
-        moves = json['moves'] as int,
         rating = json['rating'] as int;
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'moves': moves,
         'rating': rating,
       };
 
   @override
   String toString() {
-    return 'ID: $id, MOVES: $moves, RATING: $rating';
+    return 'ID: $id, RATING: $rating';
   }
 }

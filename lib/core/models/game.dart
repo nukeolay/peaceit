@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-// import 'package:makeitdark/core/models/cell.dart';
+import 'package:makeitdark/core/constants/initial_game_settings.dart';
 import 'package:makeitdark/core/models/game_field.dart';
 import 'package:makeitdark/core/models/level.dart';
+import 'package:makeitdark/core/models/levels.dart';
 import 'package:makeitdark/core/models/user_data.dart';
 
 class Game with ChangeNotifier {
-  final List<Level> _levels;
+  Levels _levels;
+
   late GameField _gameField;
   late UserData _userData;
   int currentLevelNumber = 0;
   bool _isWin = false;
   bool _isInit = true;
   bool isSingleFlipOn = false;
+  late int _singleFlips;
+  late int _solutionsNumber;
 
   Game(this._levels);
 
   GameField get gameField => _gameField;
 
-  UserData get userData => _userData;
-
   void initGame(GameField gameField, UserData userData) async {
+    // TODO может быть сюда не передавать UserData, а просто вызывать его тут внутри
     _gameField = gameField;
     _userData = userData;
     if (_isInit) {
@@ -27,80 +30,153 @@ class Game with ChangeNotifier {
         level: currentLevel.cells,
         solution: currentLevel.solution,
       );
-      await _userData.loadUserData();
+      await _loadUserData();
       _isInit = false;
     }
     _isWin = _gameField.isAllBlack;
     if (_isWin) {
-      if (_userData.isLevelCompleted(currentLevelId)) {
-        // если этот уровень уже был пройден
-        int _currentLevelRating = _userData.getLevelRatingById(currentLevelId);
-        switch (_currentLevelRating) {
-          case 1:
-            _userData.setLevelRatingById(
-                levelId: currentLevelId, rating: rating());
-            if (rating() == 3) {
-              _userData.singleFlipsIncrement();
-            }
-            await _userData.saveUserData();
-            break;
-          case 2:
-            if (rating() == 3) {
-              _userData.setLevelRatingById(
-                  levelId: currentLevelId, rating: rating());
-              _userData.singleFlipsIncrement();
-            }
-            await _userData.saveUserData();
-            break;
+      int newRating = rating();
+
+      if (currentLevel.rating < newRating) {
+        if (currentLevel.rating == 0) {
+          // уровень до этого еще не проходили
+          currentLevel.rating = newRating;
+          String _chapterId = _levels.chapterIdByLevelId(currentLevelId);
+          if (chapterByChapterId(_chapterId).completedRatio == 1) {
+            // пройдены все уровни в главе
+            solutionsNumberIncrement();
+          }
         }
-      } else {
-        // если этот уровень не был пройден ранее
-        _userData.setCompletedLevel(
-          CompletedLevel(
-            id: currentLevelId,
-            moves: _gameField.movesNumber,
-            rating: rating(),
-          ),
-        );
-        if ((currentLevelNumber + 1) != 0 &&
-            ((currentLevelNumber + 1) % 10 == 0)) {
-          _userData.solutionsNumberIncrement();
+        currentLevel.rating = newRating;
+        if (newRating == 3) {
+          singleFlipsIncrement();
         }
-        if (rating() == 3) {
-          _userData.singleFlipsIncrement();
-        }
-        await _userData.saveUserData();
+        await _saveUserData(this);
       }
     }
     notifyListeners();
   }
 
-  int get singleFlips => _userData.singleFlips;
+  // levels and chapters
+
+  List<Level> get allLevels => _levels.allLevels;
+
+  List<Chapter> get chapters => _levels.chapters();
+
+  int levelRatingById(String levelId) {
+    return _levels.levelById(levelId).rating;
+  }
+
+  bool canBeLevelPlayed(String levelId) {
+    final String chapterId = _levels.chapterIdByLevelId(levelId);
+    final Chapter chapter = _levels.chapterById(chapterId);
+    final int index = chapter.levelIndexById(levelId);
+    return chapter.completedLevelsNumber + 1 >= index;
+  }
+
+  bool canBeChapterPlayed(String chapterId) {
+    try {
+      int _previousChapterIndex =
+          chapters.indexWhere((chapter) => chapter.id == chapterId) - 1;
+      return chapters[_previousChapterIndex].completedRatio > 0.7;
+    } catch (error) {
+      return true;
+    }
+  }
+
+  String nextLevelIdByPreviousId(String levelId) {
+    int _levelIndex = levelIndexById(levelId);
+    final String chapterId = _levels.chapterIdByLevelId(levelId);
+    final Chapter chapter = _levels.chapterById(chapterId);
+    return chapter.levels[_levelIndex + 1].id;
+  }
+
+  int levelIndexById(String levelId) {
+    String _chapterId = levelById(levelId).chapterId;
+    final Chapter _chapter = _levels.chapterById(_chapterId);
+    return _chapter.levelIndexById(levelId);
+  }
+
+  List<Level> levelsByChapterId(String chapterId) {
+    return _levels.levelsByChapterId(chapterId);
+  }
+
+  Chapter chapterByChapterId(String chapterId) {
+    return chapters.firstWhere((chapter) => chapter.id == chapterId);
+  }
+
+  Level get currentLevel => allLevels[currentLevelNumber];
+
+  String get currentLevelId => allLevels[currentLevelNumber].id;
+
+  int get allLevelsQuantity => allLevels.length;
+
+  void restartLevel() {
+    _isWin = false;
+    _gameField.resetField();
+    isSingleFlipOn = false;
+    notifyListeners();
+  }
+
+  void setLevelById(String levelId) {
+    _isWin = false;
+    isSingleFlipOn = false;
+    currentLevelNumber = allLevels.indexWhere((level) =>
+        level.id ==
+        levelId); // посмотреть где и для чего используется, передать без него
+    _gameField.setLevel(
+      level: levelById(levelId).cells,
+      solution: levelById(levelId).solution,
+    );
+  }
+
+  Level levelById(String levelId) {
+    return allLevels.firstWhere((level) => level.id == levelId);
+  }
+
+  // user data
+
+  Future<void> _saveUserData(Game game) async {
+    await _userData.saveUserData(this);
+  }
+
+  Future<void> _loadUserData() async {
+    await _userData.loadUserData();
+    _singleFlips = _userData.singleFlips;
+    _solutionsNumber = _userData.solutionsNumber;
+    // загружаю информацию о пройденных уровнях (рейтинг)
+    for (CompletedLevel completedLevel in _userData.completedLevels.values) {
+      _levels.allLevels
+          .firstWhere((level) => level.id == completedLevel.id)
+          .rating = completedLevel.rating;
+    }
+  }
+
+  Future<void> removeData() async {
+    _levels = Levels();
+    _singleFlips = InitialGameSettings.singleFlips;
+    _solutionsNumber = InitialGameSettings.solutionsNumber;
+    currentLevelNumber = 0;
+    isSingleFlipOn = false;
+    _isWin = false;
+    await _saveUserData(this);
+    notifyListeners();
+  }
+
+  // single flips
+
+  int get singleFlips => _singleFlips;
 
   void singleFlipsDecrement() {
-    _userData.singleFlipsDecrement();
+    _singleFlips--;
   }
 
   void singleFlipsIncrement() {
-    _userData.singleFlipsIncrement();
+    _singleFlips++;
   }
 
   bool canUseSingleFlips() {
     return singleFlips != 0 && gameField.solutionCell == null;
-  }
-
-  int get solutionsNumber => _userData.solutionsNumber;
-
-  void solutionsNumberDecrement() {
-    _userData.solutionsNumberDecrement();
-  }
-
-  void solutionsNumberIncrement() {
-    _userData.solutionsNumberIncrement();
-  }
-
-  bool canUseSolution() {
-    return solutionsNumber != 0 && gameField.solutionCell == null;
   }
 
   void useSingleFlip() {
@@ -114,6 +190,22 @@ class Game with ChangeNotifier {
     }
   }
 
+  // solutions
+
+  int get solutionsNumber => _solutionsNumber;
+
+  void solutionsNumberDecrement() {
+    _solutionsNumber--;
+  }
+
+  void solutionsNumberIncrement() {
+    _solutionsNumber++;
+  }
+
+  bool canUseSolution() {
+    return solutionsNumber != 0 && gameField.solutionCell == null;
+  }
+
   void useSolution() {
     if (solutionsNumber > 0) {
       restartLevel();
@@ -121,61 +213,16 @@ class Game with ChangeNotifier {
     }
   }
 
-  Level get currentLevel => _levels[currentLevelNumber];
-
-  String get currentLevelId => _levels[currentLevelNumber].id;
-
-  List<Level> get levels => _levels;
-
-  int get levelsNumber => _levels.length;
+  // play
 
   bool get isWin => _isWin;
 
-  bool get isGameFinished => levelsNumber == currentLevelNumber + 1;
+  bool get isGameFinished => allLevelsQuantity == currentLevelNumber + 1;
 
   int rating() {
+    // TODO сделать ById - ById уже есть. Этот метод используется для расчета значения от количества ходов. Передавать сюда Id и количество ходов. Или оставить все без изменения
     if (_gameField.movesNumber <= currentLevel.bestResult) return 3;
     if (_gameField.movesNumber <= currentLevel.goodResult) return 2;
     return 1;
-  }
-
-  void nextLevel() {
-    _isWin = false;
-    isSingleFlipOn = false;
-    currentLevelNumber++;
-    _gameField.setLevel(
-      level: currentLevel.cells,
-      solution: currentLevel.solution,
-    );
-    notifyListeners();
-  }
-
-  void restartLevel() {
-    _isWin = false;
-    _gameField.resetField();
-    isSingleFlipOn = false;
-    notifyListeners();
-  }
-
-  void removeData() {
-    _userData.removeData();
-    currentLevelNumber = 0;
-    _isWin = false;
-    isSingleFlipOn = false;
-    notifyListeners();
-  }
-
-  void setLevelById(String id) {
-    _isWin = false;
-    currentLevelNumber = levels.indexWhere((level) => level.id == id);
-    _gameField.setLevel(
-      level: getLevelById(id).cells,
-      solution: getLevelById(id).solution,
-    );
-    notifyListeners();
-  }
-
-  Level getLevelById(String id) {
-    return levels.firstWhere((level) => level.id == id);
   }
 }

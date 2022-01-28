@@ -36,7 +36,8 @@ class _BottomButtonsState extends State<BottomButtons> {
         leftButtontext: 'Выйти',
         leftButtonFunction: () {
           HapticFeedback.heavyImpact();
-          Navigator.of(context).pushReplacementNamed(Routes.home);
+          Navigator.popUntil(
+              context, ModalRoute.withName(Routes.selectLevelMenu));
         },
         rightButtontext: 'Продолжить',
         rightButtonFunction: () {
@@ -131,24 +132,18 @@ class _BottomButtonsState extends State<BottomButtons> {
                                 _game.useSingleFlip();
                               }
                             : null,
-                        icon: _game.isSingleFlipOn
-                            ? CircleAvatar(
-                                child: Icon(
-                                  Icons.flip,
-                                  size: 30,
-                                  color: context.read<AppTheme>().cardFront,
-                                ),
-                              )
-                            : Icon(
-                                Icons.flip,
-                                size: 30,
-                                color: _game.canUseSingleFlips()
-                                    ? context.read<AppTheme>().buttonTextColor
-                                    : context
-                                        .read<AppTheme>()
-                                        .buttonTextColor
-                                        .withOpacity(0.2),
-                              ),
+                        icon: Icon(
+                          Icons.flip,
+                          size: 30,
+                          color: _game.canUseSingleFlips()
+                              ? _game.isSingleFlipOn
+                                  ? context.read<AppTheme>().accentColor
+                                  : context.read<AppTheme>().buttonTextColor
+                              : context
+                                  .read<AppTheme>()
+                                  .buttonTextColor
+                                  .withOpacity(0.2),
+                        ),
                       ),
                     ],
                   ),

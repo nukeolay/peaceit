@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +10,22 @@ import 'package:makeitdark/core/models/game_field.dart';
 import 'package:makeitdark/core/routes/routes.dart';
 import 'package:makeitdark/core/utils/utils.dart';
 
-class LevelCompletedScreen extends StatelessWidget {
+class LevelCompletedScreen extends StatefulWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LevelCompletedScreen> createState() => _LevelCompletedScreenState();
+}
+
+class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
+  late String _levelId;
+
+  @override
+  void didChangeDependencies() {
+    _levelId = ModalRoute.of(context)!.settings.arguments as String;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     Game game = context.read<Game>();
@@ -46,15 +62,49 @@ class LevelCompletedScreen extends StatelessWidget {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
+                if (rating != 3)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: context
+                              .read<AppTheme>()
+                              .cardBack
+                              .withOpacity(0.1),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context
+                                  .read<AppTheme>()
+                                  .cardBack
+                                  .withOpacity(0.05),
+                              blurRadius: 6.0,
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'чтобы получить 3 звезды,\nпройди этот уровень за ${game.levelById(_levelId).bestResult} ${Utils.wordEnding(game.levelById(_levelId).bestResult)}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 30),
+                // TODO проверять, если закончено более 70% в глаые, писать, что открыта новая глава
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
                       onPressed: () {
                         HapticFeedback.heavyImpact();
-                        game.restartLevel();
-                        Navigator.of(context).pushReplacementNamed(Routes.game);
+                        Navigator.of(context).pushReplacementNamed(Routes.game,
+                            arguments: _levelId);
                       },
                       icon: const Icon(
                         Icons.replay_rounded,
@@ -72,9 +122,16 @@ class LevelCompletedScreen extends StatelessWidget {
                           Navigator.of(context)
                               .pushReplacementNamed(Routes.gameFinished);
                         } else {
-                          game.nextLevel();
-                          Navigator.of(context)
-                              .pushReplacementNamed(Routes.game);
+                          try {
+                            String _nextLevelId =
+                                game.nextLevelIdByPreviousId(_levelId);
+                            Navigator.of(context).pushReplacementNamed(
+                                Routes.game,
+                                arguments: _nextLevelId);
+                          } catch (error) {
+                            Navigator.of(context)
+                                .pushReplacementNamed(Routes.selectChapterMenu);
+                          }
                         }
                       },
                       icon: const Icon(

@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
         ChangeNotifierProxyProvider2<GameField, UserData, Game>(
-          create: (context) => Game(Levels.allLevels),
+          create: (context) => Game(Levels()),
           update: (context, gameField, userData, previousGame) =>
               previousGame!..initGame(gameField, userData),
           lazy: false,

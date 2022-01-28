@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/models/level.dart';
 import 'package:makeitdark/core/widgets/custom_alert_dialog.dart';
+import 'package:makeitdark/features/select_level_menu/widgets/menu_chapter_card.dart';
 import 'package:provider/provider.dart';
 
 import 'package:makeitdark/core/models/app_theme.dart';
 import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/features/select_level_menu/widgets/menu_level_card.dart';
 
-class SelectLevelMenuScreen extends StatefulWidget {
-  const SelectLevelMenuScreen({Key? key}) : super(key: key);
+class SelectChapterMenuScreen extends StatefulWidget {
+  const SelectChapterMenuScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelectLevelMenuScreen> createState() => _SelectLevelMenuScreenState();
+  State<SelectChapterMenuScreen> createState() =>
+      _SelectChapterMenuScreenState();
 }
 
-class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
+class _SelectChapterMenuScreenState extends State<SelectChapterMenuScreen> {
   late Game _game;
-  late String _chapterId;
 
   @override
   void didChangeDependencies() {
     _game = Provider.of<Game>(context);
-    _chapterId = ModalRoute.of(context)!.settings.arguments as String;
     super.didChangeDependencies();
   }
 
@@ -52,7 +50,7 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Level> _levels = _game.levelsByChapterId(_chapterId);
+    // UserData userData = _game.userData;
 
     return Scaffold(
       body: Container(
@@ -89,7 +87,7 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'ВЫБОР УРОВНЯ',
+                        'ВЫБОР ГЛАВЫ',
                         style: TextStyle(
                           color: context.read<AppTheme>().buttonTextColor,
                           fontSize: 20,
@@ -98,7 +96,6 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                       ),
                     ),
                     Padding(
-                      // TODO убрать эту кнопку когда сделаю меню выбора глав, оставить только н аэкране с главами
                       padding: const EdgeInsets.all(8.0),
                       child: IconButton(
                         icon: Icon(
@@ -116,7 +113,7 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                 ),
                 GridView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: _levels.length,
+                  itemCount: _game.chapters.length,
                   shrinkWrap: true,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -126,9 +123,8 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                   ),
                   padding: const EdgeInsets.all(0.0),
                   itemBuilder: (context, index) {
-                    String levelId = _levels[index].id;
-                    int rating = _game.levelRatingById(levelId);
-                    bool canBePlayed = _game.canBeLevelPlayed(levelId);
+                    String chapterId = _game.chapters[index].id;
+                    bool canBePlayed = _game.canBeChapterPlayed(chapterId);
                     return Center(
                       child: Container(
                         padding: const EdgeInsets.all(8.0),
@@ -136,14 +132,19 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                           onTap: canBePlayed
                               ? () {
                                   HapticFeedback.heavyImpact();
-                                  Navigator.of(context).pushNamed(Routes.game,
-                                      arguments: levelId);
+                                  Navigator.of(context).pushNamed(
+                                      Routes.selectLevelMenu,
+                                      arguments: chapterId);
                                 }
                               : null,
-                          child: MenuLevelCard(
-                            cells: _levels[index].cells,
-                            levelNumber: index + 1,
-                            rating: rating,
+                          child: MenuChapterCard(
+                            chapterId: chapterId,
+                            completedLevelsInChapter: _game
+                                .chapterByChapterId(chapterId)
+                                .completedLevelsNumber,
+                            levelsInChapter: _game
+                                .chapterByChapterId(chapterId)
+                                .levelsNumber,
                             canBePlayed: canBePlayed,
                           ),
                         ),

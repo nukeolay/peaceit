@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:makeitdark/core/models/cell.dart';
 import 'package:makeitdark/core/models/game.dart';
 import 'package:makeitdark/core/models/game_field.dart';
@@ -8,7 +10,6 @@ import 'package:makeitdark/core/routes/routes.dart';
 import 'package:makeitdark/features/game/widgets/bottom_buttons.dart';
 import 'package:makeitdark/features/game/widgets/game_field_grid.dart';
 import 'package:makeitdark/features/game/widgets/top_info_element.dart';
-import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -18,26 +19,34 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  late Game game;
-  late GameField gameField;
-  late List<Cell> cells;
-  late int currentLevel;
-  late int movesNumber;
-  late int length;
+  late Game _game;
+  late String _levelId;
+  late int _levelIndex;
+  late GameField _gameField;
+  late List<Cell> _cells;
+  late int _movesNumber;
+  late int _length;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    game = Provider.of<Game>(context);
-    gameField = game.gameField;
-    cells = gameField.currentLevel;
-    currentLevel = game.currentLevelNumber;
-    movesNumber = gameField.movesNumber;
-    length = sqrt(cells.length).toInt();
+    _levelId = ModalRoute.of(context)!.settings.arguments as String;
+    _game = Provider.of<Game>(context);
+    if (_isInit) {
+      _game.setLevelById(_levelId);
+      _isInit = false;
+    }
+    _gameField = _game.gameField;
+    _cells = _gameField.currentLevel;
+    _levelIndex = _game.levelIndexById(_levelId);
+    _movesNumber = _gameField.movesNumber;
+    _length = sqrt(_cells.length).toInt();
 
     bool isWin = Provider.of<Game>(context).isWin;
     if (isWin) {
       Future(() {
-        Navigator.of(context).pushReplacementNamed(Routes.levelCompleted);
+        Navigator.of(context)
+            .pushReplacementNamed(Routes.levelCompleted, arguments: _levelId);
       });
     }
     super.didChangeDependencies();
@@ -46,7 +55,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double cellWidth = width / length - 10;
+    double cellWidth = width / _length - 10;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -74,11 +83,11 @@ class _GameScreenState extends State<GameScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TopInfoElement(
-                            topData: '${currentLevel + 1}',
+                            topData: '${_levelIndex + 1}',
                             bottomData: 'уровень',
                           ),
                           TopInfoElement(
-                            topData: '$movesNumber',
+                            topData: '$_movesNumber',
                             bottomData: 'количество\nходов',
                           ),
                         ],
@@ -90,33 +99,12 @@ class _GameScreenState extends State<GameScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GameFieldGrid(
-                      cells: cells,
-                      length: length,
+                      cells: _cells,
+                      length: _length,
                       cellWidth: cellWidth,
                     ),
                   ],
                 ),
-                // Expanded(
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           TopInfoElement(
-                //             topData: '${game.singleFlips}',
-                //             bottomData: 'одиночные\nповороты',
-                //           ),
-                //           TopInfoElement(
-                //             topData: '${game.solutionsNumber}',
-                //             bottomData: 'решения',
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 const Spacer(),
                 const BottomButtons(),
               ],

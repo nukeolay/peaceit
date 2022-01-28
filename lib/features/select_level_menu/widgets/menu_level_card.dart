@@ -74,29 +74,33 @@ class MenuLevelCard extends StatelessWidget {
                         ),
                       ),
                     )
-                  : Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
+                  : LayoutBuilder(
+                    builder: (context, constraints) => Container(
+                      constraints: BoxConstraints(
+                        maxHeight: constraints.maxWidth,
+                        maxWidth: constraints.maxWidth,
+                      ),
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: context
+                            .read<AppTheme>()
+                            .background
+                            .withOpacity(0.5),
+                      ),
+                      child: Text(
+                        '?',
+                        style: TextStyle(
                           color: context
                               .read<AppTheme>()
-                              .background
-                              .withOpacity(0.5),
-                        ),
-                        child: Text(
-                          '?',
-                          style: TextStyle(
-                            color: context
-                                .read<AppTheme>()
-                                .buttonTextColor
-                                .withOpacity(0.8),
-                            fontSize: 30,
-                          ),
+                              .buttonTextColor
+                              .withOpacity(0.8),
+                          fontSize: 30,
                         ),
                       ),
                     ),
+                  ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
