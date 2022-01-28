@@ -1,4 +1,4 @@
-import 'package:makeitdark/core/models/cell.dart';
+import 'package:darkit/core/models/cell.dart';
 
 class Level {
   String id;

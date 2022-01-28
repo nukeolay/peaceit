@@ -1,4 +1,4 @@
-package com.qumyz.makeitdark
+package com.qumyz.darkit
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:makeitdark/features/game/screens/game_finished_screen.dart';
-import 'package:makeitdark/features/game/screens/game_screen.dart';
-import 'package:makeitdark/features/how_to_play/screens/how_to_play_screen.dart';
-import 'package:makeitdark/features/level_constructor/screens/level_constructor_screen.dart';
-import 'package:makeitdark/features/select_level_menu/screens/select_chapter_menu_screen.dart';
-import 'package:makeitdark/features/select_level_menu/screens/select_level_menu_screen.dart';
-import 'package:makeitdark/features/home/screens/home_screen.dart';
-import 'package:makeitdark/features/game/screens/level_completed_screen.dart';
+import 'package:darkit/features/game/screens/game_finished_screen.dart';
+import 'package:darkit/features/game/screens/game_screen.dart';
+import 'package:darkit/features/how_to_play/screens/how_to_play_screen.dart';
+import 'package:darkit/features/level_constructor/screens/level_constructor_screen.dart';
+import 'package:darkit/features/select_level_menu/screens/select_chapter_menu_screen.dart';
+import 'package:darkit/features/select_level_menu/screens/select_level_menu_screen.dart';
+import 'package:darkit/features/home/screens/home_screen.dart';
+import 'package:darkit/features/game/screens/level_completed_screen.dart';
 
 class Routes {
   static const String home = '/home-screen';

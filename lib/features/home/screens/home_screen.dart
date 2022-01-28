@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/core/widgets/custom_text_button.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/core/widgets/custom_text_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                     width: width,
                     child: FittedBox(
                       child: Text(
-                        '[make it dark]',
+                        '[dark it]',
                         style: TextStyle(
                           color: context
                               .read<AppTheme>()

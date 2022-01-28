@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/models/level.dart';
-import 'package:makeitdark/core/widgets/custom_alert_dialog.dart';
+import 'package:darkit/core/models/level.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/features/select_level_menu/widgets/menu_level_card.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/features/select_level_menu/widgets/menu_level_card.dart';
 
 class SelectLevelMenuScreen extends StatefulWidget {
   const SelectLevelMenuScreen({Key? key}) : super(key: key);
@@ -25,29 +24,6 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
     _game = Provider.of<Game>(context);
     _chapterId = ModalRoute.of(context)!.settings.arguments as String;
     super.didChangeDependencies();
-  }
-
-  void _showRemoveDataDialog() {
-    double width = MediaQuery.of(context).size.width;
-    showDialog(
-      context: context,
-      builder: (context) => CustomAlertDialog(
-        height: width / 2,
-        width: width / 1.1,
-        text: 'Сбросить данные?\nВсе уровни нужно будет проходить заново.',
-        leftButtontext: 'Сбросить',
-        leftButtonFunction: () {
-          HapticFeedback.heavyImpact();
-          _game.removeData();
-          Navigator.of(context).pop();
-        },
-        rightButtontext: 'Отмена',
-        rightButtonFunction: () {
-          HapticFeedback.heavyImpact();
-          Navigator.of(context).pop();
-        },
-      ),
-    );
   }
 
   @override
@@ -97,19 +73,14 @@ class _SelectLevelMenuScreenState extends State<SelectLevelMenuScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Padding(
-                      // TODO убрать эту кнопку когда сделаю меню выбора глав, оставить только н аэкране с главами
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: IconButton(
                         icon: Icon(
                           Icons.delete_forever_rounded,
-                          color: context.read<AppTheme>().buttonTextColor,
+                          color: Colors.transparent,
                         ),
-                        tooltip: 'сбросить данные',
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          _showRemoveDataDialog();
-                        },
+                        onPressed: null,
                       ),
                     ),
                   ],

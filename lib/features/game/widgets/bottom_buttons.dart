@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/core/widgets/custom_alert_dialog.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/core/widgets/custom_alert_dialog.dart';
 
 class BottomButtons extends StatefulWidget {
   const BottomButtons({Key? key}) : super(key: key);

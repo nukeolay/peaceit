@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/features/game/widgets/cell_widget.dart';
-import 'package:makeitdark/features/game/widgets/disable_multitouch.dart';
+import 'package:darkit/core/models/cell.dart';
+import 'package:darkit/features/game/widgets/cell_widget.dart';
+import 'package:darkit/features/game/widgets/disable_multitouch.dart';
 
 class GameFieldGrid extends StatelessWidget {
   const GameFieldGrid({

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/widgets/custom_alert_dialog.dart';
-import 'package:makeitdark/features/select_level_menu/widgets/menu_chapter_card.dart';
+import 'package:darkit/core/widgets/custom_alert_dialog.dart';
+import 'package:darkit/features/select_level_menu/widgets/menu_chapter_card.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/routes/routes.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/routes/routes.dart';
 
 class SelectChapterMenuScreen extends StatefulWidget {
   const SelectChapterMenuScreen({Key? key}) : super(key: key);

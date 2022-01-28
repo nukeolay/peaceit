@@ -1,3 +1,3 @@
-# makeitdark
+# darkit
 
 simple puzzle game

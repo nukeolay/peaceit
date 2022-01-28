@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/core/widgets/custom_text_button.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/core/widgets/custom_text_button.dart';
 
 class GameFinishedScreen extends StatelessWidget {
   const GameFinishedScreen({Key? key}) : super(key: key);

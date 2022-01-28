@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/models/game_field.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/cell.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/models/game_field.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';

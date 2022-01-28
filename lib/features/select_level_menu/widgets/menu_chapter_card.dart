@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
+import 'package:darkit/core/models/app_theme.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
@@ -100,7 +100,7 @@ class MenuChapterCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                   child: LinearProgressIndicator(
                     value: completedLevelsInChapter / levelsInChapter,
-                    color: context.read<AppTheme>().cardFront,
+                    color: context.read<AppTheme>().accentColor,
                     backgroundColor:
                         context.read<AppTheme>().cardFront.withOpacity(0.3),
                   ),

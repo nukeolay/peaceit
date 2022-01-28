@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:makeitdark/core/constants/initial_game_settings.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/models/level.dart';
+import 'package:darkit/core/constants/initial_game_settings.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/models/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData with ChangeNotifier {

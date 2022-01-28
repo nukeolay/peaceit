@@ -1,11 +1,11 @@
-import 'package:makeitdark/core/models/user_data.dart';
-import 'package:makeitdark/core/routes/custom_route.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/models/game_field.dart';
-import 'package:makeitdark/core/models/levels.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/features/home/screens/home_screen.dart';
+import 'package:darkit/core/models/user_data.dart';
+import 'package:darkit/core/routes/custom_route.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/models/game_field.dart';
+import 'package:darkit/core/models/levels.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -48,20 +48,20 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
       ],
-      child: const MakeItDarkApp(),
+      child: const DarkItApp(),
     );
   }
 }
 
-class MakeItDarkApp extends StatelessWidget {
-  const MakeItDarkApp({Key? key}) : super(key: key);
+class DarkItApp extends StatelessWidget {
+  const DarkItApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppTheme>(
       builder: (context, appTheme, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: '[make it dark]',
+        title: '[dark it]',
         theme: ThemeData(
           primarySwatch: Colors.grey,
           scaffoldBackgroundColor: appTheme.background,

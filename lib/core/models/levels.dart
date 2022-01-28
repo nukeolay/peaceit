@@ -1,5 +1,5 @@
-import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/core/models/level.dart';
+import 'package:darkit/core/models/cell.dart';
+import 'package:darkit/core/models/level.dart';
 
 class Chapter {
   String id;
@@ -806,7 +806,7 @@ class Levels {
         ]),
     Level(
         id: '4x4s6n1',
-        chapterId: '5x5',
+        chapterId: '4x4',
         bestResult: 6,
         goodResult: 9,
         cells: [

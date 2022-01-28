@@ -9,6 +9,7 @@ class GameField with ChangeNotifier {
   List<Cell> _originalLevel = [];
   List<Cell> _originalSolutionCells = [];
   List<Cell> _solutionCells = [];
+  late String _levelId;
   bool canTap = true;
   int movesNumber = 0;
   bool isAllBlack = false;
@@ -17,9 +18,11 @@ class GameField with ChangeNotifier {
   GameField();
 
   void setLevel({
+    required String levelId,
     required List<Cell> level,
     required List<Cell> solution,
   }) {
+    _levelId = levelId;
     _currentLevel =
         [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
     _originalLevel =
@@ -37,9 +40,12 @@ class GameField with ChangeNotifier {
 
   List<Cell> get currentLevel => _currentLevel;
 
+  String get levelId => _levelId;
+
   void resetField() {
     isAllBlack = false;
     setLevel(
+      levelId: _levelId,
       level: _originalLevel,
       solution: _originalSolutionCells,
     );

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
+// ignore: implementation_imports
 import 'package:provider/src/provider.dart';
+
+import 'package:darkit/core/models/app_theme.dart';
 
 class HowToPlayScreen extends StatefulWidget {
   const HowToPlayScreen({Key? key}) : super(key: key);
@@ -77,20 +79,18 @@ class _HowToPlayScreenState extends State<HowToPlayScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(30.0),
-                      width: width,
-                      child: FittedBox(
-                        child: Text(
-                          'скоро тут будет инструкция,\n или не будет',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: context
-                                .read<AppTheme>()
-                                .buttonTextColor
-                                .withOpacity(0.5),
-                          ),
+                  child: Container(
+                    padding: const EdgeInsets.all(30.0),
+                    width: width,
+                    child: FittedBox(
+                      child: Text(
+                        'скоро тут будет инструкция,\n или не будет',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: context
+                              .read<AppTheme>()
+                              .buttonTextColor
+                              .withOpacity(0.5),
                         ),
                       ),
                     ),

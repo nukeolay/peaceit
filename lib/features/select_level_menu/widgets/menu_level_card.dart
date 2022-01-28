@@ -2,8 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/cell.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/cell.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 

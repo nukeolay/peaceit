@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:makeitdark/core/constants/initial_game_settings.dart';
-import 'package:makeitdark/core/models/game_field.dart';
-import 'package:makeitdark/core/models/level.dart';
-import 'package:makeitdark/core/models/levels.dart';
-import 'package:makeitdark/core/models/user_data.dart';
+import 'package:darkit/core/constants/initial_game_settings.dart';
+import 'package:darkit/core/models/game_field.dart';
+import 'package:darkit/core/models/level.dart';
+import 'package:darkit/core/models/levels.dart';
+import 'package:darkit/core/models/user_data.dart';
 
 class Game with ChangeNotifier {
   Levels _levels;
 
   late GameField _gameField;
   late UserData _userData;
-  int currentLevelNumber = 0;
   bool _isWin = false;
   bool _isInit = true;
   bool isSingleFlipOn = false;
@@ -26,10 +25,6 @@ class Game with ChangeNotifier {
     _gameField = gameField;
     _userData = userData;
     if (_isInit) {
-      _gameField.setLevel(
-        level: currentLevel.cells,
-        solution: currentLevel.solution,
-      );
       await _loadUserData();
       _isInit = false;
     }
@@ -105,9 +100,10 @@ class Game with ChangeNotifier {
     return chapters.firstWhere((chapter) => chapter.id == chapterId);
   }
 
-  Level get currentLevel => allLevels[currentLevelNumber];
+  Level get currentLevel =>
+      allLevels.firstWhere((level) => level.id == currentLevelId);
 
-  String get currentLevelId => allLevels[currentLevelNumber].id;
+  String get currentLevelId => _gameField.levelId;
 
   int get allLevelsQuantity => allLevels.length;
 
@@ -121,10 +117,8 @@ class Game with ChangeNotifier {
   void setLevelById(String levelId) {
     _isWin = false;
     isSingleFlipOn = false;
-    currentLevelNumber = allLevels.indexWhere((level) =>
-        level.id ==
-        levelId); // посмотреть где и для чего используется, передать без него
     _gameField.setLevel(
+      levelId: levelId,
       level: levelById(levelId).cells,
       solution: levelById(levelId).solution,
     );
@@ -156,7 +150,6 @@ class Game with ChangeNotifier {
     _levels = Levels();
     _singleFlips = InitialGameSettings.singleFlips;
     _solutionsNumber = InitialGameSettings.solutionsNumber;
-    currentLevelNumber = 0;
     isSingleFlipOn = false;
     _isWin = false;
     await _saveUserData(this);
@@ -217,7 +210,8 @@ class Game with ChangeNotifier {
 
   bool get isWin => _isWin;
 
-  bool get isGameFinished => allLevelsQuantity == currentLevelNumber + 1;
+  bool get isGameFinished =>
+      allLevels.where((level) => level.rating != 0).length == allLevels.length;
 
   int rating() {
     // TODO сделать ById - ById уже есть. Этот метод используется для расчета значения от количества ходов. Передавать сюда Id и количество ходов. Или оставить все без изменения

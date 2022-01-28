@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/models/game_field.dart';
-import 'package:makeitdark/core/routes/routes.dart';
-import 'package:makeitdark/features/game/widgets/bottom_buttons.dart';
-import 'package:makeitdark/features/game/widgets/game_field_grid.dart';
-import 'package:makeitdark/features/game/widgets/top_info_element.dart';
+import 'package:darkit/core/models/cell.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/models/game_field.dart';
+import 'package:darkit/core/routes/routes.dart';
+import 'package:darkit/features/game/widgets/bottom_buttons.dart';
+import 'package:darkit/features/game/widgets/game_field_grid.dart';
+import 'package:darkit/features/game/widgets/top_info_element.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({Key? key}) : super(key: key);

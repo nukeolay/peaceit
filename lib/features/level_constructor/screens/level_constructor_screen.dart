@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:makeitdark/core/models/app_theme.dart';
-import 'package:makeitdark/core/models/cell.dart';
-import 'package:makeitdark/core/models/game.dart';
-import 'package:makeitdark/core/models/game_field.dart';
-import 'package:makeitdark/features/game/widgets/top_info_element.dart';
-import 'package:makeitdark/features/level_constructor/widgets/constructor_game_field_grid.dart';
+import 'package:darkit/core/models/app_theme.dart';
+import 'package:darkit/core/models/cell.dart';
+import 'package:darkit/core/models/game.dart';
+import 'package:darkit/core/models/game_field.dart';
+import 'package:darkit/features/game/widgets/top_info_element.dart';
+import 'package:darkit/features/level_constructor/widgets/constructor_game_field_grid.dart';
 import 'package:provider/provider.dart';
 
 class LevelConstructorScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
   late Game game;
   late GameField gameField;
   late List<Cell> cells;
-  late int currentLevel;
+  // late int currentLevel;
   late int movesNumber;
   late int length;
   List<Cell> inputCells = [];
@@ -31,7 +31,7 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
     game = Provider.of<Game>(context);
     gameField = game.gameField;
     cells = gameField.currentLevel;
-    currentLevel = game.currentLevelNumber;
+    // currentLevel = game.currentLevelNumber;
     movesNumber = gameField.movesNumber;
     length = sqrt(cells.length).toInt();
     super.didChangeDependencies();
@@ -68,8 +68,8 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TopInfoElement(
-                            topData: '${currentLevel + 1}',
+                          const TopInfoElement(
+                            topData: 'НОВЫЙ',
                             bottomData: 'уровень',
                           ),
                           TopInfoElement(
