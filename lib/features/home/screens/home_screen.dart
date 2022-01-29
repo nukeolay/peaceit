@@ -63,11 +63,20 @@ class HomeScreen extends StatelessWidget {
                 ),
                 // const SizedBox(height: 50),
                 // CustomTextButton(
-                //   text: 'Редактор',
+                //   text: 'Редактор 3x3',
                 //   function: () {
                 //     HapticFeedback.heavyImpact();
-                //     Navigator.of(context)
-                //         .pushNamed(Routes.levelConstructor, arguments: 'new');
+                //     Navigator.of(context).pushNamed(Routes.levelConstructor,
+                //         arguments: 'new 3x3');
+                //   },
+                // ),
+                // const SizedBox(height: 50),
+                // CustomTextButton(
+                //   text: 'Редактор 4x4',
+                //   function: () {
+                //     HapticFeedback.heavyImpact();
+                //     Navigator.of(context).pushNamed(Routes.levelConstructor,
+                //         arguments: 'new 4x4');
                 //   },
                 // ),
                 const Spacer(),
