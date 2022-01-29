@@ -19,10 +19,14 @@ class LevelCompletedScreen extends StatefulWidget {
 
 class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
   late String _levelId;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    _levelId = ModalRoute.of(context)!.settings.arguments as String;
+    if (_isInit) {
+      _isInit = false;
+      _levelId = ModalRoute.of(context)!.settings.arguments as String;
+    }
     super.didChangeDependencies();
   }
 

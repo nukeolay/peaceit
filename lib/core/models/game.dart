@@ -66,7 +66,8 @@ class Game with ChangeNotifier {
     final String chapterId = _levels.chapterIdByLevelId(levelId);
     final Chapter chapter = _levels.chapterById(chapterId);
     final int index = chapter.levelIndexById(levelId);
-    return chapter.completedLevelsNumber + 1 >= index;
+    return chapter.completedLevelsNumber >=
+        index; // TODO если + 1 то будет открываться по 2 уровня
   }
 
   bool canBeChapterPlayed(String chapterId) {

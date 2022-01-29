@@ -78,6 +78,7 @@ class MenuChapterCard extends StatelessWidget {
                   ),
                   child: Text(
                     chapterId,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: canBePlayed
                           ? context

@@ -8,21 +8,45 @@ import 'package:darkit/core/models/app_theme.dart';
 import 'package:darkit/core/models/game.dart';
 import 'package:darkit/core/routes/routes.dart';
 
-class SelectChapterMenuScreen extends StatefulWidget {
+class SelectChapterMenuScreen extends StatelessWidget {
   const SelectChapterMenuScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelectChapterMenuScreen> createState() =>
-      _SelectChapterMenuScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: const ChapterSelect(),
+      ),
+    );
+  }
 }
 
-class _SelectChapterMenuScreenState extends State<SelectChapterMenuScreen> {
+class ChapterSelect extends StatefulWidget {
+  const ChapterSelect({Key? key}) : super(key: key);
+
+  @override
+  _ChapterSelectState createState() => _ChapterSelectState();
+}
+
+class _ChapterSelectState extends State<ChapterSelect> {
   late Game _game;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    _game = Provider.of<Game>(context);
-    super.didChangeDependencies();
+    if (_isInit) {
+      _isInit = false;
+      _game = Provider.of<Game>(context);
+      super.didChangeDependencies();
+    }
   }
 
   void _showRemoveDataDialog() {
@@ -50,111 +74,96 @@ class _SelectChapterMenuScreenState extends State<SelectChapterMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // UserData userData = _game.userData;
-
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/bg.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ListView(
-              physics: const BouncingScrollPhysics(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: context.read<AppTheme>().buttonTextColor,
-                        ),
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: context.read<AppTheme>().buttonTextColor,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'ВЫБОР ГЛАВЫ',
-                        style: TextStyle(
-                          color: context.read<AppTheme>().buttonTextColor,
-                          fontSize: 20,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.delete_forever_rounded,
-                          color: context.read<AppTheme>().buttonTextColor,
-                        ),
-                        tooltip: 'сбросить данные',
-                        onPressed: () {
-                          HapticFeedback.heavyImpact();
-                          _showRemoveDataDialog();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: _game.chapters.length,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 3 / 4,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
+                    onPressed: () {
+                      HapticFeedback.heavyImpact();
+                      Navigator.of(context).pop();
+                    },
                   ),
-                  padding: const EdgeInsets.all(0.0),
-                  itemBuilder: (context, index) {
-                    String chapterId = _game.chapters[index].id;
-                    bool canBePlayed = _game.canBeChapterPlayed(chapterId);
-                    return Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: canBePlayed
-                              ? () {
-                                  HapticFeedback.heavyImpact();
-                                  Navigator.of(context).pushNamed(
-                                      Routes.selectLevelMenu,
-                                      arguments: chapterId);
-                                }
-                              : null,
-                          child: MenuChapterCard(
-                            chapterId: chapterId,
-                            completedLevelsInChapter: _game
-                                .chapterByChapterId(chapterId)
-                                .completedLevelsNumber,
-                            levelsInChapter: _game
-                                .chapterByChapterId(chapterId)
-                                .levelsNumber,
-                            canBePlayed: canBePlayed,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'ВЫБОР ГЛАВЫ',
+                    style: TextStyle(
+                      color: context.read<AppTheme>().buttonTextColor,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete_forever_rounded,
+                      color: context.read<AppTheme>().buttonTextColor,
+                    ),
+                    tooltip: 'сбросить данные',
+                    onPressed: () {
+                      HapticFeedback.heavyImpact();
+                      _showRemoveDataDialog();
+                    },
+                  ),
                 ),
               ],
             ),
-          ),
+            GridView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: _game.chapters.length,
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 3 / 4,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+              ),
+              padding: const EdgeInsets.all(0.0),
+              itemBuilder: (context, index) {
+                String chapterId = _game.chapters[index].id;
+                bool canBePlayed = _game.canBeChapterPlayed(chapterId);
+                return Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: canBePlayed
+                          ? () {
+                              HapticFeedback.heavyImpact();
+                              Navigator.of(context).pushNamed(
+                                  Routes.selectLevelMenu,
+                                  arguments: chapterId);
+                            }
+                          : null,
+                      child: MenuChapterCard(
+                        chapterId: chapterId,
+                        completedLevelsInChapter: _game
+                            .chapterByChapterId(chapterId)
+                            .completedLevelsNumber,
+                        levelsInChapter:
+                            _game.chapterByChapterId(chapterId).levelsNumber,
+                        canBePlayed: canBePlayed,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

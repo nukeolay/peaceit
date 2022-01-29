@@ -18,20 +18,25 @@ class LevelConstructorScreen extends StatefulWidget {
 }
 
 class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
-  late Game game;
+  late Game _game;
+  late String _levelId;
   late GameField gameField;
   late List<Cell> cells;
-  // late int currentLevel;
   late int movesNumber;
   late int length;
   List<Cell> inputCells = [];
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    game = Provider.of<Game>(context);
-    gameField = game.gameField;
+    _levelId = ModalRoute.of(context)!.settings.arguments as String;
+    _game = Provider.of<Game>(context);
+    if (_isInit) {
+      _game.setLevelById(_levelId);
+      _isInit = false;
+    }
+    gameField = _game.gameField;
     cells = gameField.currentLevel;
-    // currentLevel = game.currentLevelNumber;
     movesNumber = gameField.movesNumber;
     length = sqrt(cells.length).toInt();
     super.didChangeDependencies();
@@ -66,7 +71,7 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const TopInfoElement(
                             topData: 'НОВЫЙ',
@@ -81,7 +86,7 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
                             child: IconButton(
                               onPressed: () {
                                 HapticFeedback.heavyImpact();
-                                game.restartLevel();
+                                _game.restartLevel();
                                 setState(() {
                                   inputCells = [];
                                 });

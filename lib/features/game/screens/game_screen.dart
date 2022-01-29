@@ -27,23 +27,23 @@ class _GameScreenState extends State<GameScreen> {
   late int _movesNumber;
   late int _length;
   bool _isInit = true;
-
+  bool _isWin = false;
+  
   @override
   void didChangeDependencies() {
-    _levelId = ModalRoute.of(context)!.settings.arguments as String;
-    _game = Provider.of<Game>(context);
     if (_isInit) {
-      _game.setLevelById(_levelId);
+      _levelId = ModalRoute.of(context)!.settings.arguments as String;
+      _game = Provider.of<Game>(context);
       _isInit = false;
+      _game.setLevelById(_levelId);
     }
     _gameField = _game.gameField;
     _cells = _gameField.currentLevel;
     _levelIndex = _game.levelIndexById(_levelId);
     _movesNumber = _gameField.movesNumber;
     _length = sqrt(_cells.length).toInt();
-
-    bool isWin = Provider.of<Game>(context).isWin;
-    if (isWin) {
+    _isWin = _game.isWin;
+    if (_isWin) {
       Future(() {
         Navigator.of(context)
             .pushReplacementNamed(Routes.levelCompleted, arguments: _levelId);

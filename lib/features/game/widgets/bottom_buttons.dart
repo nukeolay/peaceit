@@ -18,10 +18,14 @@ class BottomButtons extends StatefulWidget {
 
 class _BottomButtonsState extends State<BottomButtons> {
   late Game _game;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    _game = Provider.of<Game>(context);
+    if (_isInit) {
+      _isInit = false;
+      _game = Provider.of<Game>(context);
+    }
     super.didChangeDependencies();
   }
 
