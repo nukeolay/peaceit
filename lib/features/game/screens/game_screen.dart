@@ -28,7 +28,15 @@ class _GameScreenState extends State<GameScreen> {
   late int _length;
   bool _isInit = true;
   bool _isWin = false;
-  
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     if (_isInit) {

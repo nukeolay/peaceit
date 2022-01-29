@@ -43,6 +43,14 @@ class _LevelSelectState extends State<LevelSelect> {
   bool _isInit = true;
 
   @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     if (_isInit) {
       _isInit = false;

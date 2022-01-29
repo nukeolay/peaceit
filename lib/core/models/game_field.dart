@@ -64,21 +64,21 @@ class GameField with ChangeNotifier {
   List<Cell> nearestCells(int x, int y) {
     List<Cell> result = [];
     try {
-      result.add(_getCellByCoordinates(x, y - 1));
+      result.add(_cellByCoordinates(x, y - 1));
     } catch (error) {}
     try {
-      result.add(_getCellByCoordinates(x, y + 1));
+      result.add(_cellByCoordinates(x, y + 1));
     } catch (error) {}
     try {
-      result.add(_getCellByCoordinates(x - 1, y));
+      result.add(_cellByCoordinates(x - 1, y));
     } catch (error) {}
     try {
-      result.add(_getCellByCoordinates(x + 1, y));
+      result.add(_cellByCoordinates(x + 1, y));
     } catch (error) {}
     return result;
   }
 
-  int blackNumber() {
+  int get blackNumber {
     int result = 0;
     for (Cell cell in _currentLevel) {
       if (cell.isBlack) result++;
@@ -89,7 +89,7 @@ class GameField with ChangeNotifier {
   void pressCell(int x, int y) {
     if (solutionCell == Cell(x, y) || solutionCell == null) {
       if (canTap) {
-        _getCellByCoordinates(x, y).switchIt();
+        _cellByCoordinates(x, y).switchIt();
         List<Cell> cellsToSwitch = nearestCells(x, y);
         movesNumber++;
         for (Cell cell in cellsToSwitch) {
@@ -102,7 +102,7 @@ class GameField with ChangeNotifier {
         canTap = false;
         Timer(const Duration(milliseconds: 310), () {
           canTap = true;
-          if (blackNumber() == _currentLevel.length) {
+          if (blackNumber == _currentLevel.length) {
             isAllBlack = true;
           }
           notifyListeners();
@@ -113,13 +113,13 @@ class GameField with ChangeNotifier {
 
   void singleFlip(int x, int y) {
     if (canTap) {
-      _getCellByCoordinates(x, y).switchIt();
+      _cellByCoordinates(x, y).switchIt();
       movesNumber++;
       notifyListeners();
       canTap = false;
       Timer(const Duration(milliseconds: 310), () {
         canTap = true;
-        if (blackNumber() == _currentLevel.length) {
+        if (blackNumber == _currentLevel.length) {
           isAllBlack = true;
         }
         notifyListeners();
@@ -127,7 +127,7 @@ class GameField with ChangeNotifier {
     }
   }
 
-  Cell _getCellByCoordinates(int x, int y) {
+  Cell _cellByCoordinates(int x, int y) {
     return _currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 }

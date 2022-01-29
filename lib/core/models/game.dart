@@ -56,7 +56,7 @@ class Game with ChangeNotifier {
 
   List<Level> get allLevels => _levels.allLevels;
 
-  List<Chapter> get chapters => _levels.chapters();
+  List<Chapter> get chapters => _levels.chapters;
 
   int levelRatingById(String levelId) {
     return _levels.levelById(levelId).rating;

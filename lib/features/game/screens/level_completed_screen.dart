@@ -100,7 +100,7 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                     ),
                   ),
                 const SizedBox(height: 30),
-                // TODO проверять, если закончено более 70% в глаые, писать, что открыта новая глава
+                // TODO проверять, если закончено более 70% в главе, писать, что открыта новая глава
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -133,8 +133,10 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                                 Routes.game,
                                 arguments: _nextLevelId);
                           } catch (error) {
-                            Navigator.of(context)
-                                .pushReplacementNamed(Routes.selectChapterMenu);
+                            // Navigator.of(context).pushReplacementNamed(Routes
+                            //     .selectChapterMenu); // TODO заменять до страницы с главой
+                            Navigator.popUntil(context,
+                                ModalRoute.withName(Routes.selectChapterMenu));
                           }
                         }
                       },
