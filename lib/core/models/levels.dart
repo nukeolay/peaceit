@@ -56,6 +56,47 @@ class Levels {
     return chapters.firstWhere((chapter) => chapter.id == chapterId);
   }
 
+  bool get isFirstStart => allLevels.where((level) => level.rating > 0).isEmpty;
+
+  bool canBeLevelPlayed(String levelId) {
+    final String chapterId = chapterIdByLevelId(levelId);
+    final Chapter chapter = chapterById(chapterId);
+    final int index = chapter.levelIndexById(levelId);
+    return chapter.completedLevelsNumber >=
+        index; // TODO если + 1 то будет открываться по 2 уровня
+  }
+
+  bool canBeChapterPlayed(String chapterId) {
+    try {
+      int _previousChapterIndex =
+          chapters.indexWhere((chapter) => chapter.id == chapterId) - 1;
+      return chapters[_previousChapterIndex].completedRatio > 0.7;
+    } catch (error) {
+      return true;
+    }
+  }
+
+  int levelIndexById(String levelId) {
+    String _chapterId = levelById(levelId).chapterId;
+    final Chapter _chapter = chapterById(_chapterId);
+    return _chapter.levelIndexById(levelId);
+  }
+
+  String nextLevelIdByPreviousId(String levelId) {
+    int _levelIndex = levelIndexById(levelId);
+    final String chapterId = chapterIdByLevelId(levelId);
+    final Chapter chapter = chapterById(chapterId);
+    return chapter.levels[_levelIndex + 1].id;
+  }
+
+  int levelRatingById(String levelId) {
+    return levelById(levelId).rating;
+  }
+
+  Chapter chapterByChapterId(String chapterId) {
+    return chapters.firstWhere((chapter) => chapter.id == chapterId);
+  }
+
   List<Level> allLevels = [
     // ------------------- CHAPTER 1 -------------------
     Level(id: 'x3c1n1', chapterId: '1', bestResult: 1, goodResult: 4, cells: [
@@ -364,7 +405,21 @@ class Levels {
       Cell(3, 1),
       Cell(1, 1),
     ]),
-    Level(id: 'x4c2n13', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x3c2n13', chapterId: '2', bestResult: 2, goodResult: 5, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1, true),
+      Cell(1, 2, true),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+    ], solution: [
+      Cell(3, 2),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x4c2n14', chapterId: '2', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1),
       Cell(3, 1),
@@ -403,6 +458,329 @@ class Levels {
       Cell(2, 2),
       Cell(3, 3),
     ]),
+    Level(id: 'x3s3n2', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1, true),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+    ], solution: [
+      Cell(1, 3),
+      Cell(1, 1),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n3', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+    ], solution: [
+      Cell(3, 3),
+      Cell(1, 2),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n4', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(1, 3),
+      Cell(2, 3, true),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(1, 3),
+      Cell(2, 2),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n5', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2, true),
+      Cell(3, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(1, 3),
+      Cell(1, 2),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n6', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(1, 1),
+      Cell(2, 2),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n7', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1, true),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3),
+      Cell(2, 3, true),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(3, 1),
+      Cell(1, 2),
+      Cell(1, 1),
+    ]),
+    Level(id: 'x3s3n8', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3),
+      Cell(2, 3, true),
+      Cell(3, 3),
+    ], solution: [
+      Cell(3, 3),
+      Cell(1, 3),
+      Cell(2, 1),
+    ]),
+    Level(id: 'x3s3n9', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(2, 3),
+      Cell(3, 2),
+      Cell(1, 2),
+    ]),
+    Level(id: 'x3s3n10', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(2, 2),
+      Cell(3, 1),
+      Cell(1, 1),
+    ]),
+    Level(id: 'x3s3n11', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+    ], solution: [
+      Cell(3, 2),
+      Cell(2, 2),
+      Cell(1, 2),
+    ]),
+    Level(id: 'x3s3n12', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3, true),
+    ], solution: [
+      Cell(3, 3),
+      Cell(2, 3),
+      Cell(1, 3),
+    ]),
+    Level(id: 'x4s3n13', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1, true),
+      Cell(4, 1, true),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(4, 2, true),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+      Cell(4, 3, true),
+      Cell(1, 4),
+      Cell(2, 4, true),
+      Cell(3, 4),
+      Cell(4, 4, true),
+    ], solution: [
+      Cell(2, 2),
+      Cell(2, 3),
+      Cell(2, 4),
+    ]),
+    Level(id: 'x4s3n14', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1, true),
+      Cell(4, 1, true),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(4, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3),
+      Cell(3, 3),
+      Cell(4, 3, true),
+      Cell(1, 4, true),
+      Cell(2, 4, true),
+      Cell(3, 4, true),
+      Cell(4, 4),
+    ], solution: [
+      Cell(3, 3),
+      Cell(4, 4),
+      Cell(1, 1),
+    ]),
+    Level(id: 'x4s3n15', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1, true),
+      Cell(4, 1, true),
+      Cell(1, 2, true),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(4, 2, true),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+      Cell(4, 3),
+      Cell(1, 4, true),
+      Cell(2, 4, true),
+      Cell(3, 4),
+      Cell(4, 4, true),
+    ], solution: [
+      Cell(3, 3),
+      Cell(2, 2),
+      Cell(1, 1),
+    ]),
+    Level(id: 'x4s3n16', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1, true),
+      Cell(3, 1),
+      Cell(4, 1),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2),
+      Cell(4, 2),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3),
+      Cell(4, 3),
+      Cell(1, 4, true),
+      Cell(2, 4, true),
+      Cell(3, 4, true),
+      Cell(4, 4),
+    ], solution: [
+      Cell(4, 3),
+      Cell(3, 1),
+      Cell(1, 1),
+    ]),
+    Level(id: 'x4s3n17', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(4, 1),
+      Cell(1, 2),
+      Cell(2, 2, true),
+      Cell(3, 2, true),
+      Cell(4, 2),
+      Cell(1, 3, true),
+      Cell(2, 3, true),
+      Cell(3, 3, true),
+      Cell(4, 3),
+      Cell(1, 4, true),
+      Cell(2, 4, true),
+      Cell(3, 4),
+      Cell(4, 4),
+    ], solution: [
+      Cell(1, 1),
+      Cell(4, 1),
+      Cell(4, 4),
+    ]),
+    Level(id: 'x4s3n18', chapterId: '3', bestResult: 3, goodResult: 6, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(4, 1, true),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2, true),
+      Cell(4, 2),
+      Cell(1, 3),
+      Cell(2, 3, true),
+      Cell(3, 3, true),
+      Cell(4, 3, true),
+      Cell(1, 4, true),
+      Cell(2, 4),
+      Cell(3, 4, true),
+      Cell(4, 4, true),
+    ], solution: [
+      Cell(2, 2),
+      Cell(2, 3),
+      Cell(3, 2),
+    ]),
+    Level(id: 'x4s4n8', chapterId: '3', bestResult: 4, goodResult: 7, cells: [
+      Cell(1, 1, true),
+      Cell(2, 1),
+      Cell(3, 1),
+      Cell(4, 1, true),
+      Cell(1, 2),
+      Cell(2, 2),
+      Cell(3, 2),
+      Cell(4, 2),
+      Cell(1, 3),
+      Cell(2, 3),
+      Cell(3, 3),
+      Cell(4, 3),
+      Cell(1, 4, true),
+      Cell(2, 4),
+      Cell(3, 4),
+      Cell(4, 4, true),
+    ], solution: [
+      Cell(2, 2),
+      Cell(2, 3),
+      Cell(3, 3),
+      Cell(3, 2),
+    ]),
+
+    // ------------------- CHAPTER 4 -------------------
+
     Level(id: 'x3s4n1', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1, true),
       Cell(2, 1),
@@ -436,7 +814,7 @@ class Levels {
       Cell(2, 2),
     ]),
 
-    Level(id: 'x4s4n4', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n3', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1, true),
       Cell(3, 1, true),
@@ -459,7 +837,7 @@ class Levels {
       Cell(3, 1),
       Cell(2, 4),
     ]),
-    Level(id: 'x4s4n5', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n4', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1, true),
       Cell(3, 1, true),
@@ -482,7 +860,7 @@ class Levels {
       Cell(2, 2),
       Cell(2, 3),
     ]),
-    Level(id: 'x4s4n6', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n5', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1),
       Cell(3, 1),
@@ -505,7 +883,7 @@ class Levels {
       Cell(1, 2),
       Cell(4, 2),
     ]),
-    Level(id: 'x4s4n9', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n6', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1, true),
       Cell(2, 1, true),
       Cell(3, 1, true),
@@ -528,7 +906,7 @@ class Levels {
       Cell(2, 3),
       Cell(1, 4),
     ]),
-    Level(id: 'x4s4n10', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n7', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1, true),
       Cell(2, 1),
       Cell(3, 1, true),
@@ -551,7 +929,7 @@ class Levels {
       Cell(1, 2),
       Cell(2, 1),
     ]),
-    Level(id: 'x4s4n11', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n8', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1),
       Cell(3, 1),
@@ -575,7 +953,7 @@ class Levels {
       Cell(4, 1),
     ]),
 
-    Level(id: 'x4s4n12', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n9', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1),
       Cell(3, 1, true),
@@ -598,7 +976,7 @@ class Levels {
       Cell(3, 2),
       Cell(2, 1),
     ]),
-    Level(id: 'x4s4n7', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
+    Level(id: 'x4s4n10', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
       Cell(1, 1),
       Cell(2, 1),
       Cell(3, 1),
@@ -620,29 +998,6 @@ class Levels {
       Cell(2, 3),
       Cell(4, 1),
       Cell(4, 4),
-    ]),
-    Level(id: 'x4s4n8', chapterId: '4', bestResult: 4, goodResult: 7, cells: [
-      Cell(1, 1, true),
-      Cell(2, 1),
-      Cell(3, 1),
-      Cell(4, 1, true),
-      Cell(1, 2),
-      Cell(2, 2),
-      Cell(3, 2),
-      Cell(4, 2),
-      Cell(1, 3),
-      Cell(2, 3),
-      Cell(3, 3),
-      Cell(4, 3),
-      Cell(1, 4, true),
-      Cell(2, 4),
-      Cell(3, 4),
-      Cell(4, 4, true),
-    ], solution: [
-      Cell(2, 2),
-      Cell(2, 3),
-      Cell(3, 3),
-      Cell(3, 2),
     ]),
 
     Level(id: 'x3s5n1', chapterId: '5', bestResult: 5, goodResult: 8, cells: [

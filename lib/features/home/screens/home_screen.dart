@@ -1,3 +1,4 @@
+import 'package:darkit/core/models/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -50,7 +51,10 @@ class HomeScreen extends StatelessWidget {
                   text: 'Играть',
                   function: () {
                     HapticFeedback.heavyImpact();
-                    Navigator.of(context).pushNamed(Routes.selectChapterMenu);
+                    context.read<Game>().isFirstStart
+                        ? Navigator.of(context).pushNamed(Routes.selectChapterMenu) // TODO когда сделаю tutorial поменять тут на Routes.tutorial
+                        : Navigator.of(context)
+                            .pushNamed(Routes.selectChapterMenu);
                   },
                 ),
                 const SizedBox(height: 50),

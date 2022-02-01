@@ -1,3 +1,4 @@
+import 'package:darkit/features/tutorial/screens/toturial_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:darkit/features/game/screens/game_finished_screen.dart';
 import 'package:darkit/features/game/screens/game_screen.dart';
@@ -16,6 +17,7 @@ class Routes {
   static const String selectChapterMenu = '/select-chapter-menu-screen';
   static const String gameFinished = '/game-finished-screen';
   static const String howToPlay = '/how-to-play-screen';
+  static const String tutorial = '/tutorial-screen';
   static const String levelConstructor = '/level-constructor-screen';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -37,6 +39,8 @@ class Routes {
             return const GameFinishedScreen();
           case howToPlay:
             return const HowToPlayScreen();
+          case tutorial:
+            return const TutorialScreen();
           case levelConstructor:
             return const LevelConstructorScreen();
           default:

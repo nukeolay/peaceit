@@ -31,7 +31,6 @@ class Game with ChangeNotifier {
     _isWin = _gameField.isAllBlack;
     if (_isWin) {
       int newRating = rating();
-
       if (currentLevel.rating < newRating) {
         if (currentLevel.rating == 0) {
           // уровень до этого еще не проходили
@@ -53,60 +52,51 @@ class Game with ChangeNotifier {
   }
 
   // levels and chapters
+  //
+  //
+  // функции, обращающиеся только к классу Levels
+  //
+  //
+
+  bool get isFirstStart => _levels.isFirstStart;
 
   List<Level> get allLevels => _levels.allLevels;
 
   List<Chapter> get chapters => _levels.chapters;
 
-  int levelRatingById(String levelId) {
-    return _levels.levelById(levelId).rating;
-  }
+  int levelRatingById(String levelId) => _levels.levelRatingById(levelId);
 
-  bool canBeLevelPlayed(String levelId) {
-    final String chapterId = _levels.chapterIdByLevelId(levelId);
-    final Chapter chapter = _levels.chapterById(chapterId);
-    final int index = chapter.levelIndexById(levelId);
-    return chapter.completedLevelsNumber >=
-        index; // TODO если + 1 то будет открываться по 2 уровня
-  }
+  bool canBeLevelPlayed(String levelId) => _levels.canBeLevelPlayed(levelId);
 
-  bool canBeChapterPlayed(String chapterId) {
-    try {
-      int _previousChapterIndex =
-          chapters.indexWhere((chapter) => chapter.id == chapterId) - 1;
-      return chapters[_previousChapterIndex].completedRatio > 0.7;
-    } catch (error) {
-      return true;
-    }
-  }
+  bool canBeChapterPlayed(String chapterId) =>
+      _levels.canBeChapterPlayed(chapterId);
 
-  String nextLevelIdByPreviousId(String levelId) {
-    int _levelIndex = levelIndexById(levelId);
-    final String chapterId = _levels.chapterIdByLevelId(levelId);
-    final Chapter chapter = _levels.chapterById(chapterId);
-    return chapter.levels[_levelIndex + 1].id;
-  }
+  String nextLevelIdByPreviousId(String levelId) =>
+      _levels.nextLevelIdByPreviousId(levelId);
 
-  int levelIndexById(String levelId) {
-    String _chapterId = levelById(levelId).chapterId;
-    final Chapter _chapter = _levels.chapterById(_chapterId);
-    return _chapter.levelIndexById(levelId);
-  }
+  int levelIndexById(String levelId) => _levels.levelIndexById(levelId);
 
   List<Level> levelsByChapterId(String chapterId) {
     return _levels.levelsByChapterId(chapterId);
   }
 
-  Chapter chapterByChapterId(String chapterId) {
-    return chapters.firstWhere((chapter) => chapter.id == chapterId);
-  }
+  Chapter chapterByChapterId(String chapterId) =>
+      _levels.chapterByChapterId(chapterId);
 
   Level get currentLevel =>
       allLevels.firstWhere((level) => level.id == currentLevelId);
 
-  String get currentLevelId => _gameField.levelId;
-
   int get allLevelsQuantity => allLevels.length;
+
+  Level levelById(String levelId) {
+    return allLevels.firstWhere((level) => level.id == levelId);
+  }
+
+  //
+  //
+  // функции, обращающиеся только к классу Levels
+  //
+  //
 
   void restartLevel() {
     _isWin = false;
@@ -125,9 +115,7 @@ class Game with ChangeNotifier {
     );
   }
 
-  Level levelById(String levelId) {
-    return allLevels.firstWhere((level) => level.id == levelId);
-  }
+  String get currentLevelId => _gameField.levelId;
 
   // user data
 
