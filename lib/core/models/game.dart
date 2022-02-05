@@ -1,9 +1,9 @@
+import 'package:darkit/internal/dependencies/repository_module.dart';
 import 'package:flutter/material.dart';
-import 'package:darkit/core/constants/initial_game_settings.dart';
 import 'package:darkit/core/models/game_field.dart';
 import 'package:darkit/core/models/level.dart';
 import 'package:darkit/core/models/levels.dart';
-import 'package:darkit/core/models/user_data.dart';
+import 'package:darkit/domain/entities/user_data.dart';
 
 class Game with ChangeNotifier {
   Levels _levels;
@@ -13,17 +13,14 @@ class Game with ChangeNotifier {
   bool _isWin = false;
   bool _isInit = true;
   bool isSingleFlipOn = false;
-  late int _singleFlips;
-  late int _solutionsNumber;
 
   Game(this._levels);
 
   GameField get gameField => _gameField;
 
-  void initGame(GameField gameField, UserData userData) async {
+  void initGame(GameField gameField) async {
     // TODO может быть сюда не передавать UserData, а просто вызывать его тут внутри
     _gameField = gameField;
-    _userData = userData;
     if (_isInit) {
       await _loadUserData();
       _isInit = false;
@@ -35,17 +32,21 @@ class Game with ChangeNotifier {
         if (currentLevel.rating == 0) {
           // уровень до этого еще не проходили
           currentLevel.rating = newRating;
+          _userData.completedLevels[currentLevel.id] = CompletedLevel(
+            id: currentLevel.id,
+            rating: currentLevel.rating,
+          );
           String _chapterId = _levels.chapterIdByLevelId(currentLevelId);
           if (chapterByChapterId(_chapterId).completedRatio == 1) {
             // пройдены все уровни в главе
-            solutionsNumberIncrement();
+            await solutionsNumberIncrement();
           }
         }
         currentLevel.rating = newRating;
         if (newRating == 3) {
-          singleFlipsIncrement();
+          await singleFlipsIncrement();
         }
-        await _saveUserData(this);
+        await _saveUserData();
       }
     }
     notifyListeners();
@@ -119,14 +120,13 @@ class Game with ChangeNotifier {
 
   // user data
 
-  Future<void> _saveUserData(Game game) async {
-    await _userData.saveUserData(this);
+  Future<void> _saveUserData() async {
+    await RepositoryModule.userDataRepository.save();
   }
 
   Future<void> _loadUserData() async {
-    await _userData.loadUserData();
-    _singleFlips = _userData.singleFlips;
-    _solutionsNumber = _userData.solutionsNumber;
+    await RepositoryModule.userDataRepository.load();
+    _userData = RepositoryModule.userDataRepository.userData;
     // загружаю информацию о пройденных уровнях (рейтинг)
     for (CompletedLevel completedLevel in _userData.completedLevels.values) {
       _levels.allLevels
@@ -137,24 +137,27 @@ class Game with ChangeNotifier {
 
   Future<void> removeData() async {
     _levels = Levels();
-    _singleFlips = InitialGameSettings.singleFlips;
-    _solutionsNumber = InitialGameSettings.solutionsNumber;
     isSingleFlipOn = false;
     _isWin = false;
-    await _saveUserData(this);
+    _userData.completedLevels = {};
+    _userData.singleFlips = 2;
+    _userData.solutionsNumber = 2;
+    await _saveUserData();
     notifyListeners();
   }
 
   // single flips
 
-  int get singleFlips => _singleFlips;
+  int get singleFlips => _userData.singleFlips;
 
-  void singleFlipsDecrement() {
-    _singleFlips--;
+  Future<void> singleFlipsDecrement() async {
+    _userData.singleFlips--;
+    await _saveUserData();
   }
 
-  void singleFlipsIncrement() {
-    _singleFlips++;
+  Future<void> singleFlipsIncrement() async {
+    _userData.singleFlips++;
+    await _saveUserData();
   }
 
   bool canUseSingleFlips() {
@@ -174,14 +177,16 @@ class Game with ChangeNotifier {
 
   // solutions
 
-  int get solutionsNumber => _solutionsNumber;
+  int get solutionsNumber => _userData.solutionsNumber;
 
-  void solutionsNumberDecrement() {
-    _solutionsNumber--;
+  Future<void> solutionsNumberDecrement() async {
+    _userData.solutionsNumber--;
+    await _saveUserData();
   }
 
-  void solutionsNumberIncrement() {
-    _solutionsNumber++;
+  Future<void> solutionsNumberIncrement() async {
+    _userData.solutionsNumber++;
+    await _saveUserData();
   }
 
   bool canUseSolution() {
