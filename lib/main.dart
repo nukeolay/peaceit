@@ -1,4 +1,4 @@
-import 'package:darkit/core/models/user_data.dart';
+import 'package:darkit/domain/entities/user_data.dart';
 import 'package:darkit/core/routes/custom_route.dart';
 import 'package:darkit/core/models/app_theme.dart';
 import 'package:darkit/core/models/game.dart';
@@ -34,17 +34,13 @@ class MyApp extends StatelessWidget {
           create: (context) => AppTheme(),
         ),
         ChangeNotifierProvider(
-          create: (context) => UserData(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider(
           create: (context) => GameField(),
           lazy: false,
         ),
-        ChangeNotifierProxyProvider2<GameField, UserData, Game>(
+        ChangeNotifierProxyProvider<GameField, Game>(
           create: (context) => Game(Levels()),
-          update: (context, gameField, userData, previousGame) =>
-              previousGame!..initGame(gameField, userData),
+          update: (context, gameField, previousGame) =>
+              previousGame!..initGame(gameField),
           lazy: false,
         ),
       ],

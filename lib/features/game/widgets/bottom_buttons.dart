@@ -61,11 +61,11 @@ class _BottomButtonsState extends State<BottomButtons> {
         width: width / 1.1,
         text: 'Показать решение?',
         leftButtontext: 'Показать',
-        leftButtonFunction: () {
+        leftButtonFunction: () async {
           HapticFeedback.heavyImpact();
           Navigator.of(context).pop();
           _game.useSolution();
-          _game.solutionsNumberDecrement();
+          await _game.solutionsNumberDecrement();
         },
         rightButtontext: 'Отмена',
         rightButtonFunction: () {

@@ -81,12 +81,12 @@ class _ConstructorCellWidgetState extends State<ConstructorCellWidget> {
     _controller.toggleCard();
   }
 
-  void singleFlipCard() {
+  void singleFlipCard() async {
     if (_canTap) {
       HapticFeedback.heavyImpact();
       _gameField.singleFlip(widget._cell.x, widget._cell.y);
       _controller.toggleCard();
-      _game.singleFlipsDecrement();
+      await _game.singleFlipsDecrement();
       _game.isSingleFlipOn = false;
     }
   }

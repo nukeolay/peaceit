@@ -58,9 +58,9 @@ class _ChapterSelectState extends State<ChapterSelect> {
         width: width / 1.1,
         text: 'Сбросить данные?\nВсе уровни нужно будет проходить заново.',
         leftButtontext: 'Сбросить',
-        leftButtonFunction: () {
+        leftButtonFunction: () async {
           HapticFeedback.heavyImpact();
-          _game.removeData();
+          await _game.removeData();
           Navigator.of(context).pop();
         },
         rightButtontext: 'Отмена',
