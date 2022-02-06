@@ -1,10 +1,10 @@
 import 'package:darkit/core/constants/default_levels.dart';
-import 'package:darkit/features/levels/data/prefs/prefs_levels_util.dart';
+import 'package:darkit/features/levels/data/prefs/levels_prefs_util.dart';
 import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
 import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
 
 class LevelsRepositoryImpl implements LevelsRepository {
-  final PrefsLevelsUtil _prefsLevelsUtil;
+  final LevelsPrefsUtil _prefsLevelsUtil;
   late LevelsEntity _levels;
 
   LevelsRepositoryImpl(this._prefsLevelsUtil);

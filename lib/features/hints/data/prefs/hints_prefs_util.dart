@@ -3,10 +3,10 @@ import 'package:darkit/features/hints/data/prefs/model/hints_prefs_model.dart';
 import 'package:darkit/features/hints/data/prefs/services/hints_prefs_service.dart';
 import 'package:darkit/features/hints/domain/entities/hints_entity.dart';
 
-class PrefsHintsUtil {
+class HintsPrefsUtil {
   final HintsPrefsService _prefsHintsService;
 
-  PrefsHintsUtil(this._prefsHintsService);
+  HintsPrefsUtil(this._prefsHintsService);
 
   Future<HintsEntity> load() async {
     final HintsPrefsModel result = await _prefsHintsService.load();
