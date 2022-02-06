@@ -1,3 +1,5 @@
+// import 'package:darkit/domain/entities/user_data.dart';
+
 import 'package:darkit/domain/entities/user_data.dart';
 
 class UserDataPrefsModel {
@@ -21,6 +23,7 @@ class UserDataPrefsModel {
           (id, value) => MapEntry(
             id,
             {'id': id, 'rating': (value as CompletedLevel).rating},
+            // {'id': id, 'rating': value['rating']},
           ),
         ),
         'singleFlips': singleFlips,
