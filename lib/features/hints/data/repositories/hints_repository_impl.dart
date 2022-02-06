@@ -1,10 +1,10 @@
 import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/features/hints/data/prefs/prefs_hints_util.dart';
+import 'package:darkit/features/hints/data/prefs/hints_prefs_util.dart';
 import 'package:darkit/features/hints/domain/entities/hints_entity.dart';
 import 'package:darkit/features/hints/domain/repositories/hints_repository.dart';
 
 class HintsRepositoryImpl implements HintsRepository {
-  final PrefsHintsUtil _prefsHintsUtil;
+  final HintsPrefsUtil _prefsHintsUtil;
   late HintsEntity _hints;
 
   HintsRepositoryImpl(this._prefsHintsUtil);
