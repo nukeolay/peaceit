@@ -23,6 +23,7 @@ class LevelsRepositoryImpl implements LevelsRepository {
 
   @override
   Future<void> save(LevelsEntity levels) {
+    _levels = levels;
     return _prefsLevelsUtil.save(levels);
   }
 }

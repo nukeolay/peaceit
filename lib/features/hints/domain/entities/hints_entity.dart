@@ -16,4 +16,9 @@ class HintsEntity {
       solutionsNumber: solutionsNumber ?? this.solutionsNumber,
     );
   }
+
+  @override
+  String toString() {
+    return 'HINTS:\n -singleFlips: $singleFlips,\n -solutionsNumber: $solutionsNumber';
+  }
 }

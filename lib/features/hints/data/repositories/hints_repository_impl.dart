@@ -26,6 +26,7 @@ class HintsRepositoryImpl implements HintsRepository {
 
   @override
   Future<void> save(HintsEntity hints) {
+    _hints = hints;
     return _prefsHintsUtil.save(hints);
   }
 }
