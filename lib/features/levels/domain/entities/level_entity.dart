@@ -35,6 +35,6 @@ class LevelEntity {
 
   @override
   String toString() {
-    return 'id: $id, chapterId: $chapterId, reting: $rating';
+    return 'id: $id, chapterId: $chapterId, rating: $rating';
   }
 }

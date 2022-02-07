@@ -47,7 +47,7 @@ class _GameScreenState extends State<GameScreen> {
     }
     _gameField = _game.gameField;
     _cells = _gameField.currentLevel;
-    _levelIndex = _game.levelIndexById(_levelId);
+    _levelIndex = _game.levelIndexInChapterById(_levelId);
     _movesNumber = _gameField.movesNumber;
     _length = sqrt(_cells.length).toInt();
     _isWin = _game.isWin;

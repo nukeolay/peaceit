@@ -1,15 +1,15 @@
 import 'dart:math';
 
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:darkit/core/models/app_theme.dart';
-import 'package:darkit/core/models/cell.dart';
 import 'package:darkit/core/models/game.dart';
 import 'package:darkit/core/models/game_field.dart';
 import 'package:darkit/features/game/widgets/top_info_element.dart';
 import 'package:darkit/features/level_constructor/widgets/constructor_game_field_grid.dart';
-import 'package:provider/provider.dart';
 
 class LevelConstructorScreen extends StatefulWidget {
   const LevelConstructorScreen({Key? key}) : super(key: key);
