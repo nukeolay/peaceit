@@ -1,8 +1,8 @@
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 
 class ChapterEntity {
-  String id;
-  List<LevelEntity> levels;
+  final String id;
+  final List<LevelEntity> levels;
 
   ChapterEntity({
     required this.id,
