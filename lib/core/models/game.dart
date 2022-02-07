@@ -8,7 +8,7 @@ import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:darkit/internal/dependencies/hints_repository_module.dart';
-import 'package:darkit/internal/dependencies/levels_repository_module%20copy.dart';
+import 'package:darkit/internal/dependencies/levels_repository_module.dart';
 import 'package:flutter/material.dart';
 import 'package:darkit/core/models/game_field.dart';
 
@@ -33,7 +33,8 @@ class Game with ChangeNotifier {
       if (currentLevel.rating < newRating) {
         if (currentLevel.rating == 0) {
           // уровень до этого еще не проходили
-          _levels.levels[levelIndexById(currentLevelId)] =
+          _levels.levels[_levels.levels
+                  .indexWhere((level) => level.id == currentLevelId)] =
               currentLevel.copyWith(rating: newRating);
           String _chapterId = _chapterIdByLevelId(currentLevelId);
           if (chapterByChapterId(_chapterId).completedRatio == 1) {
@@ -41,8 +42,9 @@ class Game with ChangeNotifier {
             await solutionsNumberIncrement();
           }
         }
-        _levels.levels[levelIndexById(currentLevelId)] = currentLevel.copyWith(
-            rating: newRating); // TODO может это не нужно? ранее уже
+        _levels.levels[_levels.levels
+                .indexWhere((level) => level.id == currentLevelId)] =
+            currentLevel.copyWith(rating: newRating);
         if (newRating == 3) {
           await singleFlipsIncrement();
         }
@@ -106,18 +108,17 @@ class Game with ChangeNotifier {
     }
   }
 
-  String nextLevelIdByPreviousId(String levelId) {
-    int levelIndex = levelIndexById(levelId);
+  String nextLevelIdInChapterByPreviousId(String levelId) {
+    final int levelIndex = levelIndexInChapterById(levelId);
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
     return chapter.levels[levelIndex + 1].id;
   }
 
-  int levelIndexById(String levelId) {
+  int levelIndexInChapterById(String levelId) {
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
-    final levelIndexInChapter = chapter.levelIndexById(levelId);
-    return levelIndexInChapter;
+    return chapter.levelIndexById(levelId);
   }
 
   List<LevelEntity> levelsByChapterId(String chapterId) {

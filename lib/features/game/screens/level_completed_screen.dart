@@ -129,7 +129,7 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                         } else {
                           try {
                             String _nextLevelId =
-                                game.nextLevelIdByPreviousId(_levelId);
+                                game.nextLevelIdInChapterByPreviousId(_levelId);
                             Navigator.of(context).pushReplacementNamed(
                                 Routes.game,
                                 arguments: _nextLevelId);

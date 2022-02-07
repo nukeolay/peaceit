@@ -58,14 +58,6 @@ class Levels {
 
   bool get isFirstStart => allLevels.where((level) => level.rating > 0).isEmpty;
 
-  bool canBeLevelPlayed(String levelId) {
-    final String chapterId = chapterIdByLevelId(levelId);
-    final Chapter chapter = chapterById(chapterId);
-    final int index = chapter.levelIndexById(levelId);
-    return chapter.completedLevelsNumber >=
-        index; // TODO если + 1 то будет открываться по 2 уровня
-  }
-
   bool canBeChapterPlayed(String chapterId) {
     try {
       int _previousChapterIndex =

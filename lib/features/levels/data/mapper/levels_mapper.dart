@@ -12,7 +12,7 @@ class LevelsMapper {
               rating: levelsPrefsModel.completedLevels[level.id]!);
         }
         return level;
-      }).toList(), // TODO преобразую, добавляю к levels рейтинг из completed levels
+      }).toList(),
     );
   }
 
@@ -20,6 +20,6 @@ class LevelsMapper {
     return LevelsPrefsModel(completedLevels: {
       for (LevelEntity level in levels.levels)
         if (level.rating > 0) level.id: level.rating
-    }); // TODO преобразую, выбираю только пройденные уровни, где рейтинг больше 0
+    });
   }
 }

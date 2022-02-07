@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:darkit/core/models/app_theme.dart';
-import 'package:darkit/core/models/cell.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
+
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
+import 'package:darkit/core/models/app_theme.dart';
 
 class MenuLevelCard extends StatelessWidget {
   const MenuLevelCard({
@@ -76,32 +76,32 @@ class MenuLevelCard extends StatelessWidget {
                       ),
                     )
                   : LayoutBuilder(
-                    builder: (context, constraints) => Container(
-                      constraints: BoxConstraints(
-                        maxHeight: constraints.maxWidth,
-                        maxWidth: constraints.maxWidth,
-                      ),
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: context
-                            .read<AppTheme>()
-                            .background
-                            .withOpacity(0.5),
-                      ),
-                      child: Text(
-                        '?',
-                        style: TextStyle(
+                      builder: (context, constraints) => Container(
+                        constraints: BoxConstraints(
+                          maxHeight: constraints.maxWidth,
+                          maxWidth: constraints.maxWidth,
+                        ),
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
                           color: context
                               .read<AppTheme>()
-                              .buttonTextColor
-                              .withOpacity(0.8),
-                          fontSize: 30,
+                              .background
+                              .withOpacity(0.5),
+                        ),
+                        child: Text(
+                          '?',
+                          style: TextStyle(
+                            color: context
+                                .read<AppTheme>()
+                                .buttonTextColor
+                                .withOpacity(0.8),
+                            fontSize: 30,
+                          ),
                         ),
                       ),
                     ),
-                  ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
