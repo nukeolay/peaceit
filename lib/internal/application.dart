@@ -7,7 +7,7 @@ import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/features/home/screens/home_screen.dart';
 import 'package:darkit/core/models/game.dart';
 import 'package:darkit/core/models/game_field.dart';
-import 'package:darkit/core/models/levels.dart';
+// import 'package:darkit/core/models/levels.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
         ChangeNotifierProxyProvider<GameField, Game>(
-          create: (context) => Game(Levels()),
+          create: (context) => Game(),
           update: (context, gameField, previousGame) =>
               previousGame!..initGame(gameField),
           lazy: false,

@@ -1,44 +1,43 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-import 'cell.dart';
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 
 class GameField with ChangeNotifier {
-  List<Cell> _currentLevel = [];
-  List<Cell> _originalLevel = [];
-  List<Cell> _originalSolutionCells = [];
-  List<Cell> _solutionCells = [];
+  List<CellEntity> _currentLevel = [];
+  List<CellEntity> _originalLevel = [];
+  List<CellEntity> _originalSolutionCells = [];
+  List<CellEntity> _solutionCells = [];
   late String _levelId;
   bool canTap = true;
   int movesNumber = 0;
   bool isAllBlack = false;
-  Cell? solutionCell;
+  CellEntity? solutionCell;
 
   GameField();
 
   void setLevel({
     required String levelId,
-    required List<Cell> level,
-    required List<Cell> solution,
+    required List<CellEntity> level,
+    required List<CellEntity> solution,
   }) {
     _levelId = levelId;
     _currentLevel =
-        [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
+        [...level].map((cell) => CellEntity(cell.x, cell.y, cell.isBlack)).toList();
     _originalLevel =
-        [...level].map((cell) => Cell(cell.x, cell.y, cell.isBlack)).toList();
+        [...level].map((cell) => CellEntity(cell.x, cell.y, cell.isBlack)).toList();
     _originalSolutionCells = [...solution]
-        .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
         .toList();
     _solutionCells = [...solution]
-        .map((cell) => Cell(cell.x, cell.y, cell.isBlack))
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
         .toList();
     movesNumber = 0;
     solutionCell = null;
     isAllBlack = false;
   }
 
-  List<Cell> get currentLevel => _currentLevel;
+  List<CellEntity> get currentLevel => _currentLevel;
 
   String get levelId => _levelId;
 
@@ -61,8 +60,8 @@ class GameField with ChangeNotifier {
     }
   }
 
-  List<Cell> nearestCells(int x, int y) {
-    List<Cell> result = [];
+  List<CellEntity> nearestCells(int x, int y) {
+    List<CellEntity> result = [];
     try {
       result.add(_cellByCoordinates(x, y - 1));
     } catch (error) {}
@@ -80,19 +79,19 @@ class GameField with ChangeNotifier {
 
   int get blackNumber {
     int result = 0;
-    for (Cell cell in _currentLevel) {
+    for (CellEntity cell in _currentLevel) {
       if (cell.isBlack) result++;
     }
     return result;
   }
 
   void pressCell(int x, int y) {
-    if (solutionCell == Cell(x, y) || solutionCell == null) {
+    if (solutionCell == CellEntity(x, y) || solutionCell == null) {
       if (canTap) {
         _cellByCoordinates(x, y).switchIt();
-        List<Cell> cellsToSwitch = nearestCells(x, y);
+        List<CellEntity> cellsToSwitch = nearestCells(x, y);
         movesNumber++;
-        for (Cell cell in cellsToSwitch) {
+        for (CellEntity cell in cellsToSwitch) {
           cell.switchIt();
         }
         if (solutionCell != null) {
@@ -127,7 +126,7 @@ class GameField with ChangeNotifier {
     }
   }
 
-  Cell _cellByCoordinates(int x, int y) {
+  CellEntity _cellByCoordinates(int x, int y) {
     return _currentLevel.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 }

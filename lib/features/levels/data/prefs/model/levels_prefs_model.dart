@@ -6,9 +6,7 @@ class LevelsPrefsModel {
   });
 
   LevelsPrefsModel.fromJson(Map<String, dynamic> json)
-      : completedLevels = json['completedLevels'] as Map<String, int>;
+      : completedLevels = json.map((key, value) => MapEntry(key, value as int));
 
-  Map<String, dynamic> toJson() => {
-        'completedLevels': completedLevels,
-      };
+  Map<String, dynamic> toJson() => completedLevels;
 }

@@ -1,3 +1,4 @@
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:darkit/core/models/cell.dart';
 import 'package:darkit/features/game/widgets/disable_multitouch.dart';
@@ -12,8 +13,8 @@ class ConstructorGameFieldGrid extends StatelessWidget {
     required this.cellWidth,
   }) : super(key: key);
 
-  final List<Cell> cells;
-  final List<Cell> inputCells;
+  final List<CellEntity> cells;
+  final List<CellEntity> inputCells;
 
   final int length;
   final double cellWidth;

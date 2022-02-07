@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:darkit/core/models/app_theme.dart';
@@ -11,7 +12,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 
 class CellWidget extends StatefulWidget {
-  final Cell _cell;
+  final CellEntity _cell;
 
   const CellWidget(
     this._cell, {
@@ -32,7 +33,7 @@ class _CellWidgetState extends State<CellWidget> {
   bool _canTap = true;
   bool _isSingleFlipOn = false;
   bool _isFlash = false;
-  Cell? _solutionCell;
+  CellEntity? _solutionCell;
 
   @override
   void initState() {
