@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:darkit/core/models/app_theme.dart';
-import 'package:darkit/core/models/cell.dart';
+// import 'package:darkit/core/models/cell.dart';
 import 'package:darkit/core/models/game.dart';
 import 'package:darkit/core/models/game_field.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +12,8 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 
 class ConstructorCellWidget extends StatefulWidget {
-  final Cell _cell;
-  final List<Cell> inputCells;
+  final CellEntity _cell;
+  final List<CellEntity> inputCells;
 
   const ConstructorCellWidget(
     this._cell,
@@ -34,7 +35,7 @@ class _ConstructorCellWidgetState extends State<ConstructorCellWidget> {
   bool _canTap = true;
   bool _isSingleFlipOn = false;
   bool _isFlash = false;
-  Cell? _solutionCell;
+  CellEntity? _solutionCell;
 
   @override
   void initState() {
@@ -70,7 +71,7 @@ class _ConstructorCellWidgetState extends State<ConstructorCellWidget> {
       // поворачиваем карту только если сейчас не режим решения
       if (widget._cell == _solutionCell || _solutionCell == null) {
         setState(() {
-          widget.inputCells.add(Cell(widget._cell.x, widget._cell.y));
+          widget.inputCells.add(CellEntity(widget._cell.x, widget._cell.y));
         });
         _controller.toggleCard();
       }

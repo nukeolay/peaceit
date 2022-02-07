@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:darkit/core/models/app_theme.dart';
@@ -21,10 +22,10 @@ class _LevelConstructorScreenState extends State<LevelConstructorScreen> {
   late Game _game;
   late String _levelId;
   late GameField gameField;
-  late List<Cell> cells;
+  late List<CellEntity> cells;
   late int movesNumber;
   late int length;
-  List<Cell> inputCells = [];
+  List<CellEntity> inputCells = [];
   bool _isInit = true;
 
   @override

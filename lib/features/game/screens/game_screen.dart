@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,7 @@ class _GameScreenState extends State<GameScreen> {
   late String _levelId;
   late int _levelIndex;
   late GameField _gameField;
-  late List<Cell> _cells;
+  late List<CellEntity> _cells;
   late int _movesNumber;
   late int _length;
   bool _isInit = true;

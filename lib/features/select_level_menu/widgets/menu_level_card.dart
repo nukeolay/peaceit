@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:darkit/core/models/app_theme.dart';
 import 'package:darkit/core/models/cell.dart';
@@ -16,7 +17,7 @@ class MenuLevelCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final List<Cell> cells;
+  final List<CellEntity> cells;
   final int levelNumber;
   final int rating;
   final bool canBePlayed;
