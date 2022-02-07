@@ -1,7 +1,6 @@
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:darkit/core/models/level.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/models/app_theme.dart';
