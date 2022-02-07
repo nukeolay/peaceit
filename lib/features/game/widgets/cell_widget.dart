@@ -101,13 +101,25 @@ class _CellWidgetState extends State<CellWidget> {
         speed: 300,
         controller: _controller,
         flipOnTouch: false,
-        front: customCell(_isBlack),
-        back: customCell(!_isBlack),
+        front: CustomCell(_isBlack, _isFlash),
+        back: CustomCell(!_isBlack, _isFlash),
       ),
     );
   }
+}
 
-  Widget customCell(_isBlack) {
+class CustomCell extends StatelessWidget {
+  final bool _isBlack;
+  final bool _isFlash;
+
+  const CustomCell(
+    this._isBlack,
+    this._isFlash, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
       // child: BackdropFilter(
