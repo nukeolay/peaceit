@@ -32,4 +32,9 @@ class LevelEntity {
       rating: rating,
     );
   }
+
+  @override
+  String toString() {
+    return 'id: $id, chapterId: $chapterId, reting: $rating';
+  }
 }

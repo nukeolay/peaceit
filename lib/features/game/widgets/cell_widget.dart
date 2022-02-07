@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -97,12 +98,18 @@ class _CellWidgetState extends State<CellWidget> {
       onTap: () {
         _isSingleFlipOn ? singleFlipCard() : flipCard();
       },
-      child: FlipCard(
-        speed: 300,
-        controller: _controller,
-        flipOnTouch: false,
-        front: CustomCell(_isBlack, _isFlash),
-        back: CustomCell(!_isBlack, _isFlash),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+          child: FlipCard(
+            speed: DefaultGameSettings.flipSpeed,
+            controller: _controller,
+            flipOnTouch: false,
+            front: CustomCell(_isBlack, _isFlash),
+            back: CustomCell(!_isBlack, _isFlash),
+          ),
+        ),
       ),
     );
   }
@@ -120,26 +127,20 @@ class CustomCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      // child: BackdropFilter(
-      //   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: _isFlash
-              ? context.read<AppTheme>().accentColor.withOpacity(0.5)
-              : _isBlack
-                  ? context.read<AppTheme>().cardFront.withOpacity(0.5)
-                  : context.read<AppTheme>().cardBack.withOpacity(0.5),
-          boxShadow: [
-            BoxShadow(
-              color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-              blurRadius: 6.0,
-            ),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: _isFlash
+            ? context.read<AppTheme>().accentColor.withOpacity(0.5)
+            : _isBlack
+                ? context.read<AppTheme>().cardFront.withOpacity(0.5)
+                : context.read<AppTheme>().cardBack.withOpacity(0.5),
+        boxShadow: [
+          BoxShadow(
+            color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+            blurRadius: 6.0,
+          ),
+        ],
       ),
-      // ),
     );
   }
 }

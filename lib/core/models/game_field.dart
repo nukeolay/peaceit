@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
@@ -22,10 +23,12 @@ class GameField with ChangeNotifier {
     required List<CellEntity> solution,
   }) {
     _levelId = levelId;
-    _currentLevel =
-        [...level].map((cell) => CellEntity(cell.x, cell.y, cell.isBlack)).toList();
-    _originalLevel =
-        [...level].map((cell) => CellEntity(cell.x, cell.y, cell.isBlack)).toList();
+    _currentLevel = [...level]
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
+        .toList();
+    _originalLevel = [...level]
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
+        .toList();
     _originalSolutionCells = [...solution]
         .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
         .toList();
@@ -99,7 +102,8 @@ class GameField with ChangeNotifier {
         }
         notifyListeners();
         canTap = false;
-        Timer(const Duration(milliseconds: 310), () {
+        Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10),
+            () {
           canTap = true;
           if (blackNumber == _currentLevel.length) {
             isAllBlack = true;
@@ -116,7 +120,8 @@ class GameField with ChangeNotifier {
       movesNumber++;
       notifyListeners();
       canTap = false;
-      Timer(const Duration(milliseconds: 310), () {
+      Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10),
+          () {
         canTap = true;
         if (blackNumber == _currentLevel.length) {
           isAllBlack = true;
