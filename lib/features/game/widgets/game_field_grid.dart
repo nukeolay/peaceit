@@ -1,6 +1,5 @@
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:darkit/core/models/cell.dart';
 import 'package:darkit/features/game/widgets/cell_widget.dart';
 import 'package:darkit/features/game/widgets/disable_multitouch.dart';
 

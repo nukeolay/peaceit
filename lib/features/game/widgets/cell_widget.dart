@@ -4,7 +4,6 @@ import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:darkit/core/models/app_theme.dart';
-import 'package:darkit/core/models/cell.dart';
 import 'package:darkit/core/models/game.dart';
 import 'package:darkit/core/models/game_field.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +36,8 @@ class _CellWidgetState extends State<CellWidget> {
 
   @override
   void initState() {
-    super.initState();
     _controller = FlipCardController();
+    super.initState();
   }
 
   @override
@@ -111,24 +110,24 @@ class _CellWidgetState extends State<CellWidget> {
   Widget customCell(_isBlack) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.0),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-        child: Container(
-          decoration: BoxDecoration(
-            color: _isFlash
-                ? context.read<AppTheme>().accentColor.withOpacity(0.5)
-                : _isBlack
-                    ? context.read<AppTheme>().cardFront.withOpacity(0.5)
-                    : context.read<AppTheme>().cardBack.withOpacity(0.5),
-            boxShadow: [
-              BoxShadow(
-                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
+      // child: BackdropFilter(
+      //   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: _isFlash
+              ? context.read<AppTheme>().accentColor.withOpacity(0.5)
+              : _isBlack
+                  ? context.read<AppTheme>().cardFront.withOpacity(0.5)
+                  : context.read<AppTheme>().cardBack.withOpacity(0.5),
+          boxShadow: [
+            BoxShadow(
+              color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+              blurRadius: 6.0,
+            ),
+          ],
         ),
       ),
+      // ),
     );
   }
 }
