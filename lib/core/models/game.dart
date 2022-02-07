@@ -6,36 +6,23 @@ import 'package:darkit/features/hints/domain/usecases/solutions_number_increment
 import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
-import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:darkit/internal/dependencies/hints_repository_module.dart';
 import 'package:darkit/internal/dependencies/levels_repository_module%20copy.dart';
-// import 'package:darkit/internal/dependencies/repository_module.dart';
 import 'package:flutter/material.dart';
 import 'package:darkit/core/models/game_field.dart';
-// import 'package:darkit/core/models/level.dart';
-// import 'package:darkit/core/models/levels.dart';
-// import 'package:darkit/domain/entities/user_data.dart';
 
 class Game with ChangeNotifier {
-  // Levels _levels;
-
   late GameField _gameField;
-  // late UserData _userData;
-  // late LevelsEntity _levels;
   bool _isWin = false;
   bool _isInit = true;
   bool isSingleFlipOn = false;
 
-  // Game(this._levels);
-
   GameField get gameField => _gameField;
 
   void initGame(GameField gameField) async {
-    // TODO может быть сюда не передавать UserData, а просто вызывать его тут внутри
     _gameField = gameField;
     if (_isInit) {
-      // await _loadUserData();
       await HintsRepositoryModule.hintsRepository.load();
       await LevelsRepositoryModule.levelsRepository.load();
       _isInit = false;
@@ -46,38 +33,24 @@ class Game with ChangeNotifier {
       if (currentLevel.rating < newRating) {
         if (currentLevel.rating == 0) {
           // уровень до этого еще не проходили
-          // currentLevel.rating = newRating;
           _levels.levels[levelIndexById(currentLevelId)] =
               currentLevel.copyWith(rating: newRating);
-          // _userData.completedLevels[currentLevel.id] = CompletedLevel(
-          //   id: currentLevel.id,
-          //   rating: currentLevel.rating,
-          // );
           String _chapterId = _chapterIdByLevelId(currentLevelId);
           if (chapterByChapterId(_chapterId).completedRatio == 1) {
             // пройдены все уровни в главе
             await solutionsNumberIncrement();
           }
         }
-        // currentLevel.rating = newRating;
         _levels.levels[levelIndexById(currentLevelId)] = currentLevel.copyWith(
             rating: newRating); // TODO может это не нужно? ранее уже
         if (newRating == 3) {
           await singleFlipsIncrement();
         }
         await LevelsRepositoryModule.levelsRepository.save(_levels);
-        // await _saveUserData();
       }
     }
     notifyListeners();
   }
-
-  // levels and chapters
-  //
-  //
-  // функции, обращающиеся только к классу Levels
-  //
-  //
 
   LevelsEntity get _levels => LevelsRepositoryModule.levelsRepository.levels;
 
@@ -134,15 +107,17 @@ class Game with ChangeNotifier {
   }
 
   String nextLevelIdByPreviousId(String levelId) {
-    int _levelIndex = levelIndexById(levelId);
+    int levelIndex = levelIndexById(levelId);
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
-    return chapter.levels[_levelIndex + 1].id;
+    return chapter.levels[levelIndex + 1].id;
   }
 
   int levelIndexById(String levelId) {
-    return _levels.levels
-        .indexOf(_levels.levels.firstWhere((level) => level.id == levelId));
+    final String chapterId = _chapterIdByLevelId(levelId);
+    final ChapterEntity chapter = _chapterById(chapterId);
+    final levelIndexInChapter = chapter.levelIndexById(levelId);
+    return levelIndexInChapter;
   }
 
   List<LevelEntity> levelsByChapterId(String chapterId) {
@@ -164,12 +139,6 @@ class Game with ChangeNotifier {
     return _levels.levels.firstWhere((level) => level.id == levelId);
   }
 
-  //
-  //
-  // функции, обращающиеся только к классу Levels
-  //
-  //
-
   void restartLevel() {
     _isWin = false;
     _gameField.resetField();
@@ -189,31 +158,10 @@ class Game with ChangeNotifier {
 
   String get currentLevelId => _gameField.levelId;
 
-  // user data
-
-  // Future<void> _saveUserData() async {
-  //   await RepositoryModule.userDataRepository.save();
-  // }
-
-  // Future<void> _loadUserData() async {
-  // await RepositoryModule.userDataRepository.load();
-  // await HintsRepositoryModule.hintsRepository.load();
-  // await LevelsRepositoryModule.levelsRepository.load();
-  // _userData = RepositoryModule.userDataRepository.userData;
-  // загружаю информацию о пройденных уровнях (рейтинг)
-  // for (CompletedLevel completedLevel in _userData.completedLevels.values) {
-  //   _levels._levels.levels
-  //       .firstWhere((level) => level.id == completedLevel.id)
-  //       .rating = completedLevel.rating;
-  // }
-  // }
-
   Future<void> removeData() async {
-    // _levels = Levels();
     isSingleFlipOn = false;
     _isWin = false;
-    // _userData.completedLevels = {};
-    ResetLevels(LevelsRepositoryModule.levelsRepository);
+    await ResetLevels(LevelsRepositoryModule.levelsRepository).call();
     await ResetHints(HintsRepositoryModule.hintsRepository).call();
     notifyListeners();
   }

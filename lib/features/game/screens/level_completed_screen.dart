@@ -134,8 +134,6 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                                 Routes.game,
                                 arguments: _nextLevelId);
                           } catch (error) {
-                            // Navigator.of(context).pushReplacementNamed(Routes
-                            //     .selectChapterMenu); // TODO заменять до страницы с главой
                             Navigator.popUntil(context,
                                 ModalRoute.withName(Routes.selectChapterMenu));
                           }
