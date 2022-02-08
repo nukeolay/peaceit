@@ -1,10 +1,10 @@
 import 'dart:ui';
 
+import 'package:darkit/old_realisation/models/app_theme.dart';
 import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-import 'package:darkit/core/models/app_theme.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({

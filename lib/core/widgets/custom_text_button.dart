@@ -1,7 +1,7 @@
 import 'dart:ui';
 
+import 'package:darkit/old_realisation/models/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:darkit/core/models/app_theme.dart';
 import 'package:provider/provider.dart';
 
 class CustomTextButton extends StatelessWidget {

@@ -1,13 +1,12 @@
+import 'package:darkit/old_realisation/home/screens/home_screen.dart';
+import 'package:darkit/old_realisation/models/app_theme.dart';
+import 'package:darkit/old_realisation/models/game.dart';
+import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/custom_route.dart';
-import 'package:darkit/core/models/app_theme.dart';
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/features/home/screens/home_screen.dart';
-import 'package:darkit/core/models/game.dart';
-import 'package:darkit/core/models/game_field.dart';
-// import 'package:darkit/core/models/levels.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
