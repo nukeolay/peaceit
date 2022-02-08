@@ -1,13 +1,13 @@
-import 'package:darkit/features/tutorial/screens/toturial_screen.dart';
+import 'package:darkit/old_realisation/game/screens/game_finished_screen.dart';
+import 'package:darkit/old_realisation/game/screens/game_screen.dart';
+import 'package:darkit/old_realisation/game/screens/level_completed_screen.dart';
+import 'package:darkit/old_realisation/home/screens/home_screen.dart';
+import 'package:darkit/old_realisation/how_to_play/screens/how_to_play_screen.dart';
+import 'package:darkit/old_realisation/level_constructor/screens/level_constructor_screen.dart';
+import 'package:darkit/old_realisation/select_level_menu/screens/select_chapter_menu_screen.dart';
+import 'package:darkit/old_realisation/select_level_menu/screens/select_level_menu_screen.dart';
+import 'package:darkit/old_realisation/tutorial/screens/toturial_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:darkit/features/game/screens/game_finished_screen.dart';
-import 'package:darkit/features/game/screens/game_screen.dart';
-import 'package:darkit/features/how_to_play/screens/how_to_play_screen.dart';
-import 'package:darkit/features/level_constructor/screens/level_constructor_screen.dart';
-import 'package:darkit/features/select_level_menu/screens/select_chapter_menu_screen.dart';
-import 'package:darkit/features/select_level_menu/screens/select_level_menu_screen.dart';
-import 'package:darkit/features/home/screens/home_screen.dart';
-import 'package:darkit/features/game/screens/level_completed_screen.dart';
 
 class Routes {
   static const String home = '/home-screen';
