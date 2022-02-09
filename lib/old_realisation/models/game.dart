@@ -1,3 +1,4 @@
+import 'package:darkit/features/hints/domain/repositories/hints_repository.dart';
 import 'package:darkit/features/hints/domain/usecases/reset_hints.dart';
 import 'package:darkit/features/hints/domain/usecases/single_flips_decrement.dart';
 import 'package:darkit/features/hints/domain/usecases/single_flips_increment.dart';
@@ -6,9 +7,9 @@ import 'package:darkit/features/hints/domain/usecases/solutions_number_increment
 import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
+import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
-import 'package:darkit/internal/dependencies/hints_repository_module.dart';
-import 'package:darkit/internal/dependencies/levels_repository_module.dart';
+import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +19,16 @@ class Game with ChangeNotifier {
   bool _isInit = true;
   bool isSingleFlipOn = false;
 
+  final HintsRepository _hintsRepository = serviceLocator<HintsRepository>();
+  final LevelsRepository _levelsRepository = serviceLocator<LevelsRepository>();
+
   GameField get gameField => _gameField;
 
   void initGame(GameField gameField) async {
     _gameField = gameField;
     if (_isInit) {
-      await HintsRepositoryModule.hintsRepository.load();
-      await LevelsRepositoryModule.levelsRepository.load();
+      await _hintsRepository.load();
+      await _levelsRepository.load();
       _isInit = false;
     }
     _isWin = _gameField.isAllBlack;
@@ -48,13 +52,13 @@ class Game with ChangeNotifier {
         if (newRating == 3) {
           await singleFlipsIncrement();
         }
-        await LevelsRepositoryModule.levelsRepository.save(_levels);
+        await _levelsRepository.save(_levels);
       }
     }
     notifyListeners();
   }
 
-  LevelsEntity get _levels => LevelsRepositoryModule.levelsRepository.levels;
+  LevelsEntity get _levels => _levelsRepository.levels;
 
   bool get isFirstStart =>
       _levels.levels.where((level) => level.rating > 0).isEmpty;
@@ -162,22 +166,21 @@ class Game with ChangeNotifier {
   Future<void> removeData() async {
     isSingleFlipOn = false;
     _isWin = false;
-    await ResetLevels(LevelsRepositoryModule.levelsRepository).call();
-    await ResetHints(HintsRepositoryModule.hintsRepository).call();
+    await ResetLevels(_levelsRepository).call();
+    await ResetHints(_hintsRepository).call();
     notifyListeners();
   }
 
   // single flips
 
-  int get singleFlips =>
-      HintsRepositoryModule.hintsRepository.hints.singleFlips;
+  int get singleFlips => _hintsRepository.hints.singleFlips;
 
   Future<void> singleFlipsDecrement() async {
-    await SingleFlipsDecrement(HintsRepositoryModule.hintsRepository).call();
+    await SingleFlipsDecrement(_hintsRepository).call();
   }
 
   Future<void> singleFlipsIncrement() async {
-    await SingleFlipsIncrement(HintsRepositoryModule.hintsRepository).call();
+    await SingleFlipsIncrement(_hintsRepository).call();
   }
 
   bool canUseSingleFlips() {
@@ -197,17 +200,14 @@ class Game with ChangeNotifier {
 
   // solutions
 
-  int get solutionsNumber =>
-      HintsRepositoryModule.hintsRepository.hints.solutionsNumber;
+  int get solutionsNumber => _hintsRepository.hints.solutionsNumber;
 
   Future<void> solutionsNumberDecrement() async {
-    await SolutionsNumberDecrement(HintsRepositoryModule.hintsRepository)
-        .call();
+    await SolutionsNumberDecrement(_hintsRepository).call();
   }
 
   Future<void> solutionsNumberIncrement() async {
-    await SolutionsNumberIncrement(HintsRepositoryModule.hintsRepository)
-        .call();
+    await SolutionsNumberIncrement(_hintsRepository).call();
   }
 
   bool canUseSolution() {
