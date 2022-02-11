@@ -6,7 +6,6 @@ import 'package:darkit/features/hints/domain/usecases/solutions_number_decrement
 import 'package:darkit/features/hints/domain/usecases/solutions_number_increment.dart';
 import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
-import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
 import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:darkit/internal/service_locator.dart';
@@ -16,7 +15,6 @@ import 'package:flutter/material.dart';
 class Game with ChangeNotifier {
   late GameField _gameField;
   bool _isWin = false;
-  // bool _isInit = true;
   bool isSingleFlipOn = false;
 
   final HintsRepository _hintsRepository = serviceLocator<HintsRepository>();
@@ -26,19 +24,13 @@ class Game with ChangeNotifier {
 
   void initGame(GameField gameField) async {
     _gameField = gameField;
-    // if (_isInit) {
-    //   // await _hintsRepository.load();
-    //   // await _levelsRepository.load();
-    //   _isInit = false;
-    // }
     _isWin = _gameField.isAllBlack;
     if (_isWin) {
       int newRating = rating();
       if (currentLevel.rating < newRating) {
         if (currentLevel.rating == 0) {
           // уровень до этого еще не проходили
-          _levels.levels[_levels.levels
-                  .indexWhere((level) => level.id == currentLevelId)] =
+          _levels[_levels.indexWhere((level) => level.id == currentLevelId)] =
               currentLevel.copyWith(rating: newRating);
           String _chapterId = _chapterIdByLevelId(currentLevelId);
           if (chapterByChapterId(_chapterId).completedRatio == 1) {
@@ -46,8 +38,7 @@ class Game with ChangeNotifier {
             await solutionsNumberIncrement();
           }
         }
-        _levels.levels[_levels.levels
-                .indexWhere((level) => level.id == currentLevelId)] =
+        _levels[_levels.indexWhere((level) => level.id == currentLevelId)] =
             currentLevel.copyWith(rating: newRating);
         if (newRating == 3) {
           await singleFlipsIncrement();
@@ -58,15 +49,14 @@ class Game with ChangeNotifier {
     notifyListeners();
   }
 
-  LevelsEntity get _levels => _levelsRepository.levels;
+  List<LevelEntity> get _levels => _levelsRepository.levels;
 
-  bool get isFirstStart =>
-      _levels.levels.where((level) => level.rating > 0).isEmpty;
+  bool get isFirstStart => _levels.where((level) => level.rating > 0).isEmpty;
 
   List<ChapterEntity> get chapters {
     List<ChapterEntity> chapters = [];
     List<String> chapterIds = [];
-    for (LevelEntity level in _levels.levels) {
+    for (LevelEntity level in _levels) {
       if (!chapterIds.contains(level.chapterId)) {
         chapterIds.add(level.chapterId);
         chapters.add(ChapterEntity(id: level.chapterId, levels: [level]));
@@ -81,13 +71,13 @@ class Game with ChangeNotifier {
   }
 
   LevelEntity _levelById(String levelId) {
-    return _levels.levels.firstWhere((level) => level.id == levelId);
+    return _levels.firstWhere((level) => level.id == levelId);
   }
 
   int levelRatingById(String levelId) => _levelById(levelId).rating;
 
   String _chapterIdByLevelId(String levelId) {
-    return _levels.levels.firstWhere((level) => level.id == levelId).chapterId;
+    return _levels.firstWhere((level) => level.id == levelId).chapterId;
   }
 
   ChapterEntity _chapterById(String chapterId) {
@@ -116,9 +106,7 @@ class Game with ChangeNotifier {
   }
 
   List<LevelEntity> levelsByChapterId(String chapterId) {
-    return _levels.levels
-        .where((level) => level.chapterId == chapterId)
-        .toList();
+    return _levels.where((level) => level.chapterId == chapterId).toList();
   }
 
   ChapterEntity chapterByChapterId(String chapterId) {
@@ -126,12 +114,12 @@ class Game with ChangeNotifier {
   }
 
   LevelEntity get currentLevel =>
-      _levels.levels.firstWhere((level) => level.id == currentLevelId);
+      _levels.firstWhere((level) => level.id == currentLevelId);
 
-  int get levelsQuantity => _levels.levels.length;
+  int get levelsQuantity => _levels.length;
 
   LevelEntity levelById(String levelId) {
-    return _levels.levels.firstWhere((level) => level.id == levelId);
+    return _levels.firstWhere((level) => level.id == levelId);
   }
 
   void restartLevel() {
@@ -216,8 +204,8 @@ class Game with ChangeNotifier {
   bool get isWin => _isWin;
 
   bool get isGameFinished =>
-      _levels.levels.where((level) => level.rating != 0).length ==
-      _levels.levels.length;
+      _levels.where((level) => level.rating != 0).length ==
+      _levels.length;
 
   int rating() {
     // TODO сделать ById - ById уже есть. Этот метод используется для расчета значения от количества ходов. Передавать сюда Id и количество ходов. Или оставить все без изменения

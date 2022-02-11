@@ -1,7 +1,7 @@
-import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
+import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 
 abstract class LevelsRepository {
-  LevelsEntity get levels;
+  List<LevelEntity> get levels;
   Future<void> load();
-  Future<void> save(LevelsEntity levels);
+  Future<void> save(List<LevelEntity> levels);
 }

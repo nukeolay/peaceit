@@ -6,7 +6,7 @@ class GenerateChapters {
   final LevelsRepository _levelsRepository;
   GenerateChapters(this._levelsRepository);
   List<ChapterEntity> call() {
-    final List<LevelEntity> _levels = _levelsRepository.levels.levels;
+    final List<LevelEntity> _levels = _levelsRepository.levels;
     final List<ChapterEntity> _chapters = [];
     final List<String> chapterIds = [];
     for (LevelEntity level in _levels) {
