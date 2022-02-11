@@ -8,7 +8,7 @@ import 'package:provider/src/provider.dart';
 class SelectChapterCard extends StatelessWidget {
   const SelectChapterCard({
     required this.chapterId,
-    required this.chapterProgress,
+    required this.completedRatio,
     required this.completedLevelsInChapter,
     required this.levelsInChapter,
     required this.canBePlayed,
@@ -16,7 +16,7 @@ class SelectChapterCard extends StatelessWidget {
   }) : super(key: key);
 
   final String chapterId;
-  final double chapterProgress;
+  final double completedRatio;
   final String completedLevelsInChapter;
   final String levelsInChapter;
   final bool canBePlayed;
@@ -69,7 +69,7 @@ class SelectChapterCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: LinearProgressIndicator(
-                    value: chapterProgress,
+                    value: completedRatio,
                     color: context.read<AppTheme>().accentColor,
                     backgroundColor:
                         context.read<AppTheme>().cardFront.withOpacity(0.3),

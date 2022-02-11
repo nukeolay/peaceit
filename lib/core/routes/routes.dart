@@ -1,4 +1,4 @@
-import 'package:darkit/features/levels/presentation/views/select_chapter_view.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/view/select_chapter_view.dart';
 import 'package:darkit/old_realisation/game/screens/game_finished_screen.dart';
 import 'package:darkit/old_realisation/game/screens/game_screen.dart';
 import 'package:darkit/old_realisation/game/screens/level_completed_screen.dart';

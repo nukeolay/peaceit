@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/features/levels/presentation/select_chapter_screen/view_models/select_chapter_view_model.dart';
 import 'package:darkit/features/levels/presentation/select_chapter_screen/widgets/select_chapter_card.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/view_model/view_model.dart';
 
 class ChaptersGrid extends StatelessWidget {
   const ChaptersGrid({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class ChaptersGrid extends StatelessWidget {
     final _viewModel = context.watch<SelectChapterViewModel>();
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: _viewModel.chaptersNumber,
+      itemCount: _viewModel.state.chaptersNumber,
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -24,8 +24,11 @@ class ChaptersGrid extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(0.0),
       itemBuilder: (context, index) {
-        String _chapterId = _viewModel.chapters[index];
-        bool _canBePlayed = _viewModel.canBePlayed(_chapterId);
+        String _chapterId = _viewModel.state.chapters[index];
+        double _completedRatio = _viewModel.state.completedRatio[index];
+        String _completedLevels = _viewModel.state.completedLevels[index];
+        String _levelsNumber = _viewModel.state.levelsNumber[index];
+        bool _canBePlayed = _viewModel.state.canBePlayed[index];
         return Center(
           child: Container(
             padding: const EdgeInsets.all(8.0),
@@ -41,10 +44,9 @@ class ChaptersGrid extends StatelessWidget {
                   : null,
               child: SelectChapterCard(
                 chapterId: _chapterId,
-                chapterProgress: _viewModel.completedRatio(_chapterId),
-                completedLevelsInChapter:
-                    _viewModel.completedLevels(_chapterId),
-                levelsInChapter: _viewModel.levelsNumber(_chapterId),
+                completedRatio: _completedRatio,
+                completedLevelsInChapter: _completedLevels,
+                levelsInChapter: _levelsNumber,
                 canBePlayed: _canBePlayed,
               ),
             ),

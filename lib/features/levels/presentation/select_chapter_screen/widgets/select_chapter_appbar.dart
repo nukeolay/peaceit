@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
-import 'package:darkit/features/levels/presentation/select_chapter_screen/view_models/select_chapter_view_model.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/view_model/view_model.dart';
 
 class SelectChapterAppbar extends StatelessWidget {
   const SelectChapterAppbar({Key? key}) : super(key: key);

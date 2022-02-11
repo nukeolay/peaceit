@@ -1,7 +1,10 @@
-import 'package:darkit/features/levels/presentation/select_level_screen/widgets/select_level_body.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// ! TODO переделать на levels
+import 'package:darkit/features/levels/presentation/select_level_screen/view_model/view_model.dart';
+import 'package:darkit/features/levels/presentation/select_level_screen/widgets/levels_grid.dart';
+import 'package:darkit/features/levels/presentation/select_level_screen/widgets/select_level_appbar.dart';
+
 class SelectLevelView extends StatelessWidget {
   const SelectLevelView({Key? key}) : super(key: key);
 
@@ -17,7 +20,21 @@ class SelectLevelView extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: const SelectLevelBody(),
+        child: ChangeNotifierProvider<SelectLevelViewModel>(
+          create: (_) => SelectLevelViewModel('dommy------------'),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: const [
+                  SelectLevelAppbar(),
+                  LevelsGrid(),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

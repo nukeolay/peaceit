@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'package:darkit/features/levels/presentation/select_chapter_screen/widgets/select_chapter_body.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/view_model/view_model.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/widgets/chapters_grid.dart';
+import 'package:darkit/features/levels/presentation/select_chapter_screen/widgets/select_chapter_appbar.dart';
 
 class SelectChapterView extends StatelessWidget {
   const SelectChapterView({Key? key}) : super(key: key);
@@ -17,7 +20,21 @@ class SelectChapterView extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: const SelectChapterBody(),
+        child: ChangeNotifierProvider<SelectChapterViewModel>(
+          create: (_) => SelectChapterViewModel(),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                children: const [
+                  SelectChapterAppbar(),
+                  ChaptersGrid(),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
