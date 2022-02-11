@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:darkit/old_realisation/models/app_theme.dart';
+import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';

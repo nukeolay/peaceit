@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 // ignore: implementation_imports
 import 'package:provider/src/provider.dart';
 
-class MenuChapterCard extends StatelessWidget {
-  const MenuChapterCard({
+class SelectChapterCard extends StatelessWidget {
+  const SelectChapterCard({
     required this.chapterId,
+    required this.chapterProgress,
     required this.completedLevelsInChapter,
     required this.levelsInChapter,
     required this.canBePlayed,
@@ -15,8 +16,9 @@ class MenuChapterCard extends StatelessWidget {
   }) : super(key: key);
 
   final String chapterId;
-  final int completedLevelsInChapter;
-  final int levelsInChapter;
+  final double chapterProgress;
+  final String completedLevelsInChapter;
+  final String levelsInChapter;
   final bool canBePlayed;
 
   @override
@@ -62,13 +64,12 @@ class MenuChapterCard extends StatelessWidget {
                   ),
                 ),
               ),
-              // ),
               Container(
                 alignment: Alignment.center,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: LinearProgressIndicator(
-                    value: completedLevelsInChapter / levelsInChapter,
+                    value: chapterProgress,
                     color: context.read<AppTheme>().accentColor,
                     backgroundColor:
                         context.read<AppTheme>().cardFront.withOpacity(0.3),

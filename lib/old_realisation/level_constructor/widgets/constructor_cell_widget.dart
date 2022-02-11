@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
-import 'package:darkit/old_realisation/models/app_theme.dart';
+import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:darkit/core/models/cell.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';

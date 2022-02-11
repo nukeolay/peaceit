@@ -11,6 +11,7 @@ import 'package:darkit/features/levels/data/prefs/levels_prefs_util.dart';
 import 'package:darkit/features/levels/data/prefs/services/levels_prefs_service.dart';
 import 'package:darkit/features/levels/data/repositories/levels_repository_impl.dart';
 import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
+import 'package:darkit/features/levels/domain/usecases/genereate_chapers.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,6 +49,9 @@ Future<void> init() async {
   serviceLocator.registerLazySingleton<ResetLevels>(
     () => ResetLevels(serviceLocator()),
   );
+  serviceLocator.registerLazySingleton<GenerateChapters>(
+    () => GenerateChapters(serviceLocator()),
+  );
 
   // ---Repository---
   // HintsRepository
@@ -80,4 +84,8 @@ Future<void> init() async {
       await SharedPreferences.getInstance();
   serviceLocator
       .registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+
+  // -- Repositories Init --
+  await serviceLocator<LevelsRepository>().load();
+  await serviceLocator<HintsRepository>().load();
 }
