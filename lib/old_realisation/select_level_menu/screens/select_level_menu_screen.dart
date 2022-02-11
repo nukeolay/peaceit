@@ -1,5 +1,5 @@
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
-import 'package:darkit/old_realisation/models/app_theme.dart';
+import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/select_level_menu/widgets/menu_level_card.dart';
 import 'package:flutter/material.dart';

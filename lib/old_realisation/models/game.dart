@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 class Game with ChangeNotifier {
   late GameField _gameField;
   bool _isWin = false;
-  bool _isInit = true;
+  // bool _isInit = true;
   bool isSingleFlipOn = false;
 
   final HintsRepository _hintsRepository = serviceLocator<HintsRepository>();
@@ -26,11 +26,11 @@ class Game with ChangeNotifier {
 
   void initGame(GameField gameField) async {
     _gameField = gameField;
-    if (_isInit) {
-      await _hintsRepository.load();
-      await _levelsRepository.load();
-      _isInit = false;
-    }
+    // if (_isInit) {
+    //   // await _hintsRepository.load();
+    //   // await _levelsRepository.load();
+    //   _isInit = false;
+    // }
     _isWin = _gameField.isAllBlack;
     if (_isWin) {
       int newRating = rating();
@@ -97,19 +97,9 @@ class Game with ChangeNotifier {
   bool canBeLevelPlayed(String levelId) {
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
-    final int index = chapter.levelIndexById(levelId);
+    final int index = chapter.levelIndex(levelId);
     return chapter.completedLevelsNumber >=
         index; // TODO если + 1 то будет открываться по 2 уровня
-  }
-
-  bool canBeChapterPlayed(String chapterId) {
-    try {
-      int _previousChapterIndex =
-          chapters.indexWhere((chapter) => chapter.id == chapterId) - 1;
-      return chapters[_previousChapterIndex].completedRatio > 0.7;
-    } catch (error) {
-      return true;
-    }
   }
 
   String nextLevelIdInChapterByPreviousId(String levelId) {
@@ -122,7 +112,7 @@ class Game with ChangeNotifier {
   int levelIndexInChapterById(String levelId) {
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
-    return chapter.levelIndexById(levelId);
+    return chapter.levelIndex(levelId);
   }
 
   List<LevelEntity> levelsByChapterId(String chapterId) {

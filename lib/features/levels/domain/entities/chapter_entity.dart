@@ -16,7 +16,7 @@ class ChapterEntity {
 
   double get completedRatio => completedLevelsNumber / levelsNumber;
 
-  int levelIndexById(String levelId) {
+  int levelIndex(String levelId) {
     return levels.indexOf(levels.firstWhere((level) => level.id == levelId));
   }
 }

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
-import 'package:darkit/old_realisation/models/app_theme.dart';
+import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
