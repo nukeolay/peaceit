@@ -1,5 +1,5 @@
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
-import 'package:darkit/features/levels/domain/entities/levels_entity.dart';
+import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/presentation/select_level_screen/view_model/view_model_state.dart';
 
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ class SelectLevelViewModel extends ChangeNotifier {
     _init(chapterId);
   }
 
-  final List<LevelsEntity> _levels = [];
+  final List<List<LevelEntity>> _levels = [];
 
   void _init(String chapterId) {
     _levels.clear();
