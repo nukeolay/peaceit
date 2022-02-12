@@ -39,7 +39,7 @@ class ChaptersGrid extends StatelessWidget {
                       Navigator.of(context)
                           .pushNamed(Routes.selectLevelMenu,
                               arguments: _chapterId)
-                          .then((_) => _viewModel.update());
+                          .whenComplete(_viewModel.update);
                     }
                   : null,
               child: SelectChapterCard(
