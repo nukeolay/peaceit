@@ -15,7 +15,6 @@ class SelectChapterViewModelState {
     this.canBePlayed = const [],
   });
 
-  @override
   SelectChapterViewModelState copyWith({
     List<String>? chapters,
     int? chaptersNumber,

@@ -1,5 +1,4 @@
 import 'package:darkit/features/hints/domain/repositories/hints_repository.dart';
-import 'package:darkit/features/hints/domain/usecases/reset_hints.dart';
 import 'package:darkit/features/hints/domain/usecases/single_flips_decrement.dart';
 import 'package:darkit/features/hints/domain/usecases/single_flips_increment.dart';
 import 'package:darkit/features/hints/domain/usecases/solutions_number_decrement.dart';
@@ -7,7 +6,6 @@ import 'package:darkit/features/hints/domain/usecases/solutions_number_increment
 import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
-import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
@@ -70,12 +68,6 @@ class Game with ChangeNotifier {
     return chapters;
   }
 
-  LevelEntity _levelById(String levelId) {
-    return _levels.firstWhere((level) => level.id == levelId);
-  }
-
-  int levelRatingById(String levelId) => _levelById(levelId).rating;
-
   String _chapterIdByLevelId(String levelId) {
     return _levels.firstWhere((level) => level.id == levelId).chapterId;
   }
@@ -84,29 +76,10 @@ class Game with ChangeNotifier {
     return chapters.firstWhere((chapter) => chapter.id == chapterId);
   }
 
-  bool canBeLevelPlayed(String levelId) {
-    final String chapterId = _chapterIdByLevelId(levelId);
-    final ChapterEntity chapter = _chapterById(chapterId);
-    final int index = chapter.levelIndex(levelId);
-    return chapter.completedLevelsNumber >=
-        index; // TODO если + 1 то будет открываться по 2 уровня
-  }
-
-  String nextLevelIdInChapterByPreviousId(String levelId) {
-    final int levelIndex = levelIndexInChapterById(levelId);
-    final String chapterId = _chapterIdByLevelId(levelId);
-    final ChapterEntity chapter = _chapterById(chapterId);
-    return chapter.levels[levelIndex + 1].id;
-  }
-
   int levelIndexInChapterById(String levelId) {
     final String chapterId = _chapterIdByLevelId(levelId);
     final ChapterEntity chapter = _chapterById(chapterId);
     return chapter.levelIndex(levelId);
-  }
-
-  List<LevelEntity> levelsByChapterId(String chapterId) {
-    return _levels.where((level) => level.chapterId == chapterId).toList();
   }
 
   ChapterEntity chapterByChapterId(String chapterId) {
@@ -115,8 +88,6 @@ class Game with ChangeNotifier {
 
   LevelEntity get currentLevel =>
       _levels.firstWhere((level) => level.id == currentLevelId);
-
-  int get levelsQuantity => _levels.length;
 
   LevelEntity levelById(String levelId) {
     return _levels.firstWhere((level) => level.id == levelId);
@@ -140,14 +111,6 @@ class Game with ChangeNotifier {
   }
 
   String get currentLevelId => _gameField.levelId;
-
-  Future<void> removeData() async {
-    isSingleFlipOn = false;
-    _isWin = false;
-    await ResetLevels(_levelsRepository).call();
-    await ResetHints(_hintsRepository).call();
-    notifyListeners();
-  }
 
   // single flips
 
@@ -204,8 +167,7 @@ class Game with ChangeNotifier {
   bool get isWin => _isWin;
 
   bool get isGameFinished =>
-      _levels.where((level) => level.rating != 0).length ==
-      _levels.length;
+      _levels.where((level) => level.rating != 0).length == _levels.length;
 
   int rating() {
     // TODO сделать ById - ById уже есть. Этот метод используется для расчета значения от количества ходов. Передавать сюда Id и количество ходов. Или оставить все без изменения

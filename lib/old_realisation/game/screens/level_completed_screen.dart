@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:darkit/core/app_theme.dart';
-import 'package:darkit/old_realisation/models/game.dart';
-import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
+import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/old_realisation/models/game.dart';
+import 'package:darkit/old_realisation/models/game_field.dart';
 
 class LevelCompletedScreen extends StatefulWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
@@ -128,11 +128,13 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                               .pushReplacementNamed(Routes.gameFinished);
                         } else {
                           try {
-                            String _nextLevelId =
-                                game.nextLevelIdInChapterByPreviousId(_levelId);
-                            Navigator.of(context).pushReplacementNamed(
-                                Routes.game,
-                                arguments: _nextLevelId);
+                            // String _nextLevelId =
+                            //     game.nextLevelIdInChapterByPreviousId(_levelId);
+                            // Navigator.of(context).pushReplacementNamed(
+                            //     Routes.game,
+                            //     arguments: _nextLevelId);
+                            Navigator.popUntil(context,
+                                ModalRoute.withName(Routes.selectLevelMenu)); // TODO сделать переход не следующий уровень, а не в меню выбора уровней
                           } catch (error) {
                             Navigator.popUntil(context,
                                 ModalRoute.withName(Routes.selectChapterMenu));
