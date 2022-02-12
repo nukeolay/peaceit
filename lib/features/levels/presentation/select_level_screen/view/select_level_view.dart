@@ -10,6 +10,8 @@ class SelectLevelView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _chapterId = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -21,7 +23,7 @@ class SelectLevelView extends StatelessWidget {
           ),
         ),
         child: ChangeNotifierProvider<SelectLevelViewModel>(
-          create: (_) => SelectLevelViewModel('dommy------------'),
+          create: (_) => SelectLevelViewModel(_chapterId),
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(12.0),

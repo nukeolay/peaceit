@@ -40,7 +40,9 @@ class LevelsGrid extends StatelessWidget {
                   ? () {
                       HapticFeedback.heavyImpact();
                       Navigator.of(context)
-                          .pushNamed(Routes.game, arguments: _levelId);
+                          .pushNamed(Routes.game, arguments: _levelId)
+                          .whenComplete(_viewModel
+                              .update); // TODO не обновляет список пройденных уровней псоле прохождения второго уровня подряд
                     }
                   : null,
               child: SelectLevelCard(
