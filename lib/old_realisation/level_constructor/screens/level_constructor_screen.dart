@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
 
 class LevelConstructorScreen extends StatefulWidget {
   const LevelConstructorScreen({Key? key}) : super(key: key);

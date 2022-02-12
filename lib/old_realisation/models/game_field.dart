@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'package:darkit/core/constants/default_game_settings.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:flutter/material.dart';
-
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 
 class GameField with ChangeNotifier {
   List<CellEntity> _currentLevel = [];

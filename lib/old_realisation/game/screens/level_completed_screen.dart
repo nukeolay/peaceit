@@ -128,13 +128,13 @@ class _LevelCompletedScreenState extends State<LevelCompletedScreen> {
                               .pushReplacementNamed(Routes.gameFinished);
                         } else {
                           try {
-                            // String _nextLevelId =
-                            //     game.nextLevelIdInChapterByPreviousId(_levelId);
-                            // Navigator.of(context).pushReplacementNamed(
-                            //     Routes.game,
-                            //     arguments: _nextLevelId);
-                            Navigator.popUntil(context,
-                                ModalRoute.withName(Routes.selectLevelMenu)); // TODO сделать переход не следующий уровень, а не в меню выбора уровней
+                            String _nextLevelId =
+                                game.nextLevelIdInChapterByPreviousId(_levelId);
+                            Navigator.of(context).pushReplacementNamed(
+                                Routes.game,
+                                arguments: _nextLevelId);
+                            // Navigator.popUntil(context,
+                            //     ModalRoute.withName(Routes.selectLevelMenu)); // TODO сделать переход не следующий уровень, а не в меню выбора уровней
                           } catch (error) {
                             Navigator.popUntil(context,
                                 ModalRoute.withName(Routes.selectChapterMenu));

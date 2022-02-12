@@ -2,7 +2,7 @@ import 'package:darkit/old_realisation/game/widgets/disable_multitouch.dart';
 import 'package:darkit/old_realisation/level_constructor/widgets/constructor_cell_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
 
 class ConstructorGameFieldGrid extends StatelessWidget {
   const ConstructorGameFieldGrid({

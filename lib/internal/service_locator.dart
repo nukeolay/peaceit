@@ -1,22 +1,22 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:darkit/features/hints/data/prefs/hints_prefs_util.dart';
-import 'package:darkit/features/hints/data/prefs/services/hints_prefs_service.dart';
-import 'package:darkit/features/hints/data/repositories/hints_repository_impl.dart';
-import 'package:darkit/features/hints/domain/repositories/hints_repository.dart';
-import 'package:darkit/features/hints/domain/usecases/reset_hints.dart';
-import 'package:darkit/features/hints/domain/usecases/single_flips_decrement.dart';
-import 'package:darkit/features/hints/domain/usecases/single_flips_increment.dart';
-import 'package:darkit/features/hints/domain/usecases/solutions_number_decrement.dart';
-import 'package:darkit/features/hints/domain/usecases/solutions_number_increment.dart';
-import 'package:darkit/features/levels/data/prefs/levels_prefs_util.dart';
-import 'package:darkit/features/levels/data/prefs/services/levels_prefs_service.dart';
-import 'package:darkit/features/levels/data/repositories/levels_repository_impl.dart';
-import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
-import 'package:darkit/features/levels/domain/usecases/get_chapers.dart';
-import 'package:darkit/features/levels/domain/usecases/get_levels.dart';
-import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
+import 'package:darkit/data/hints/prefs/hints_prefs_util.dart';
+import 'package:darkit/data/hints/prefs/services/hints_prefs_service.dart';
+import 'package:darkit/data/hints/repositories/hints_repository_impl.dart';
+import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:darkit/domain/hints/usecases/reset_hints.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_increment.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_increment.dart';
+import 'package:darkit/data/levels/prefs/levels_prefs_util.dart';
+import 'package:darkit/data/levels/prefs/services/levels_prefs_service.dart';
+import 'package:darkit/data/levels/repositories/levels_repository_impl.dart';
+import 'package:darkit/domain/levels/repositories/levels_repository.dart';
+import 'package:darkit/domain/levels/usecases/get_chapers.dart';
+import 'package:darkit/domain/levels/usecases/get_levels.dart';
+import 'package:darkit/domain/levels/usecases/reset_levels.dart';
 
 final GetIt serviceLocator = GetIt.instance;
 

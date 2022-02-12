@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:darkit/core/app_theme.dart';
 import 'package:darkit/core/routes/custom_route.dart';
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/old_realisation/home/screens/home_screen.dart';
+import 'package:darkit/presentation/home/home_screen.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/old_realisation/game/widgets/bottom_buttons.dart';
 import 'package:darkit/old_realisation/game/widgets/game_field_grid.dart';
 import 'package:darkit/old_realisation/game/widgets/top_info_element.dart';
