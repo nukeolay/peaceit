@@ -1,15 +1,15 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
 import 'package:darkit/old_realisation/game/widgets/bottom_buttons.dart';
 import 'package:darkit/old_realisation/game/widgets/game_field_grid.dart';
 import 'package:darkit/old_realisation/game/widgets/top_info_element.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:darkit/core/routes/routes.dart';
-
 
 class GameScreen extends StatefulWidget {
   const GameScreen({Key? key}) : super(key: key);

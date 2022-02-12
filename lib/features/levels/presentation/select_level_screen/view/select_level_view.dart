@@ -5,8 +5,21 @@ import 'package:darkit/features/levels/presentation/select_level_screen/view_mod
 import 'package:darkit/features/levels/presentation/select_level_screen/widgets/levels_grid.dart';
 import 'package:darkit/features/levels/presentation/select_level_screen/widgets/select_level_appbar.dart';
 
-class SelectLevelView extends StatelessWidget {
+class SelectLevelView extends StatefulWidget {
   const SelectLevelView({Key? key}) : super(key: key);
+
+  @override
+  State<SelectLevelView> createState() => _SelectLevelViewState();
+}
+
+class _SelectLevelViewState extends State<SelectLevelView> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

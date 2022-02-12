@@ -7,7 +7,6 @@ import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/features/levels/presentation/select_level_screen/view_model/view_model.dart';
 import 'package:darkit/features/levels/presentation/select_level_screen/widgets/select_level_card.dart';
 
-// ! TODO переделать на levels
 class LevelsGrid extends StatelessWidget {
   const LevelsGrid({Key? key}) : super(key: key);
 
@@ -41,8 +40,9 @@ class LevelsGrid extends StatelessWidget {
                       HapticFeedback.heavyImpact();
                       Navigator.of(context)
                           .pushNamed(Routes.game, arguments: _levelId)
-                          .whenComplete(_viewModel
-                              .update); // TODO не обновляет список пройденных уровней псоле прохождения второго уровня подряд
+                          .whenComplete(_viewModel.update);
+                      // TODO не обновляет список пройденных уровней поcле прохождения второго уровня подряд
+                      // поэтому при нажатии на > после прохождения уровня, переходит не на следующий уровень, а в меню выбора уровней
                     }
                   : null,
               child: SelectLevelCard(
