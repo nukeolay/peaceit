@@ -1,5 +1,5 @@
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
-import 'package:darkit/features/levels/domain/entities/level_entity.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
+import 'package:darkit/domain/levels/entities/level_entity.dart';
 
 class DefaultLevels {
   static final List<LevelEntity> levels = [ // TODO потом сделать не final, а const

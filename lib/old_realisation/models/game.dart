@@ -1,11 +1,11 @@
-import 'package:darkit/features/hints/domain/repositories/hints_repository.dart';
-import 'package:darkit/features/hints/domain/usecases/single_flips_decrement.dart';
-import 'package:darkit/features/hints/domain/usecases/single_flips_increment.dart';
-import 'package:darkit/features/hints/domain/usecases/solutions_number_decrement.dart';
-import 'package:darkit/features/hints/domain/usecases/solutions_number_increment.dart';
-import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
-import 'package:darkit/features/levels/domain/entities/level_entity.dart';
-import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
+import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_increment.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_increment.dart';
+import 'package:darkit/domain/levels/entities/chapter_entity.dart';
+import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:darkit/domain/levels/repositories/levels_repository.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +50,13 @@ class Game with ChangeNotifier {
   List<LevelEntity> get _levels => _levelsRepository.levels;
 
   bool get isFirstStart => _levels.where((level) => level.rating > 0).isEmpty;
+
+  String nextLevelIdInChapterByPreviousId(String levelId) {
+    final int levelIndex = levelIndexInChapterById(levelId);
+    final String chapterId = _chapterIdByLevelId(levelId);
+    final ChapterEntity chapter = _chapterById(chapterId);
+    return chapter.levels[levelIndex + 1].id;
+  }
 
   List<ChapterEntity> get chapters {
     List<ChapterEntity> chapters = [];
