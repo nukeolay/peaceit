@@ -1,24 +1,30 @@
-import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
-import 'package:darkit/features/levels/domain/entities/level_entity.dart';
-import 'package:darkit/features/levels/presentation/select_level_screen/view_model/view_model_state.dart';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-// ! TODO переделать на levels
+import 'package:darkit/features/levels/domain/entities/cell_entity.dart';
+import 'package:darkit/features/levels/domain/entities/level_entity.dart';
+import 'package:darkit/features/levels/domain/usecases/get_levels.dart';
+import 'package:darkit/features/levels/presentation/select_level_screen/view_model/view_model_state.dart';
+import 'package:darkit/internal/service_locator.dart';
+
 class SelectLevelViewModel extends ChangeNotifier {
   SelectLevelViewModelState _state = SelectLevelViewModelState();
 
   SelectLevelViewModelState get state => _state;
+  final String _chapterId;
 
-  SelectLevelViewModel(String chapterId) {
-    _init(chapterId);
+  SelectLevelViewModel(this._chapterId) {
+    _init(_chapterId);
   }
 
-  final List<List<LevelEntity>> _levels = [];
+  final List<LevelEntity> _levels = [];
 
   void _init(String chapterId) {
     _levels.clear();
-    // _levels.addAll(serviceLocator<GenerateLevels>().call(chapterId));
+    _levels.addAll(serviceLocator<GetLevels>()
+        .call()
+        .where((level) => level.chapterId == chapterId));
     _state = _state.copyWith(
       levels: _levelIds,
       levelsNumber: _levelsNumber,
@@ -31,40 +37,50 @@ class SelectLevelViewModel extends ChangeNotifier {
   }
 
   void _updateState() {
-    _init('dommy----');
+    _init(_chapterId);
     notifyListeners();
   }
 
   void update() {
     _updateState();
+    print('screen updated');
   }
-
-  // final List<ChapterEntity> _chapters =
-  //     serviceLocator<GenerateChapters>().call();
 
   List<String> get _levelIds {
-    return []; // !
+    return _levels.map((level) => level.id).toList();
   }
 
-  int get _levelsNumber => 0; // !
+  int get _levelsNumber => _levels.length;
 
   List<List<CellEntity>> get _cells {
-    return []; // !
+    return _levels.map((level) => level.cells).toList();
   }
 
   List<int> get _cellsQuantity {
-    return []; // !
+    return _cells.map((level) => sqrt(level.length).toInt()).toList();
   }
 
   List<String> get _levelNumber {
-    return []; // !
+    return _levels
+        .map((level) => (_levels.indexOf(level) + 1).toString())
+        .toList();
   }
 
   List<int> get _rating {
-    return []; // !
+    return _levels.map((level) => level.rating).toList();
   }
 
   List<bool> get _canBePlayed {
-    return []; // !
+    final List<bool> result = [];
+    for (var level in _levels) {
+      final levelIndex = _levels.indexOf(level);
+      if (levelIndex == 0) {
+        result.add(true); // если это первый уровень
+      } else {
+        // если предыдущий уровень пройден
+        result.add(_levels[levelIndex - 1].rating > 0);
+      }
+    }
+    return result;
   }
 }

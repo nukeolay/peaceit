@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/features/hints/domain/usecases/reset_hints.dart';
 import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
-import 'package:darkit/features/levels/domain/usecases/genereate_chapers.dart';
+import 'package:darkit/features/levels/domain/usecases/get_chapers.dart';
 import 'package:darkit/features/levels/domain/usecases/reset_levels.dart';
 import 'package:darkit/features/levels/presentation/select_chapter_screen/view_model/view_model_state.dart';
 
@@ -20,7 +20,7 @@ class SelectChapterViewModel extends ChangeNotifier {
 
   void _init() {
     _chapters.clear();
-    _chapters.addAll(serviceLocator<GenerateChapters>().call());
+    _chapters.addAll(serviceLocator<GetChapters>().call());
     _state = _state.copyWith(
       chapters: _chapterIds,
       chaptersNumber: _chaptersNumber,
@@ -67,16 +67,16 @@ class SelectChapterViewModel extends ChangeNotifier {
   }
 
   List<bool> get _canBePlayed {
-    final List<bool> _result = [];
-    for (var _chapter in _chapters) {
-      final _chapterIndex = _chapters.indexOf(_chapter);
-      if (_chapterIndex == 0) {
-        _result.add(true); // если это первая глава
+    final List<bool> result = [];
+    for (ChapterEntity _chapter in _chapters) {
+      final chapterIndex = _chapters.indexOf(_chapter);
+      if (chapterIndex == 0) {
+        result.add(true); // если это первая глава
       } else {
         // если предыдущая глава пройдена не менее чем на 70%
-        _result.add(_chapters[_chapterIndex - 1].completedRatio > 0.7);
+        result.add(_chapters[chapterIndex - 1].completedRatio >= 0.7);
       }
     }
-    return _result;
+    return result;
   }
 }

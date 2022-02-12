@@ -2,9 +2,9 @@ import 'package:darkit/features/levels/domain/entities/chapter_entity.dart';
 import 'package:darkit/features/levels/domain/entities/level_entity.dart';
 import 'package:darkit/features/levels/domain/repositories/levels_repository.dart';
 
-class GenerateChapters {
+class GetChapters {
   final LevelsRepository _levelsRepository;
-  GenerateChapters(this._levelsRepository);
+  GetChapters(this._levelsRepository);
   List<ChapterEntity> call() {
     final List<LevelEntity> _levels = _levelsRepository.levels;
     final List<ChapterEntity> _chapters = [];

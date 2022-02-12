@@ -1,11 +1,11 @@
 import 'package:darkit/features/levels/presentation/select_chapter_screen/view/select_chapter_view.dart';
+import 'package:darkit/features/levels/presentation/select_level_screen/view/select_level_view.dart';
 import 'package:darkit/old_realisation/game/screens/game_finished_screen.dart';
 import 'package:darkit/old_realisation/game/screens/game_screen.dart';
 import 'package:darkit/old_realisation/game/screens/level_completed_screen.dart';
 import 'package:darkit/old_realisation/home/screens/home_screen.dart';
 import 'package:darkit/old_realisation/how_to_play/screens/how_to_play_screen.dart';
 import 'package:darkit/old_realisation/level_constructor/screens/level_constructor_screen.dart';
-import 'package:darkit/old_realisation/select_level_menu/screens/select_level_menu_screen.dart';
 import 'package:darkit/old_realisation/tutorial/screens/toturial_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +32,7 @@ class Routes {
           case levelCompleted:
             return const LevelCompletedScreen();
           case selectLevelMenu:
-            return const SelectLevelMenuScreen();
+            return const SelectLevelView();
           case selectChapterMenu:
             return const SelectChapterView();
           case gameFinished:
