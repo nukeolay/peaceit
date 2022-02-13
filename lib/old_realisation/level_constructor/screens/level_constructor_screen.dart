@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:darkit/old_realisation/game/widgets/top_info_element.dart';
 import 'package:darkit/old_realisation/level_constructor/widgets/constructor_game_field_grid.dart';
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 import 'package:flutter/material.dart';

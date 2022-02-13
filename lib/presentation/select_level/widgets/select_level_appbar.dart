@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 
 class SelectLevelAppbar extends StatelessWidget {
   const SelectLevelAppbar({Key? key}) : super(key: key);

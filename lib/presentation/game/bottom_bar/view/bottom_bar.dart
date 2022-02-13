@@ -1,22 +1,22 @@
 import 'dart:ui';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/old_realisation/models/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:darkit/core/theme/app_theme.dart';
+import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
 
-class BottomButtons extends StatefulWidget {
-  const BottomButtons({Key? key}) : super(key: key);
+class BottomBar extends StatefulWidget {
+  const BottomBar({Key? key}) : super(key: key);
 
   @override
-  State<BottomButtons> createState() => _BottomButtonsState();
+  State<BottomBar> createState() => _BottomBarState();
 }
 
-class _BottomButtonsState extends State<BottomButtons> {
+class _BottomBarState extends State<BottomBar> {
   late Game _game;
   bool _isInit = true;
 

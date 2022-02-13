@@ -42,7 +42,7 @@ class LevelsGrid extends StatelessWidget {
                           .pushNamed(Routes.game, arguments: _levelId)
                           .whenComplete(_viewModel.update);
                       // TODO не обновляет список пройденных уровней поcле прохождения второго уровня подряд
-                      // поэтому при нажатии на > после прохождения уровня, переходит не на следующий уровень, а в меню выбора уровней
+                      // TODO поэтому при нажатии на > после прохождения уровня, переходит не на следующий уровень, а в меню выбора уровней
                     }
                   : null,
               child: SelectLevelCard(
