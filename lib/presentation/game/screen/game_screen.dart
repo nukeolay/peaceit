@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
-import 'package:darkit/presentation/game/bottom_bar/view_model/view_model.dart';
-import 'package:darkit/presentation/game/game_field_grid/view/game_field.dart';
-import 'package:darkit/presentation/game/game_field_grid/view_model/view_model.dart';
-import 'package:darkit/presentation/game/top_bar/view_model/view_model.dart';
-import 'package:darkit/presentation/game/bottom_bar/view/bottom_bar.dart';
-import 'package:darkit/presentation/game/top_bar/view/top_bar.dart';
+import 'package:darkit/presentation/game/view/bottom_bar/bottom_bar.dart';
+import 'package:darkit/presentation/game/view/game_field/game_field.dart';
+import 'package:darkit/presentation/game/view/top_bar/top_bar.dart';
+import 'package:darkit/presentation/game/view_model/view_model.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -27,29 +26,23 @@ class GameScreen extends StatelessWidget {
               horizontal: 8.0,
               vertical: 10,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ChangeNotifierProvider<TopBarViewModel>(
-                  create: (_) => TopBarViewModel(),
-                  child: const TopBar(),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ChangeNotifierProvider<GameFieldViewModel>(
-                      create: (_) => GameFieldViewModel(),
-                      child: const GameField(),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                ChangeNotifierProvider<BottomBarViewModel>(
-                  create: (_) => BottomBarViewModel(),
-                  child: const BottomBar(),
-                ),
-              ],
+            child: ChangeNotifierProvider<GameViewModel>(
+              create: (_) => GameViewModel(),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const TopBar(),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      GameField(),
+                    ],
+                  ),
+                  const Spacer(),
+                  const BottomBar(),
+                ],
+              ),
             ),
           ),
         ),

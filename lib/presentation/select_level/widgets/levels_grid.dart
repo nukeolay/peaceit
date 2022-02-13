@@ -13,9 +13,10 @@ class LevelsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _viewModel = context.watch<SelectLevelViewModel>();
+    final _state = _viewModel.state;
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: _viewModel.state.levelsNumber,
+      itemCount: _state.levelsNumber,
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -25,17 +26,17 @@ class LevelsGrid extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(0.0),
       itemBuilder: (context, index) {
-        final String _levelId = _viewModel.state.levels[index];
-        final List<CellEntity> _cells = _viewModel.state.cells[index];
-        final int _cellsQuantity = _viewModel.state.cellsQuantity[index];
-        final String _levelNumber = _viewModel.state.levelNumber[index];
-        final int _rating = _viewModel.state.rating[index];
-        final bool _canBePlayed = _viewModel.state.canBePlayed[index];
+        final String _levelId = _state.levels[index];
+        final List<CellEntity> _cells = _state.cells[index];
+        final int _cellsQuantity = _state.cellsQuantity[index];
+        final String _levelNumber =_state.levelNumber[index];
+        final int _rating = _state.rating[index];
+        final bool _canBePlayed = _state.canBePlayed[index];
         return Center(
           child: Container(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: _viewModel.state.canBePlayed[index]
+              onTap: _state.canBePlayed[index]
                   ? () {
                       HapticFeedback.heavyImpact();
                       Navigator.of(context)
