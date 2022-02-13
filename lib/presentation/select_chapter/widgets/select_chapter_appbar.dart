@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
 import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
 

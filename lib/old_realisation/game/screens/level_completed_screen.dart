@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/old_realisation/models/game.dart';
 import 'package:darkit/old_realisation/models/game_field.dart';
 

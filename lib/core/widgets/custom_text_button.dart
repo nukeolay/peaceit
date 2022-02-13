@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

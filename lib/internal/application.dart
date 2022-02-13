@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/app_theme.dart';
+import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/routes/custom_route.dart';
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/presentation/home/home_screen.dart';
