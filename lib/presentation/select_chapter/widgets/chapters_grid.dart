@@ -12,9 +12,10 @@ class ChaptersGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _viewModel = context.watch<SelectChapterViewModel>();
+    final _state = _viewModel.state;
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: _viewModel.state.chaptersNumber,
+      itemCount: _state.chaptersNumber,
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -24,11 +25,11 @@ class ChaptersGrid extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(0.0),
       itemBuilder: (context, index) {
-        String _chapterId = _viewModel.state.chapters[index];
-        double _completedRatio = _viewModel.state.completedRatio[index];
-        String _completedLevels = _viewModel.state.completedLevels[index];
-        String _levelsNumber = _viewModel.state.levelsNumber[index];
-        bool _canBePlayed = _viewModel.state.canBePlayed[index];
+        String _chapterId = _state.chapters[index];
+        double _completedRatio = _state.completedRatio[index];
+        String _completedLevels = _state.completedLevels[index];
+        String _levelsNumber = _state.levelsNumber[index];
+        bool _canBePlayed = _state.canBePlayed[index];
         return Center(
           child: Container(
             padding: const EdgeInsets.all(8.0),
