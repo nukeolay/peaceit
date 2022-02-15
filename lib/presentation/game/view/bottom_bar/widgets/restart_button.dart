@@ -1,3 +1,4 @@
+import 'package:darkit/presentation/game/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -9,10 +10,11 @@ class RestartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _viewModel = context.read<GameViewModel>();
     return IconButton(
       onPressed: () {
         HapticFeedback.heavyImpact();
-        // _game.restartLevel();
+        _viewModel.restartLevel();
       },
       icon: Icon(
         Icons.replay_rounded,

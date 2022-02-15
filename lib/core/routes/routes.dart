@@ -1,6 +1,6 @@
 import 'package:darkit/old_realisation/game/screens/game_finished_screen.dart';
-import 'package:darkit/old_realisation/game/screens/game_screen.dart';
 import 'package:darkit/old_realisation/game/screens/level_completed_screen.dart';
+import 'package:darkit/presentation/game/screen/game_screen.dart';
 import 'package:darkit/presentation/home/home_screen.dart';
 import 'package:darkit/old_realisation/how_to_play/screens/how_to_play_screen.dart';
 import 'package:darkit/old_realisation/level_constructor/screens/level_constructor_screen.dart';

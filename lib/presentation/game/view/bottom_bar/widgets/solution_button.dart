@@ -32,7 +32,7 @@ class SolutionButton extends StatelessWidget {
                   HapticFeedback.heavyImpact();
                   showDialog(
                     context: context,
-                    builder: (context) => SolutionDialog(context),
+                    builder: (_) => SolutionDialog(context),
                   );
                 }
               : null,
