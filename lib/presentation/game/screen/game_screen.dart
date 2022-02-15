@@ -12,6 +12,7 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _levelId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -27,7 +28,7 @@ class GameScreen extends StatelessWidget {
               vertical: 10,
             ),
             child: ChangeNotifierProvider<GameViewModel>(
-              create: (_) => GameViewModel(),
+              create: (_) => GameViewModel(_levelId),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

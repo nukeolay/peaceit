@@ -21,7 +21,7 @@ class TopBar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TopInfoElement(
-                topData: _state.level,
+                topData: _state.levelNumber,
                 bottomData: 'уровень',
               ),
               TopInfoElement(
