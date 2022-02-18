@@ -1,5 +1,3 @@
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
-
 class GameViewModelState {
   final String levelNumber;
   final String moves;
@@ -8,7 +6,10 @@ class GameViewModelState {
   final bool isSingleFlipOn;
   final String solutionsNumber;
   final bool canUseSolution;
-  final List<CellEntity> cells;
+  final int fieldLength;
+  final List<bool> cells;
+  final List<bool> cellsToFlip;
+  final int flashCellIndex;
 
   GameViewModelState({
     this.levelNumber = '',
@@ -18,7 +19,10 @@ class GameViewModelState {
     this.isSingleFlipOn = false,
     this.solutionsNumber = '',
     this.canUseSolution = false,
+    this.fieldLength = 0,
     this.cells = const [],
+    this.cellsToFlip = const [],
+    this.flashCellIndex = -1,
   });
 
   GameViewModelState copyWith({
@@ -29,7 +33,10 @@ class GameViewModelState {
     bool? isSingleFlipOn,
     String? solutionsNumber,
     bool? canUseSolution,
-    List<CellEntity>? cells,
+    int? fieldLength,
+    List<bool>? cells,
+    List<bool>? cellsToFlip,
+    int? flashCellIndex,
   }) {
     return GameViewModelState(
       levelNumber: levelNumber ?? this.levelNumber,
@@ -39,7 +46,10 @@ class GameViewModelState {
       isSingleFlipOn: isSingleFlipOn ?? this.isSingleFlipOn,
       solutionsNumber: solutionsNumber ?? this.solutionsNumber,
       canUseSolution: canUseSolution ?? this.canUseSolution,
+      fieldLength: fieldLength ?? this.fieldLength,
       cells: cells ?? this.cells,
+      cellsToFlip: cellsToFlip ?? this.cellsToFlip,
+      flashCellIndex: flashCellIndex ?? this.flashCellIndex,
     );
   }
 }

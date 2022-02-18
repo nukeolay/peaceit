@@ -100,37 +100,39 @@ class SelectLevelCard extends StatelessWidget {
                         ),
                       ),
                     ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(
-                    rating >= 1
-                        ? Icons.star_rounded
-                        : Icons.star_outline_rounded,
-                    color: canBePlayed
-                        ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().cardBack,
-                    size: 20,
-                  ),
-                  Icon(
-                    rating >= 2
-                        ? Icons.star_rounded
-                        : Icons.star_outline_rounded,
-                    color: canBePlayed
-                        ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().cardBack,
-                    size: 20,
-                  ),
-                  Icon(
-                    rating == 3
-                        ? Icons.star_rounded
-                        : Icons.star_outline_rounded,
-                    color: canBePlayed
-                        ? context.read<AppTheme>().accentColor
-                        : context.read<AppTheme>().cardBack,
-                    size: 20,
-                  ),
-                ],
+              LayoutBuilder(
+                builder: (context, constraints) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(
+                      rating >= 1
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      color: canBePlayed
+                          ? context.read<AppTheme>().accentColor
+                          : context.read<AppTheme>().cardBack,
+                      size: constraints.maxWidth / 3 - 10,
+                    ),
+                    Icon(
+                      rating >= 2
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      color: canBePlayed
+                          ? context.read<AppTheme>().accentColor
+                          : context.read<AppTheme>().cardBack,
+                      size: constraints.maxWidth / 3 - 10,
+                    ),
+                    Icon(
+                      rating == 3
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      color: canBePlayed
+                          ? context.read<AppTheme>().accentColor
+                          : context.read<AppTheme>().cardBack,
+                      size: constraints.maxWidth / 3 - 10,
+                    ),
+                  ],
+                ),
               ),
               Container(
                 alignment: Alignment.center,

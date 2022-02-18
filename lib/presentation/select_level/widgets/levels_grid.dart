@@ -29,7 +29,7 @@ class LevelsGrid extends StatelessWidget {
         final String _levelId = _state.levels[index];
         final List<CellEntity> _cells = _state.cells[index];
         final int _cellsQuantity = _state.cellsQuantity[index];
-        final String _levelNumber =_state.levelNumber[index];
+        final String _levelNumber = _state.levelNumber[index];
         final int _rating = _state.rating[index];
         final bool _canBePlayed = _state.canBePlayed[index];
         return Center(

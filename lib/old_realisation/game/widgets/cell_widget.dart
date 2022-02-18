@@ -98,18 +98,20 @@ class _CellWidgetState extends State<CellWidget> {
       onTap: () {
         _isSingleFlipOn ? singleFlipCard() : flipCard();
       },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: FlipCard(
-            speed: DefaultGameSettings.flipSpeed,
-            controller: _controller,
-            flipOnTouch: false,
-            front: CustomCell(_isBlack, _isFlash),
-            back: CustomCell(!_isBlack, _isFlash),
-          ),
-        ),
+      child: LayoutBuilder(
+        builder: ((context, constraints) => ClipRRect(
+              borderRadius: BorderRadius.circular(constraints.maxWidth / 12),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                child: FlipCard(
+                  speed: DefaultGameSettings.flipSpeed,
+                  controller: _controller,
+                  flipOnTouch: false,
+                  front: CustomCell(_isBlack, _isFlash),
+                  back: CustomCell(!_isBlack, _isFlash),
+                ),
+              ),
+            )),
       ),
     );
   }
