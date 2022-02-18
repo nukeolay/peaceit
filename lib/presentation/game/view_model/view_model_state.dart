@@ -6,6 +6,7 @@ class GameViewModelState {
   final bool isSingleFlipOn;
   final String solutionsNumber;
   final bool canUseSolution;
+  final bool isSolutionOn;
   final int fieldLength;
   final List<bool> cells;
   final List<bool> cellsToFlip;
@@ -19,6 +20,7 @@ class GameViewModelState {
     this.isSingleFlipOn = false,
     this.solutionsNumber = '',
     this.canUseSolution = false,
+    this.isSolutionOn = false,
     this.fieldLength = 0,
     this.cells = const [],
     this.cellsToFlip = const [],
@@ -33,6 +35,7 @@ class GameViewModelState {
     bool? isSingleFlipOn,
     String? solutionsNumber,
     bool? canUseSolution,
+    bool? isSolutionOn,
     int? fieldLength,
     List<bool>? cells,
     List<bool>? cellsToFlip,
@@ -46,10 +49,12 @@ class GameViewModelState {
       isSingleFlipOn: isSingleFlipOn ?? this.isSingleFlipOn,
       solutionsNumber: solutionsNumber ?? this.solutionsNumber,
       canUseSolution: canUseSolution ?? this.canUseSolution,
+      isSolutionOn: isSolutionOn ?? this.isSolutionOn,
       fieldLength: fieldLength ?? this.fieldLength,
       cells: cells ?? this.cells,
-      cellsToFlip: cellsToFlip ?? this.cellsToFlip,
-      flashCellIndex: flashCellIndex ?? this.flashCellIndex,
+      cellsToFlip: cellsToFlip ??
+          List<bool>.generate(this.cells.length, (index) => false),
+      flashCellIndex: flashCellIndex ?? -1,
     );
   }
 }

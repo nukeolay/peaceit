@@ -10,16 +10,21 @@ class RestartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = context.read<GameViewModel>();
+    final _viewModel = context.watch<GameViewModel>();
+    final _state = _viewModel.state;
     return IconButton(
-      onPressed: () {
-        HapticFeedback.heavyImpact();
-        _viewModel.restartLevel();
-      },
+      onPressed: _state.isSolutionOn
+          ? null
+          : () {
+              HapticFeedback.heavyImpact();
+              _viewModel.restartLevel();
+            },
       icon: Icon(
         Icons.replay_rounded,
         size: 30,
-        color: context.read<AppTheme>().buttonTextColor,
+        color: _state.isSolutionOn
+            ? context.read<AppTheme>().buttonTextColor.withOpacity(0.2)
+            : context.read<AppTheme>().buttonTextColor,
       ),
     );
   }

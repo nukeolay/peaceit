@@ -43,7 +43,6 @@ class SelectLevelViewModel extends ChangeNotifier {
 
   void update() {
     _updateState();
-    print('screen updated');
   }
 
   List<String> get _levelIds {
