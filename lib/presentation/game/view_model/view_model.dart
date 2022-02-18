@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:flutter/material.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
+import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
@@ -44,19 +45,17 @@ class GameViewModel extends ChangeNotifier {
       moves: _moves.toString(),
       singleFlips: _singleFlipsNumber.toString(),
       canUseSingleFlips: _canUseSingleFlips,
-      isSingleFlipOn: _isSingleFlipOn,
+      isSingleFlipOn: false,
       solutionsNumber: _solutionsNumber.toString(),
       canUseSolution: _canUseSolution,
+      isSolutionOn: false,
       fieldLength: sqrt(_cells.length).toInt(),
       cells: _cells,
       cellsToFlip: List<bool>.generate(_cells.length, (index) => false),
     );
   }
 
-  // void _updateState() {
-  //   // _init(); // !
-  //   notifyListeners(); // !
-  // }
+  // ! поменять _level на геттер, чтобы тут не хранить никакие жругие состояния кроме того что есть в _state, там хранить levelId
 
   int get _levelNumber {
     return _chapter.levelIndex(_levelId);
@@ -70,13 +69,12 @@ class GameViewModel extends ChangeNotifier {
     await serviceLocator<SingleFlipsDecrement>().call();
   }
 
-  bool get _canUseSingleFlips {
-    // return singleFlips != 0 && gameField.solutionCell == null; не включен режим решения
-    return _singleFlipsNumber > 0;
+  Future<void> _solutionsDecrement() async {
+    await serviceLocator<SolutionsNumberDecrement>().call();
   }
 
-  bool get _isSingleFlipOn {
-    return false; // !
+  bool get _canUseSingleFlips {
+    return _singleFlipsNumber > 0 && !_state.isSolutionOn;
   }
 
   int get _solutionsNumber {
@@ -84,8 +82,9 @@ class GameViewModel extends ChangeNotifier {
   }
 
   bool get _canUseSolution {
-    // return singleFlips != 0 && gameField.solutionCell == null; не включен режим решения
-    return _solutionsNumber > 0;
+    return _solutionsNumber > 0 &&
+        !_state.isSingleFlipOn &&
+        !_state.isSolutionOn;
   }
 
   List<bool> get _cells {
@@ -96,8 +95,47 @@ class GameViewModel extends ChangeNotifier {
     return _currentCells;
   }
 
+  void useSolution() {
+    // блокируем кнопки
+    _state = _state.copyWith(
+      isSolutionOn: true,
+      canUseSingleFlips: false,
+      canUseSolution: false,
+    );
+    // обнуляем поле
+    List<bool> cellsToFlip =
+        List<bool>.generate(_currentCells.length, (index) => false);
+    for (int i = 0; i < _currentCells.length; i++) {
+      if (_currentCells[i] !=
+          [..._level.cells].map((cell) => cell.isBlack).toList()[i]) {
+        cellsToFlip[i] = true;
+      }
+    }
+    _solutionsDecrement();
+    _moves = 0;
+    int flashCellIndex = _cellIndexByCoordinates(
+      _level.solution[_moves].x,
+      _level.solution[_moves].y,
+    );
+    _isInit = true;
+    _state = _state.copyWith(
+      moves: _moves.toString(),
+      cellsToFlip: cellsToFlip,
+      cells: _cells,
+      flashCellIndex: flashCellIndex,
+      solutionsNumber: _solutionsNumber.toString(),
+    );
+    notifyListeners();
+  }
+
   void useSingleFlip() {
-    // !
+    _state = _state.copyWith(
+      isSingleFlipOn: !_state.isSingleFlipOn,
+    );
+    _state = _state.copyWith(
+      canUseSolution: _canUseSolution,
+    );
+    notifyListeners();
   }
 
   void restartLevel() {
@@ -113,15 +151,12 @@ class GameViewModel extends ChangeNotifier {
     _isInit = true;
     _state = _state.copyWith(
       moves: _moves.toString(),
-      fieldLength: sqrt(_cells.length).toInt(),
       cellsToFlip: cellsToFlip,
       cells: _cells,
+      isSingleFlipOn: false,
+      isSolutionOn: false,
     );
     notifyListeners();
-  }
-
-  void useSolution() {
-    // !
   }
 
   void nextLevel() {
@@ -135,6 +170,15 @@ class GameViewModel extends ChangeNotifier {
     CellEntity _cell =
         _level.cells.firstWhere((cell) => cell.x == x && cell.y == y);
     return _level.cells.indexOf(_cell);
+  }
+
+  List<bool> _singleFlip(int index) {
+    List<bool> cellsToFlip =
+        List<bool>.generate(_cells.length, (index) => false);
+    _cells[index] = !_cells[index];
+    cellsToFlip[index] = true;
+    _singleFlipsDecrement();
+    return cellsToFlip;
   }
 
   List<bool> _normalFlip(int index) {
@@ -169,29 +213,71 @@ class GameViewModel extends ChangeNotifier {
 
   void flipCard(int index) {
     if (canTap) {
-      _moves++;
-      var tempCells = _normalFlip(index);
-
-      _state = _state.copyWith(
-        moves: _moves.toString(),
-        cells: _cells,
-        cellsToFlip: tempCells,
-      );
-      print('1: ${_cells[0]} - ${_cells[1]} - ${_cells[2]}');
-      print('2: ${_cells[3]} - ${_cells[4]} - ${_cells[5]}');
-      print('3: ${_cells[6]} - ${_cells[7]} - ${_cells[8]}');
-      notifyListeners();
-      canTap = false;
-      Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10),
-          () {
-        canTap = true;
-      });
+      if (_state.isSingleFlipOn) {
+        // поворот одной ячейки
+        _moves++;
+        List<bool> cellsToFlip = _singleFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          singleFlips: _singleFlipsNumber.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+          isSingleFlipOn: false,
+        );
+        notifyListeners();
+        _blockCells();
+      } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
+        // поворот в режиме решения
+        _moves++;
+        List<bool> cellsToFlip = _normalFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+        );
+        if (_level.solution.length - 1 >= _moves) {
+          // если еще остались решения
+          // TODO возможно этот блок не будет нужен, потому что после последнео флипа уровень будет пройден и не будет других ходов
+          int flashCellIndex = _cellIndexByCoordinates(
+            _level.solution[_moves].x,
+            _level.solution[_moves].y,
+          );
+          cellsToFlip = _normalFlip(index);
+          _state = _state.copyWith(
+            moves: _moves.toString(),
+            cells: _cells,
+            cellsToFlip: cellsToFlip,
+            flashCellIndex: flashCellIndex,
+          );
+        }
+        notifyListeners();
+        _blockCells();
+      } else if (_state.isSolutionOn) {
+        // если нажать не на ту ячейку в режиме решения
+      } else {
+        // обычный поворот вместе с соседними ячейками
+        _moves++;
+        List<bool> cellsToFlip = _normalFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+        );
+        notifyListeners();
+        _blockCells();
+      }
     }
+  }
 
-    // ! тут решаем какой делать флип - всех ячеек: одной ячейки, этой ячейки и соседних, не делать флип
-    // !
+  void _blockCells() {
+    canTap = false;
+    Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
+      canTap = true;
+    });
   }
 }
+
+
 
 
 // ! TODO if(!_cells.contains(false)) WIN!!!!
