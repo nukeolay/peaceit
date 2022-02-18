@@ -1,13 +1,13 @@
-import 'dart:async';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
+import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
 import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
@@ -20,7 +20,7 @@ class GameViewModel extends ChangeNotifier {
 
   GameViewModelState get state => _state;
 
-  String _levelId;
+  String _levelId; // ! final?
   bool _isInit = true;
   int _moves = 0;
   late ChapterEntity _chapter;
@@ -41,6 +41,7 @@ class GameViewModel extends ChangeNotifier {
         .firstWhere((chapter) => chapter.id == _level.chapterId);
     _moves = 0;
     _state = _state.copyWith(
+      levelId: _levelId,
       levelNumber: (_levelNumber + 1).toString(),
       moves: _moves.toString(),
       singleFlips: _singleFlipsNumber.toString(),
@@ -54,46 +55,9 @@ class GameViewModel extends ChangeNotifier {
       cellsToFlip: List<bool>.generate(_cells.length, (index) => false),
     );
   }
-
   // ! поменять _level на геттер, чтобы тут не хранить никакие жругие состояния кроме того что есть в _state, там хранить levelId
 
-  int get _levelNumber {
-    return _chapter.levelIndex(_levelId);
-  }
-
-  int get _singleFlipsNumber {
-    return serviceLocator<HintsRepository>().hints.singleFlips;
-  }
-
-  Future<void> _singleFlipsDecrement() async {
-    await serviceLocator<SingleFlipsDecrement>().call();
-  }
-
-  Future<void> _solutionsDecrement() async {
-    await serviceLocator<SolutionsNumberDecrement>().call();
-  }
-
-  bool get _canUseSingleFlips {
-    return _singleFlipsNumber > 0 && !_state.isSolutionOn;
-  }
-
-  int get _solutionsNumber {
-    return serviceLocator<HintsRepository>().hints.solutionsNumber;
-  }
-
-  bool get _canUseSolution {
-    return _solutionsNumber > 0 &&
-        !_state.isSingleFlipOn &&
-        !_state.isSolutionOn;
-  }
-
-  List<bool> get _cells {
-    if (_isInit) {
-      _currentCells = [..._level.cells].map((cell) => cell.isBlack).toList();
-      _isInit = false;
-    }
-    return _currentCells;
-  }
+// -------- PUBLIC --------//
 
   void useSolution() {
     // блокируем кнопки
@@ -159,11 +123,107 @@ class GameViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void nextLevel() {
-    // TODO проработать на случай последнего уровня в главе
-    _levelId = _chapter.levels[_levelNumber + 1].id;
-    _init();
-    notifyListeners();
+  void flipCard(int index) {
+    if (canTap) {
+      if (_state.isSingleFlipOn) {
+        // поворот одной ячейки
+        _moves++;
+        List<bool> cellsToFlip = _singleFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          singleFlips: _singleFlipsNumber.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+          isSingleFlipOn: false,
+        );
+        notifyListeners();
+        _blockCells();
+      } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
+        // поворот в режиме решения
+        _moves++;
+        List<bool> cellsToFlip = _normalFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+        );
+        if (_level.solution.length - 1 >= _moves) {
+          // если еще остались решения
+          int flashCellIndex = _cellIndexByCoordinates(
+            _level.solution[_moves].x,
+            _level.solution[_moves].y,
+          );
+          cellsToFlip = _normalFlip(index);
+          _state = _state.copyWith(
+            moves: _moves.toString(),
+            cells: _cells,
+            cellsToFlip: cellsToFlip,
+            flashCellIndex: flashCellIndex,
+          );
+        }
+        notifyListeners();
+        _blockCells();
+      } else if (_state.isSolutionOn) {
+        // если нажать не на ту ячейку в режиме решения
+      } else {
+        // обычный поворот вместе с соседними ячейками
+        _moves++;
+        List<bool> cellsToFlip = _normalFlip(index);
+        _state = _state.copyWith(
+          moves: _moves.toString(),
+          cells: _cells,
+          cellsToFlip: cellsToFlip,
+        );
+        notifyListeners();
+        _blockCells();
+      }
+    }
+    Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
+      if (!_cells.contains(false)) {
+        _state = _state.copyWith(isWin: true);
+        notifyListeners();
+      }
+    });
+  }
+
+// -------- NON PUBLIC --------//
+
+  int get _levelNumber {
+    return _chapter.levelIndex(_levelId);
+  }
+
+  int get _singleFlipsNumber {
+    return serviceLocator<HintsRepository>().hints.singleFlips;
+  }
+
+  Future<void> _singleFlipsDecrement() async {
+    await serviceLocator<SingleFlipsDecrement>().call();
+  }
+
+  Future<void> _solutionsDecrement() async {
+    await serviceLocator<SolutionsNumberDecrement>().call();
+  }
+
+  bool get _canUseSingleFlips {
+    return _singleFlipsNumber > 0 && !_state.isSolutionOn;
+  }
+
+  int get _solutionsNumber {
+    return serviceLocator<HintsRepository>().hints.solutionsNumber;
+  }
+
+  bool get _canUseSolution {
+    return _solutionsNumber > 0 &&
+        !_state.isSingleFlipOn &&
+        !_state.isSolutionOn;
+  }
+
+  List<bool> get _cells {
+    if (_isInit) {
+      _currentCells = [..._level.cells].map((cell) => cell.isBlack).toList();
+      _isInit = false;
+    }
+    return _currentCells;
   }
 
   int _cellIndexByCoordinates(int x, int y) {
@@ -211,64 +271,6 @@ class GameViewModel extends ChangeNotifier {
     return cellsToFlip;
   }
 
-  void flipCard(int index) {
-    if (canTap) {
-      if (_state.isSingleFlipOn) {
-        // поворот одной ячейки
-        _moves++;
-        List<bool> cellsToFlip = _singleFlip(index);
-        _state = _state.copyWith(
-          moves: _moves.toString(),
-          singleFlips: _singleFlipsNumber.toString(),
-          cells: _cells,
-          cellsToFlip: cellsToFlip,
-          isSingleFlipOn: false,
-        );
-        notifyListeners();
-        _blockCells();
-      } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
-        // поворот в режиме решения
-        _moves++;
-        List<bool> cellsToFlip = _normalFlip(index);
-        _state = _state.copyWith(
-          moves: _moves.toString(),
-          cells: _cells,
-          cellsToFlip: cellsToFlip,
-        );
-        if (_level.solution.length - 1 >= _moves) {
-          // если еще остались решения
-          // TODO возможно этот блок не будет нужен, потому что после последнео флипа уровень будет пройден и не будет других ходов
-          int flashCellIndex = _cellIndexByCoordinates(
-            _level.solution[_moves].x,
-            _level.solution[_moves].y,
-          );
-          cellsToFlip = _normalFlip(index);
-          _state = _state.copyWith(
-            moves: _moves.toString(),
-            cells: _cells,
-            cellsToFlip: cellsToFlip,
-            flashCellIndex: flashCellIndex,
-          );
-        }
-        notifyListeners();
-        _blockCells();
-      } else if (_state.isSolutionOn) {
-        // если нажать не на ту ячейку в режиме решения
-      } else {
-        // обычный поворот вместе с соседними ячейками
-        _moves++;
-        List<bool> cellsToFlip = _normalFlip(index);
-        _state = _state.copyWith(
-          moves: _moves.toString(),
-          cells: _cells,
-          cellsToFlip: cellsToFlip,
-        );
-        notifyListeners();
-        _blockCells();
-      }
-    }
-  }
-
   void _blockCells() {
     canTap = false;
     Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
@@ -276,8 +278,3 @@ class GameViewModel extends ChangeNotifier {
     });
   }
 }
-
-
-
-
-// ! TODO if(!_cells.contains(false)) WIN!!!!

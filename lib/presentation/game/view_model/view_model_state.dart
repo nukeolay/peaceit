@@ -1,4 +1,5 @@
 class GameViewModelState {
+  final String levelId;
   final String levelNumber;
   final String moves;
   final String singleFlips;
@@ -11,8 +12,10 @@ class GameViewModelState {
   final List<bool> cells;
   final List<bool> cellsToFlip;
   final int flashCellIndex;
+  final bool isWin;
 
   GameViewModelState({
+    this.levelId = '',
     this.levelNumber = '',
     this.moves = '',
     this.singleFlips = '',
@@ -25,9 +28,11 @@ class GameViewModelState {
     this.cells = const [],
     this.cellsToFlip = const [],
     this.flashCellIndex = -1,
+    this.isWin = false,
   });
 
   GameViewModelState copyWith({
+    String? levelId,
     String? levelNumber,
     String? moves,
     String? singleFlips,
@@ -40,8 +45,10 @@ class GameViewModelState {
     List<bool>? cells,
     List<bool>? cellsToFlip,
     int? flashCellIndex,
+    bool? isWin,
   }) {
     return GameViewModelState(
+      levelId: levelId ?? this.levelId,
       levelNumber: levelNumber ?? this.levelNumber,
       moves: moves ?? this.moves,
       singleFlips: singleFlips ?? this.singleFlips,
@@ -55,6 +62,7 @@ class GameViewModelState {
       cellsToFlip: cellsToFlip ??
           List<bool>.generate(this.cells.length, (index) => false),
       flashCellIndex: flashCellIndex ?? -1,
+      isWin: isWin ?? false,
     );
   }
 }
