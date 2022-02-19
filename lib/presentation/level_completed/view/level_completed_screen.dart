@@ -127,9 +127,8 @@ class LevelCompletedScreen extends StatelessWidget {
                                   .pushReplacementNamed(Routes.gameFinished);
                             } else {
                               try {
-                                Navigator.of(context).pushReplacementNamed(
-                                    Routes.game,
-                                    arguments: _state.nextLevelId);
+                                Navigator.pop(
+                                    context, _state.nextLevelId);
                               } catch (error) {
                                 Navigator.popUntil(
                                   context,

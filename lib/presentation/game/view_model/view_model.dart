@@ -20,7 +20,7 @@ class GameViewModel extends ChangeNotifier {
 
   GameViewModelState get state => _state;
 
-  String _levelId; // ! final?
+  String _levelId;
   bool _isInit = true;
   int _moves = 0;
   late ChapterEntity _chapter;
@@ -55,9 +55,40 @@ class GameViewModel extends ChangeNotifier {
       cellsToFlip: List<bool>.generate(_cells.length, (index) => false),
     );
   }
-  // ! поменять _level на геттер, чтобы тут не хранить никакие жругие состояния кроме того что есть в _state, там хранить levelId
 
 // -------- PUBLIC --------//
+
+  void newInstance(String newLevelId) {
+    int levelFieldLength = sqrt(_cells.length).toInt();
+    _levelId = newLevelId;
+    _init();
+    int newLevelFieldLength = sqrt(_level.cells.length).toInt();
+    if (levelFieldLength == newLevelFieldLength) {
+      // если предыдущий и следующий уровни одинаковой размерности
+      List<bool> cellsToFlip = _cellsToFlipToReset();
+      _isInit = true;
+      _state = _state.copyWith(
+        fieldLength: newLevelFieldLength,
+        cells: _cells,
+        cellsToFlip: cellsToFlip,
+        canUseSingleFlips: _canUseSingleFlips,
+        canUseSolution: _canUseSolution,
+      );
+    } else {
+      // если предыдущий и следующий уровни разной размерности
+      List<bool> cellsToFlip = List<bool>.generate(
+          newLevelFieldLength * newLevelFieldLength, (index) => false);
+      _isInit = true;
+      _state = _state.copyWith(
+        fieldLength: newLevelFieldLength,
+        cells: _cells,
+        cellsToFlip: cellsToFlip,
+        canUseSingleFlips: _canUseSingleFlips,
+        canUseSolution: _canUseSolution,
+      );
+    }
+    notifyListeners();
+  }
 
   void useSolution() {
     // блокируем кнопки
@@ -103,14 +134,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void restartLevel() {
-    List<bool> cellsToFlip =
-        List<bool>.generate(_currentCells.length, (index) => false);
-    for (int i = 0; i < _currentCells.length; i++) {
-      if (_currentCells[i] !=
-          [..._level.cells].map((cell) => cell.isBlack).toList()[i]) {
-        cellsToFlip[i] = true;
-      }
-    }
+    List<bool> cellsToFlip = _cellsToFlipToReset();
     _moves = 0;
     _isInit = true;
     _state = _state.copyWith(
@@ -188,6 +212,26 @@ class GameViewModel extends ChangeNotifier {
 
 // -------- NON PUBLIC --------//
 
+  List<bool> _cellsToFlipToReset() {
+    List<bool> cellsToFlip =
+        List<bool>.generate(_currentCells.length, (index) => false);
+    for (int i = 0; i < _currentCells.length; i++) {
+      if (_currentCells[i] !=
+          [..._level.cells].map((cell) => cell.isBlack).toList()[i]) {
+        cellsToFlip[i] = true;
+      }
+    }
+    return cellsToFlip;
+  }
+
+  List<bool> get _cells {
+    if (_isInit) {
+      _currentCells = [..._level.cells].map((cell) => cell.isBlack).toList();
+      _isInit = false;
+    }
+    return _currentCells;
+  }
+
   int get _levelNumber {
     return _chapter.levelIndex(_levelId);
   }
@@ -216,14 +260,6 @@ class GameViewModel extends ChangeNotifier {
     return _solutionsNumber > 0 &&
         !_state.isSingleFlipOn &&
         !_state.isSolutionOn;
-  }
-
-  List<bool> get _cells {
-    if (_isInit) {
-      _currentCells = [..._level.cells].map((cell) => cell.isBlack).toList();
-      _isInit = false;
-    }
-    return _currentCells;
   }
 
   int _cellIndexByCoordinates(int x, int y) {
