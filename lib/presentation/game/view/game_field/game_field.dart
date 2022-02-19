@@ -43,9 +43,10 @@ class _GameFieldState extends State<GameField> {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       if (true) {
         if (_state.isWin) {
-          Navigator.of(context).pushNamed(Routes.levelCompleted,
-              arguments:
-                  _state.levelId); // TODO передавать количество ходов чтобы считать рейтинг
+          Navigator.of(context).pushNamed(Routes.levelCompleted, arguments: {
+            'levelId': _state.levelId,
+            'moves': _state.moves,
+          }); // TODO передавать количество ходов чтобы считать рейтинг
           // .whenComplete(_viewModel.update);
         }
       }
