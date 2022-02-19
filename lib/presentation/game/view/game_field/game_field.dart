@@ -21,7 +21,6 @@ class _GameFieldState extends State<GameField> {
   late GameViewModelState _state;
   late double _width;
   late double _cellWidth;
-  // late List<bool> _cells;
   bool _isInit = true;
 
   @override
@@ -35,8 +34,7 @@ class _GameFieldState extends State<GameField> {
     _state = _viewModel.state;
     if (_isInit) {
       _width = MediaQuery.of(context).size.width;
-      _cellWidth = _width / _state.fieldLength - 10;
-      // _cells = _state.cells;
+      _cellWidth = _width / _state.fieldLength * 0.92;
       _isInit = false;
     }
 
@@ -73,7 +71,11 @@ class _GameFieldState extends State<GameField> {
           child: SizedBox(
             width: _cellWidth,
             height: _cellWidth,
-            child: CellWidget(index),
+            child: CellWidget(
+              index,
+              // передаю ключ, чтобы CellWidget создался заново, когда изменится конфигурация поля
+              key: ValueKey('${_state.levelId}$index'),
+            ),
           ),
         ),
       ),

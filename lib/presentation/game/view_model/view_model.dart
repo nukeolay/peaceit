@@ -63,30 +63,20 @@ class GameViewModel extends ChangeNotifier {
     _levelId = newLevelId;
     _init();
     int newLevelFieldLength = sqrt(_level.cells.length).toInt();
-    if (levelFieldLength == newLevelFieldLength) {
-      // если предыдущий и следующий уровни одинаковой размерности
-      List<bool> cellsToFlip = _cellsToFlipToReset();
-      _isInit = true;
-      _state = _state.copyWith(
-        fieldLength: newLevelFieldLength,
-        cells: _cells,
-        cellsToFlip: cellsToFlip,
-        canUseSingleFlips: _canUseSingleFlips,
-        canUseSolution: _canUseSolution,
-      );
-    } else {
-      // если предыдущий и следующий уровни разной размерности
-      List<bool> cellsToFlip = List<bool>.generate(
-          newLevelFieldLength * newLevelFieldLength, (index) => false);
-      _isInit = true;
-      _state = _state.copyWith(
-        fieldLength: newLevelFieldLength,
-        cells: _cells,
-        cellsToFlip: cellsToFlip,
-        canUseSingleFlips: _canUseSingleFlips,
-        canUseSolution: _canUseSolution,
-      );
-    }
+    List<bool> cellsToFlip = levelFieldLength == newLevelFieldLength
+        // если предыдущий и следующий уровни одинаковой размерности
+        ? _cellsToFlipToReset()
+        // если предыдущий и следующий уровни разной размерности
+        : List<bool>.generate(
+            newLevelFieldLength * newLevelFieldLength, (index) => false);
+    _isInit = true;
+    _state = _state.copyWith(
+      fieldLength: newLevelFieldLength,
+      cells: _cells,
+      cellsToFlip: cellsToFlip,
+      canUseSingleFlips: _canUseSingleFlips,
+      canUseSolution: _canUseSolution,
+    );
     notifyListeners();
   }
 
