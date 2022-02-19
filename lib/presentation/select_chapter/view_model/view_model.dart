@@ -1,3 +1,4 @@
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/internal/service_locator.dart';
@@ -67,14 +68,15 @@ class SelectChapterViewModel extends ChangeNotifier {
   }
 
   List<bool> get _canBePlayed {
-    final List<bool> result = [];
+    List<bool> result = [];
     for (ChapterEntity _chapter in _chapters) {
-      final chapterIndex = _chapters.indexOf(_chapter);
+      int chapterIndex = _chapters.indexOf(_chapter);
       if (chapterIndex == 0) {
         result.add(true); // если это первая глава
       } else {
         // если предыдущая глава пройдена не менее чем на 70%
-        result.add(_chapters[chapterIndex - 1].completedRatio >= 0.7);
+        result.add(_chapters[chapterIndex - 1].completedRatio >=
+            DefaultGameSettings.chapterCompleteRatio);
       }
     }
     return result;

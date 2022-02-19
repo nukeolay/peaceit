@@ -1,9 +1,12 @@
-import 'package:darkit/domain/levels/entities/chapter_entity.dart';
-import 'package:darkit/domain/levels/usecases/complete_level.dart';
-import 'package:darkit/domain/levels/usecases/get_chapers.dart';
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/internal/service_locator.dart';
+import 'package:darkit/domain/hints/usecases/single_flips_increment.dart';
+import 'package:darkit/domain/hints/usecases/solutions_number_increment.dart';
+import 'package:darkit/domain/levels/entities/chapter_entity.dart';
+import 'package:darkit/domain/levels/usecases/complete_level.dart';
+import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_levels.dart';
 import 'package:darkit/presentation/level_completed/view_model/view_model_state.dart';
@@ -16,7 +19,8 @@ class LevelCompletedViewModel extends ChangeNotifier {
   final String _levelId;
   final int _moves;
   late final LevelEntity _level;
-  late final ChapterEntity _chapter;
+  late ChapterEntity _chapter;
+  late final int _previousRating;
 
   LevelCompletedViewModel(this._levelId, this._moves) {
     _init();
@@ -29,10 +33,11 @@ class LevelCompletedViewModel extends ChangeNotifier {
     _chapter = serviceLocator<GetChapters>()
         .call()
         .firstWhere((chapter) => chapter.id == _level.chapterId);
-    // ! сохранить прогресс, проверив нужно и обновить рейтинг
-    if (_rating > _level.rating) {
+    // сохранить прогресс, проверив нужно ли обновить рейтинг
+    _previousRating = _level.rating;
+    if (_newRating > _previousRating) {
       serviceLocator<CompleteLevel>().call(
-        _level.copyWith(rating: _rating),
+        _level.copyWith(rating: _newRating),
       );
     }
 
@@ -40,7 +45,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
       levelId: _levelId,
       nextLevelId: _nextLevelId,
       moves: _moves,
-      rating: _rating,
+      rating: _newRating,
       bestResult: _level.bestResult,
       isSingleFlipAdded: _isSingleFlipAdded,
       isSolutionAdded: _isSolutionAdded,
@@ -51,11 +56,15 @@ class LevelCompletedViewModel extends ChangeNotifier {
 
   String get _nextLevelId {
     int index = _chapter.levels.indexWhere((level) => level.id == _levelId);
-    return _chapter.levels[index + 1]
-        .id; // ! предусмотреть что это может быть послежний уровень в главе, игре
+    if (_chapter.levels.length > index + 1) {
+      return _chapter.levels[index + 1].id;
+    } else {
+      return 'levelCompleted'; // ! обработать
+    }
+    // ! предусмотреть что это может быть послежний уровень в главе, игре
   }
 
-  int get _rating {
+  int get _newRating {
     _level.bestResult;
     if (_moves <= _level.bestResult) return 3;
     if (_moves <= _level.goodResult) return 2;
@@ -63,18 +72,47 @@ class LevelCompletedViewModel extends ChangeNotifier {
   }
 
   bool get _isSingleFlipAdded {
-    return false; // !
+    if (_previousRating < 3 && _newRating == 3) {
+      serviceLocator<SingleFlipsIncrement>().call();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   bool get _isSolutionAdded {
-    return false; // !
+    _chapter = _chapter.copyWith(
+        levels: serviceLocator<GetChapters>()
+            .call()
+            .firstWhere((chapter) => chapter.id == _level.chapterId)
+            .levels);
+    if (_previousRating == 0 && _chapter.completedRatio == 1) {
+      serviceLocator<SolutionsNumberIncrement>().call();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   bool get _isNewChapterOpened {
-    return false; // !
+    _chapter = _chapter.copyWith(
+        levels: serviceLocator<GetChapters>()
+            .call()
+            .firstWhere((chapter) => chapter.id == _level.chapterId)
+            .levels);
+    if (_previousRating == 0 &&
+        _chapter.completedRatio >= DefaultGameSettings.chapterCompleteRatio) {
+      return true; // ! не работает
+    } else {
+      return false;
+    }
   }
 
   bool get _isEndGame {
-    return false; // !
+    if (serviceLocator<GetLevels>().call().any((level) => level.rating == 0)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

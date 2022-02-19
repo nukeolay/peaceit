@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +6,8 @@ import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/level_completed/view_model/view_model.dart';
+import 'package:darkit/presentation/level_completed/widgets/info_card.dart';
+import 'package:darkit/presentation/level_completed/widgets/rating_row.dart';
 
 class LevelCompletedScreen extends StatelessWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
@@ -40,22 +40,6 @@ class LevelCompletedScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RatingRow(rating: _state.rating),
-                    if (_state.isSolutionAdded)
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '+1 решение',
-                          style: TextStyle(fontSize: 22),
-                        ),
-                      ),
-                    if (_state.isSingleFlipAdded)
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '+1 одиночный поворот',
-                          style: TextStyle(fontSize: 22),
-                        ),
-                      ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -63,37 +47,98 @@ class LevelCompletedScreen extends StatelessWidget {
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
-                    if (_state.rating != 3)
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: context
-                                  .read<AppTheme>()
-                                  .cardBack
-                                  .withOpacity(0.1),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: context
-                                      .read<AppTheme>()
-                                      .cardBack
-                                      .withOpacity(0.05),
-                                  blurRadius: 6.0,
+                    if (_state.isSingleFlipAdded ||
+                        _state.isSolutionAdded ||
+                        _state.isNewChapterOpened)
+                      InfoCard(
+                        Column(
+                          children: [
+                            if (_state.isNewChapterOpened)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.window_rounded,
+                                      size: 22,
+                                      color:
+                                          context.read<AppTheme>().accentColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'открыта новая глава',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: context
+                                              .read<AppTheme>()
+                                              .accentColor),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                'чтобы получить 3 звезды,\nпройди этот уровень за ${_state.bestResult} ${Utils.wordEnding(_state.bestResult)}',
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 16),
                               ),
-                            ),
+                            if (_state.isSolutionAdded)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.lightbulb_outline_rounded,
+                                      size: 22,
+                                      color:
+                                          context.read<AppTheme>().accentColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'получен просмотр решения',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: context
+                                              .read<AppTheme>()
+                                              .accentColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if (_state.isSingleFlipAdded)
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.flip,
+                                      size: 22,
+                                      color:
+                                          context.read<AppTheme>().accentColor,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      'получен одиночный поворот',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: context
+                                              .read<AppTheme>()
+                                              .accentColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    if (_state.rating != 3)
+                      InfoCard(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            'чтобы получить 3 звезды,\nпройди этот уровень за ${_state.bestResult} ${Utils.wordEnding(_state.bestResult)}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ),
                       ),
@@ -105,10 +150,7 @@ class LevelCompletedScreen extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             HapticFeedback.heavyImpact();
-                            Navigator.of(context).pushReplacementNamed(
-                              Routes.game,
-                              arguments: _levelId,
-                            );
+                            Navigator.pop(context, _state.levelId);
                           },
                           icon: const Icon(
                             Icons.replay_rounded,
@@ -127,8 +169,7 @@ class LevelCompletedScreen extends StatelessWidget {
                                   .pushReplacementNamed(Routes.gameFinished);
                             } else {
                               try {
-                                Navigator.pop(
-                                    context, _state.nextLevelId);
+                                Navigator.pop(context, _state.nextLevelId);
                               } catch (error) {
                                 Navigator.popUntil(
                                   context,
@@ -152,39 +193,6 @@ class LevelCompletedScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class RatingRow extends StatelessWidget {
-  const RatingRow({
-    Key? key,
-    required this.rating,
-  }) : super(key: key);
-
-  final int rating;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.star_rounded,
-          color: context.read<AppTheme>().accentColor,
-          size: 36,
-        ),
-        Icon(
-          rating >= 2 ? Icons.star_rounded : Icons.star_outline_rounded,
-          color: context.read<AppTheme>().accentColor,
-          size: 36,
-        ),
-        Icon(
-          rating == 3 ? Icons.star_rounded : Icons.star_outline_rounded,
-          color: context.read<AppTheme>().accentColor,
-          size: 36,
-        ),
-      ],
     );
   }
 }

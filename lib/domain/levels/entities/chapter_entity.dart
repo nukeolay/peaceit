@@ -9,6 +9,16 @@ class ChapterEntity {
     required this.levels,
   });
 
+  ChapterEntity copyWith({
+    String? id,
+    List<LevelEntity>? levels,
+  }) {
+    return ChapterEntity(
+      id: id ?? this.id,
+      levels: levels ?? this.levels,
+    );
+  }
+
   int get levelsNumber => levels.length;
 
   int get completedLevelsNumber =>
