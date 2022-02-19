@@ -19,6 +19,17 @@ class LevelEntity {
     this.rating = 0,
   });
 
+  // TODO вместо поля bestResult сделать геттер, который считат length solution
+  // ! int get bestResultEXPERIMENT => solution.length;
+
+  // TODO вместо поля goodResult сделать геттер, который считат length solution * 1.5
+  // ! int get goodResultEXPERIMENT => (bestResult * 1.5).ceil() + 1;
+
+  // TODO вместо поля rating добавить поле moves, записывать количество шагов, за которое пройден уровень
+  
+
+  // TODO сделать геттер rating, который будет возвращать рейтинг исходя из moves и best/good result
+
   LevelEntity copyWith({
     required int rating,
   }) {

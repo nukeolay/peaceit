@@ -21,6 +21,7 @@ class SelectLevelViewModel extends ChangeNotifier {
   final List<LevelEntity> _levels = [];
 
   void _init(String chapterId) {
+    // TODO убрать аргумент, chapterId и так доступен, не нужно его сюда передавать. Так же сделать в ждругих init
     _levels.clear();
     _levels.addAll(serviceLocator<GetLevels>()
         .call()

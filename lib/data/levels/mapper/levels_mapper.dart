@@ -7,7 +7,7 @@ class LevelsMapper {
     return DefaultLevels.levels.map((level) {
       if (levelsPrefsModel.completedLevels.containsKey(level.id)) {
         return level.copyWith(
-            rating: levelsPrefsModel.completedLevels[level.id]!);
+            rating: levelsPrefsModel.completedLevels[level.id]!); // TODO тут записывать не в rating, а в moves
       }
       return level;
     }).toList();

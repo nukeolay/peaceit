@@ -1,3 +1,4 @@
+import 'package:darkit/domain/levels/usecases/complete_level.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,6 +57,10 @@ Future<void> init() async {
   );
   serviceLocator.registerLazySingleton<GetLevels>(
     () => GetLevels(serviceLocator()),
+  );
+
+  serviceLocator.registerLazySingleton<CompleteLevel>(
+    () => CompleteLevel(serviceLocator()),
   );
 
   // ---Repository---

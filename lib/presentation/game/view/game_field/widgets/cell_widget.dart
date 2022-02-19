@@ -45,7 +45,7 @@ class _CellWidgetState extends State<CellWidget> {
 
   @override
   Widget build(BuildContext context) {
-    bool _isFlash = widget._index == _state.flashCellIndex; // !
+    bool _isFlash = widget._index == _state.flashCellIndex;
     return GestureDetector(
       onTap: () {
         HapticFeedback.heavyImpact();
