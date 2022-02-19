@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +17,11 @@ class GameField extends StatefulWidget {
 }
 
 class _GameFieldState extends State<GameField> {
-  late GameViewModel _viewModel; // = context.watch<GameViewModel>();
-  late GameViewModelState _state; // = _viewModel.state;
-  late final double width; // = MediaQuery.of(context).size.width;
-  late final double cellWidth; // = width / _state.fieldLength - 10;
+  late GameViewModel _viewModel;
+  late GameViewModelState _state;
+  late double _width;
+  late double _cellWidth;
+  // late List<bool> _cells;
   bool _isInit = true;
 
   @override
@@ -35,19 +34,22 @@ class _GameFieldState extends State<GameField> {
     _viewModel = context.watch<GameViewModel>();
     _state = _viewModel.state;
     if (_isInit) {
-      width = MediaQuery.of(context).size.width;
-      cellWidth = width / _state.fieldLength - 10;
+      _width = MediaQuery.of(context).size.width;
+      _cellWidth = _width / _state.fieldLength - 10;
+      // _cells = _state.cells;
       _isInit = false;
     }
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
       if (true) {
         if (_state.isWin) {
-          Navigator.of(context).pushNamed(Routes.levelCompleted, arguments: {
+          String _newLevelId = (await Navigator.of(context)
+              .pushNamed(Routes.levelCompleted, arguments: {
             'levelId': _state.levelId,
             'moves': _state.moves,
-          }); // TODO передавать количество ходов чтобы считать рейтинг
-          // .whenComplete(_viewModel.update);
+          })) as String;
+          _isInit = true; // нужно чтобы пересчитывать размер ширины ячейки
+          _viewModel.newInstance(_newLevelId);
         }
       }
     });
@@ -69,7 +71,10 @@ class _GameFieldState extends State<GameField> {
         padding: const EdgeInsets.all(0.0),
         itemBuilder: (context, index) => Center(
           child: SizedBox(
-              width: cellWidth, height: cellWidth, child: CellWidget(index)),
+            width: _cellWidth,
+            height: _cellWidth,
+            child: CellWidget(index),
+          ),
         ),
       ),
     );
