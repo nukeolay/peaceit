@@ -1,6 +1,6 @@
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/old_realisation/game/widgets/cell_widget.dart';
-import 'package:darkit/old_realisation/game/widgets/disable_multitouch.dart';
+import 'package:darkit/presentation/game/view/game_field/widgets/disable_multitouch.dart';
 import 'package:flutter/material.dart';
 
 class GameFieldGrid extends StatelessWidget {
