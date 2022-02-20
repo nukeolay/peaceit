@@ -167,10 +167,7 @@ class GameViewModel extends ChangeNotifier {
             _level.solution[_moves].x,
             _level.solution[_moves].y,
           );
-          cellsToFlip = _normalFlip(index);
           _state = _state.copyWith(
-            moves: _moves.toString(),
-            cells: _cells,
             cellsToFlip: cellsToFlip,
             flashCellIndex: flashCellIndex,
           );

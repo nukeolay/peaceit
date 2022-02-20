@@ -143,7 +143,6 @@ class LevelCompletedScreen extends StatelessWidget {
                         ),
                       ),
                     const SizedBox(height: 30),
-                    // TODO проверять, если закончено более 70% в главе, писать, что открыта новая глава
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
