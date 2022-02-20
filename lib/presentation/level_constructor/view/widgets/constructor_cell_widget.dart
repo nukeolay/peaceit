@@ -63,7 +63,7 @@ class CustomCell extends StatelessWidget {
       ),
       child: Text(
         _text,
-        style: const TextStyle(fontSize: 25),
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }
