@@ -27,7 +27,7 @@ class ResultBar extends StatelessWidget {
                 ..._cells.map(
                   (cell) => Text(
                     '${cell.x}, ${cell.y} ${cell.isBlack ? ', isBlack: ${cell.isBlack}' : ''}',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 12),
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -43,7 +43,7 @@ class ResultBar extends StatelessWidget {
                 ..._inputCells.map(
                   (cell) => Text(
                     '${cell.x}, ${cell.y}',
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 12),
                     textAlign: TextAlign.end,
                   ),
                 ),

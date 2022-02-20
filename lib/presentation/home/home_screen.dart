@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 // ! TODO закомментировать перед релизом
-                const SizedBox(height: 50),
+                const SizedBox(height: 10),
                 CustomTextButton(
                   text: 'Редактор 3x3',
                   function: () {
@@ -67,13 +67,31 @@ class HomeScreen extends StatelessWidget {
                         arguments: 'new 3x3');
                   },
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 10),
                 CustomTextButton(
                   text: 'Редактор 4x4',
                   function: () {
                     HapticFeedback.heavyImpact();
                     Navigator.of(context).pushNamed(Routes.levelConstructor,
                         arguments: 'new 4x4');
+                  },
+                ),
+                const SizedBox(height: 10),
+                CustomTextButton(
+                  text: 'Редактор 5x5',
+                  function: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.of(context).pushNamed(Routes.levelConstructor,
+                        arguments: 'new 5x5');
+                  },
+                ),
+                const SizedBox(height: 10),
+                CustomTextButton(
+                  text: 'Редактор 6x6',
+                  function: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.of(context).pushNamed(Routes.levelConstructor,
+                        arguments: 'new 6x6');
                   },
                 ),
                 // ! TODO закомментировать перед релизом
