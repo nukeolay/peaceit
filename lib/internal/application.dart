@@ -5,8 +5,6 @@ import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/routes/custom_route.dart';
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/presentation/home/home_screen.dart';
-import 'package:darkit/old_realisation/models/game.dart';
-import 'package:darkit/old_realisation/models/game_field.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,22 +16,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppTheme(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => GameField(),
-          lazy: false,
-        ),
-        ChangeNotifierProxyProvider<GameField, Game>(
-          create: (context) => Game(),
-          update: (context, gameField, previousGame) =>
-              previousGame!..initGame(gameField),
-          lazy: false,
-        ),
       ],
       child: const DarkItApp(),
     );
   }
 }
-
 
 class DarkItApp extends StatelessWidget {
   const DarkItApp({Key? key}) : super(key: key);
