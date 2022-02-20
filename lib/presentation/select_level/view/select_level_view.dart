@@ -5,24 +5,14 @@ import 'package:darkit/presentation/select_level/view_model/view_model.dart';
 import 'package:darkit/presentation/select_level/widgets/levels_grid.dart';
 import 'package:darkit/presentation/select_level/widgets/select_level_appbar.dart';
 
-class SelectLevelView extends StatefulWidget {
+class SelectLevelView extends StatelessWidget {
   const SelectLevelView({Key? key}) : super(key: key);
 
   @override
-  State<SelectLevelView> createState() => _SelectLevelViewState();
-}
-
-class _SelectLevelViewState extends State<SelectLevelView> {
-  @override
-  void initState() {
+  Widget build(BuildContext context) {
     Future.delayed(Duration.zero).then((_) {
       precacheImage(const AssetImage('assets/bg.png'), context);
     });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     String _chapterId = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
