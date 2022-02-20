@@ -48,7 +48,6 @@ class _CellWidgetState extends State<CellWidget> {
     bool _isFlash = widget._index == _state.flashCellIndex;
     return GestureDetector(
       onTap: () {
-        HapticFeedback.heavyImpact();
         _viewModel.flipCard(widget._index);
       },
       child: ClipRRect(

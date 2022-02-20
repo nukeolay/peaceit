@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/presentation/select_level/view_model/view_model.dart';
-import 'package:darkit/presentation/select_level/widgets/levels_grid.dart';
-import 'package:darkit/presentation/select_level/widgets/select_level_appbar.dart';
+import 'package:darkit/presentation/select_level/view/widgets/levels_grid.dart';
+import 'package:darkit/presentation/select_level/view/widgets/select_level_appbar.dart';
 
-class SelectLevelView extends StatelessWidget {
-  const SelectLevelView({Key? key}) : super(key: key);
+class SelectLevelSreen extends StatelessWidget {
+  const SelectLevelSreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

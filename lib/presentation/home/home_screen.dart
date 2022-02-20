@@ -10,6 +10,9 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -52,14 +55,6 @@ class HomeScreen extends StatelessWidget {
                   function: () {
                     HapticFeedback.heavyImpact();
                     Navigator.of(context).pushNamed(Routes.selectChapterMenu);
-                  },
-                ),
-                const SizedBox(height: 50),
-                CustomTextButton(
-                  text: 'Правила',
-                  function: () {
-                    HapticFeedback.heavyImpact();
-                    Navigator.of(context).pushNamed(Routes.howToPlay);
                   },
                 ),
                 // ! TODO закомментировать перед релизом

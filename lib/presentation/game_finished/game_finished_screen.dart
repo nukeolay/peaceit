@@ -10,6 +10,9 @@ class GameFinishedScreen extends StatelessWidget {
   const GameFinishedScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
     double width = MediaQuery.of(context).size.width;
     return WillPopScope(
       onWillPop: () {

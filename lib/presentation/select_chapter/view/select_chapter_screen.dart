@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
-import 'package:darkit/presentation/select_chapter/widgets/chapters_grid.dart';
-import 'package:darkit/presentation/select_chapter/widgets/select_chapter_appbar.dart';
+import 'package:darkit/presentation/select_chapter/view/widgets/chapters_grid.dart';
+import 'package:darkit/presentation/select_chapter/view/widgets/select_chapter_appbar.dart';
 
-class SelectChapterView extends StatelessWidget {
-  const SelectChapterView({Key? key}) : super(key: key);
+class SelectChapterScreen extends StatelessWidget {
+  const SelectChapterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
     return Scaffold(
       body: Container(
         width: double.infinity,
