@@ -14,6 +14,7 @@ import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/levels/usecases/get_levels.dart';
 import 'package:darkit/domain/hints/repositories/hints_repository.dart';
 import 'package:darkit/presentation/game/view_model/view_model_state.dart';
+import 'package:flutter/services.dart';
 
 class GameViewModel extends ChangeNotifier {
   GameViewModelState _state = GameViewModelState();
@@ -26,7 +27,7 @@ class GameViewModel extends ChangeNotifier {
   late ChapterEntity _chapter;
   late LevelEntity _level;
   late List<bool> _currentCells;
-  bool canTap = true;
+  bool _canTap = true;
 
   GameViewModel(this._levelId) {
     _init();
@@ -138,7 +139,8 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void flipCard(int index) {
-    if (canTap) {
+    if (_canTap) {
+      HapticFeedback.heavyImpact();
       if (_state.isSingleFlipOn) {
         // поворот одной ячейки
         _moves++;
@@ -295,9 +297,9 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void _blockCells() {
-    canTap = false;
+    _canTap = false;
     Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
-      canTap = true;
+      _canTap = true;
     });
   }
 }

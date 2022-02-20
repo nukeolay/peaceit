@@ -6,14 +6,17 @@ import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/level_completed/view_model/view_model.dart';
-import 'package:darkit/presentation/level_completed/widgets/info_card.dart';
-import 'package:darkit/presentation/level_completed/widgets/rating_row.dart';
+import 'package:darkit/presentation/level_completed/view/widgets/info_card.dart';
+import 'package:darkit/presentation/level_completed/view/widgets/rating_row.dart';
 
 class LevelCompletedScreen extends StatelessWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration.zero).then((_) {
+      precacheImage(const AssetImage('assets/bg.png'), context);
+    });
     final _arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final _levelId = _arguments['levelId'] as String;
@@ -76,21 +79,15 @@ class LevelCompletedScreen extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(
-                                        Icons.window_rounded,
-                                        size: 22,
-                                        color: context
-                                            .read<AppTheme>()
-                                            .accentColor,
-                                      ),
-                                      const SizedBox(width: 5),
                                       Text(
                                         'открыта новая глава',
                                         style: TextStyle(
-                                            fontSize: 16,
-                                            color: context
-                                                .read<AppTheme>()
-                                                .accentColor),
+                                          fontSize: 16,
+                                          color: context
+                                              .read<AppTheme>()
+                                              .accentColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
                                   ),

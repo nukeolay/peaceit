@@ -3,19 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/presentation/select_chapter/widgets/select_chapter_card.dart';
-import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
+import 'package:darkit/domain/levels/entities/cell_entity.dart';
+import 'package:darkit/presentation/select_level/view_model/view_model.dart';
+import 'package:darkit/presentation/select_level/view/widgets/select_level_card.dart';
 
-class ChaptersGrid extends StatelessWidget {
-  const ChaptersGrid({Key? key}) : super(key: key);
+class LevelsGrid extends StatelessWidget {
+  const LevelsGrid({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = context.watch<SelectChapterViewModel>();
+    final _viewModel = context.watch<SelectLevelViewModel>();
     final _state = _viewModel.state;
     return GridView.builder(
       physics: const BouncingScrollPhysics(),
-      itemCount: _state.chaptersNumber,
+      itemCount: _state.levelsNumber,
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -25,29 +26,29 @@ class ChaptersGrid extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(0.0),
       itemBuilder: (context, index) {
-        String _chapterId = _state.chapters[index];
-        double _completedRatio = _state.completedRatio[index];
-        String _completedLevels = _state.completedLevels[index];
-        String _levelsNumber = _state.levelsNumber[index];
-        bool _canBePlayed = _state.canBePlayed[index];
+        final String _levelId = _state.levels[index];
+        final List<CellEntity> _cells = _state.cells[index];
+        final int _cellsQuantity = _state.cellsQuantity[index];
+        final String _levelNumber = _state.levelNumber[index];
+        final int _rating = _state.rating[index];
+        final bool _canBePlayed = _state.canBePlayed[index];
         return Center(
           child: Container(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: _canBePlayed
+              onTap: _state.canBePlayed[index]
                   ? () {
                       HapticFeedback.heavyImpact();
                       Navigator.of(context)
-                          .pushNamed(Routes.selectLevelMenu,
-                              arguments: _chapterId)
+                          .pushNamed(Routes.game, arguments: _levelId)
                           .whenComplete(_viewModel.update);
                     }
                   : null,
-              child: SelectChapterCard(
-                chapterId: _chapterId,
-                completedRatio: _completedRatio,
-                completedLevelsInChapter: _completedLevels,
-                levelsInChapter: _levelsNumber,
+              child: SelectLevelCard(
+                cells: _cells,
+                cellsQuantity: _cellsQuantity,
+                levelNumber: _levelNumber,
+                rating: _rating,
                 canBePlayed: _canBePlayed,
               ),
             ),

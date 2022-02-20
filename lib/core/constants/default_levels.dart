@@ -1334,62 +1334,6 @@ class DefaultLevels {
           CellEntity(1, 4),
           CellEntity(4, 4),
         ]),
-
-    // ! TODO закомментировать перед релизом
-    LevelEntity(
-        id: 'new 3x3',
-        chapterId: 'edt 3x3',
-        bestResult: 4,
-        goodResult: 7,
-        cells: [
-          CellEntity(1, 1),
-          CellEntity(2, 1),
-          CellEntity(3, 1),
-          CellEntity(1, 2),
-          CellEntity(2, 2),
-          CellEntity(3, 2),
-          CellEntity(1, 3),
-          CellEntity(2, 3),
-          CellEntity(3, 3),
-        ],
-        solution: [
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-        ]),
-
-    LevelEntity(
-        id: 'new 4x4',
-        chapterId: 'edt 4x4',
-        bestResult: 4,
-        goodResult: 7,
-        cells: [
-          CellEntity(1, 1),
-          CellEntity(2, 1),
-          CellEntity(3, 1),
-          CellEntity(4, 1),
-          CellEntity(1, 2),
-          CellEntity(2, 2),
-          CellEntity(3, 2),
-          CellEntity(4, 2),
-          CellEntity(1, 3),
-          CellEntity(2, 3),
-          CellEntity(3, 3),
-          CellEntity(4, 3),
-          CellEntity(1, 4),
-          CellEntity(2, 4),
-          CellEntity(3, 4),
-          CellEntity(4, 4),
-        ],
-        solution: [
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-          CellEntity(0, 0),
-        ]),
-    // ! TODO закомментировать перед релизом
-
     LevelEntity(
         id: 'x5s10n1',
         chapterId: '10',
