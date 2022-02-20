@@ -167,15 +167,13 @@ class LevelCompletedScreen extends StatelessWidget {
                             if (_state.isEndGame) {
                               Navigator.of(context)
                                   .pushReplacementNamed(Routes.gameFinished);
+                            } else if (_state.isEndChapter) {
+                              Navigator.popUntil(
+                                context,
+                                ModalRoute.withName(Routes.selectChapterMenu),
+                              );
                             } else {
-                              try {
-                                Navigator.pop(context, _state.nextLevelId);
-                              } catch (error) {
-                                Navigator.popUntil(
-                                  context,
-                                  ModalRoute.withName(Routes.selectChapterMenu),
-                                );
-                              }
+                              Navigator.pop(context, _state.nextLevelId);
                             }
                           },
                           icon: const Icon(

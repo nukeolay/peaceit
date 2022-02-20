@@ -1,6 +1,6 @@
-import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:flutter/material.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/domain/hints/usecases/single_flips_increment.dart';
 import 'package:darkit/domain/hints/usecases/solutions_number_increment.dart';
@@ -21,6 +21,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
   late final LevelEntity _level;
   late ChapterEntity _chapter;
   late final int _previousRating;
+  late final double _previousCompleteRatio;
 
   LevelCompletedViewModel(this._levelId, this._moves) {
     _init();
@@ -35,6 +36,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
         .firstWhere((chapter) => chapter.id == _level.chapterId);
     // сохранить прогресс, проверив нужно ли обновить рейтинг
     _previousRating = _level.rating;
+    _previousCompleteRatio = _chapter.completedRatio;
     if (_newRating > _previousRating) {
       serviceLocator<CompleteLevel>().call(
         _level.copyWith(rating: _newRating),
@@ -50,6 +52,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
       isSingleFlipAdded: _isSingleFlipAdded,
       isSolutionAdded: _isSolutionAdded,
       isNewChapterOpened: _isNewChapterOpened,
+      isEndChapter: _isEndChapter,
       isEndGame: _isEndGame,
     );
   }
@@ -59,9 +62,8 @@ class LevelCompletedViewModel extends ChangeNotifier {
     if (_chapter.levels.length > index + 1) {
       return _chapter.levels[index + 1].id;
     } else {
-      return 'levelCompleted'; // ! обработать
+      return '';
     }
-    // ! предусмотреть что это может быть послежний уровень в главе, игре
   }
 
   int get _newRating {
@@ -100,9 +102,18 @@ class LevelCompletedViewModel extends ChangeNotifier {
             .call()
             .firstWhere((chapter) => chapter.id == _level.chapterId)
             .levels);
-    if (_previousRating == 0 &&
+    if (_previousCompleteRatio < DefaultGameSettings.chapterCompleteRatio &&
         _chapter.completedRatio >= DefaultGameSettings.chapterCompleteRatio) {
-      return true; // ! не работает
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool get _isEndChapter {
+    int index = _chapter.levels.indexWhere((level) => level.id == _levelId);
+    if (_chapter.levels.length == index + 1) {
+      return true;
     } else {
       return false;
     }
@@ -113,6 +124,6 @@ class LevelCompletedViewModel extends ChangeNotifier {
       return false;
     } else {
       return true;
-    }
+    } // ! TODO проверить
   }
 }

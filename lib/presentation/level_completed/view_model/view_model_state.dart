@@ -7,6 +7,7 @@ class LevelCompletedViewModelState {
   final bool isSingleFlipAdded;
   final bool isSolutionAdded;
   final bool isNewChapterOpened;
+  final bool isEndChapter;
   final bool isEndGame;
 
   LevelCompletedViewModelState({
@@ -18,6 +19,7 @@ class LevelCompletedViewModelState {
     this.isSingleFlipAdded = false,
     this.isSolutionAdded = false,
     this.isNewChapterOpened = false,
+    this.isEndChapter = false,
     this.isEndGame = false,
   });
 
@@ -30,6 +32,7 @@ class LevelCompletedViewModelState {
     bool? isSingleFlipAdded,
     bool? isSolutionAdded,
     bool? isNewChapterOpened,
+    bool? isEndChapter,
     bool? isEndGame,
   }) {
     return LevelCompletedViewModelState(
@@ -41,6 +44,7 @@ class LevelCompletedViewModelState {
       isSolutionAdded: isSolutionAdded ?? this.isSolutionAdded,
       bestResult: bestResult ?? this.bestResult,
       isNewChapterOpened: isNewChapterOpened ?? this.isNewChapterOpened,
+      isEndChapter: isEndChapter ?? this.isEndGame,
       isEndGame: isEndGame ?? this.isEndGame,
     );
   }

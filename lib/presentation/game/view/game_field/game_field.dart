@@ -41,13 +41,16 @@ class _GameFieldState extends State<GameField> {
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       if (true) {
         if (_state.isWin) {
-          String _newLevelId = (await Navigator.of(context)
+          // октрываем экран levelCompleted
+          String? _newLevelId = (await Navigator.of(context)
               .pushNamed(Routes.levelCompleted, arguments: {
             'levelId': _state.levelId,
             'moves': _state.moves,
-          })) as String;
-          _isInit = true; // нужно чтобы пересчитывать размер ширины ячейки
-          _viewModel.newInstance(_newLevelId);
+          })) as String?;
+          if (_newLevelId != null) {
+            _isInit = true; // нужно чтобы пересчитывать размер ширины ячейки
+            _viewModel.newInstance(_newLevelId);
+          }
         }
       }
     });
@@ -74,7 +77,7 @@ class _GameFieldState extends State<GameField> {
             child: CellWidget(
               index,
               // передаю ключ, чтобы CellWidget создался заново, когда изменится конфигурация поля
-              key: ValueKey('${_state.levelId}$index'),
+              key: ValueKey('${_state.fieldLength}$index'),
             ),
           ),
         ),
