@@ -177,7 +177,6 @@ class Game with ChangeNotifier {
       _levels.where((level) => level.rating != 0).length == _levels.length;
 
   int rating() {
-    // TODO сделать ById - ById уже есть. Этот метод используется для расчета значения от количества ходов. Передавать сюда Id и количество ходов. Или оставить все без изменения
     if (_gameField.movesNumber <= currentLevel.bestResult) return 3;
     if (_gameField.movesNumber <= currentLevel.goodResult) return 2;
     return 1;
