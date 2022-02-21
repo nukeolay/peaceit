@@ -28,8 +28,8 @@ class ConstructorCellWidget extends StatelessWidget {
         child: FlipCard(
           speed: DefaultGameSettings.flipSpeed,
           flipOnTouch: false,
-          front: CustomCell(isBlack, 'x: $x\ny: $y'),
-          back: CustomCell(!isBlack, 'x: $x\ny: $y'),
+          front: CustomCell(!isBlack, 'x: $x\ny: $y'),
+          back: CustomCell(isBlack, 'x: $x\ny: $y'),
         ),
       ),
     );
@@ -63,7 +63,7 @@ class CustomCell extends StatelessWidget {
       ),
       child: Text(
         _text,
-        style: const TextStyle(fontSize: 20),
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }
