@@ -1,4 +1,7 @@
+import 'package:darkit/domain/levels/entities/chapter_entity.dart';
+
 class GameViewModelState {
+  final ChapterEntity chapter;
   final String levelId;
   final String levelNumber;
   final String moves;
@@ -15,9 +18,10 @@ class GameViewModelState {
   final bool isWin;
 
   GameViewModelState({
+    required this.chapter,
     this.levelId = '',
     this.levelNumber = '',
-    this.moves = '',
+    this.moves = '0',
     this.singleFlips = '',
     this.canUseSingleFlips = false,
     this.isSingleFlipOn = false,
@@ -48,6 +52,7 @@ class GameViewModelState {
     bool? isWin,
   }) {
     return GameViewModelState(
+      chapter: chapter,
       levelId: levelId ?? this.levelId,
       levelNumber: levelNumber ?? this.levelNumber,
       moves: moves ?? this.moves,
