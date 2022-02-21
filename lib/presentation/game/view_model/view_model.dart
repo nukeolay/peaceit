@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/internal/service_locator.dart';
@@ -11,69 +12,57 @@ import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
-import 'package:darkit/domain/levels/usecases/get_levels.dart';
 import 'package:darkit/domain/hints/repositories/hints_repository.dart';
 import 'package:darkit/presentation/game/view_model/view_model_state.dart';
-import 'package:flutter/services.dart';
 
 class GameViewModel extends ChangeNotifier {
-  GameViewModelState _state = GameViewModelState();
-  // ! TODO переписать без _isInit
+  late GameViewModelState _state;
+
   GameViewModelState get state => _state;
 
-  String _levelId;
-  bool _isInit = true;
-  int _moves = 0;
-  late ChapterEntity _chapter;
-  late LevelEntity _level;
-  late List<bool> _currentCells;
   bool _canTap = true;
 
-  GameViewModel(this._levelId) {
-    _init();
+  GameViewModel(String levelId) {
+    _init(levelId);
   }
 
-  void _init() {
-    _level = serviceLocator<GetLevels>()
-        .call()
-        .firstWhere((level) => level.id == _levelId);
-    _chapter = serviceLocator<GetChapters>()
-        .call()
-        .firstWhere((chapter) => chapter.id == _level.chapterId);
-    _moves = 0;
-    _state = _state.copyWith(
-      levelId: _levelId,
-      levelNumber: (_levelNumber + 1).toString(),
-      moves: _moves.toString(),
+  void _init(String levelId) {
+    ChapterEntity chapter = serviceLocator<GetChapters>().call().firstWhere(
+        (chapter) => chapter.levels.any((level) => level.id == levelId));
+    LevelEntity level =
+        chapter.levels.firstWhere((level) => level.id == levelId);
+    _state = GameViewModelState(
+      chapter: chapter,
+      levelId: levelId,
+      levelNumber: (chapter.levelIndex(levelId) + 1).toString(),
       singleFlips: _singleFlipsNumber.toString(),
-      canUseSingleFlips: _canUseSingleFlips,
-      isSingleFlipOn: false,
+      canUseSingleFlips: _singleFlipsNumber > 0,
       solutionsNumber: _solutionsNumber.toString(),
-      canUseSolution: _canUseSolution,
-      isSolutionOn: false,
-      fieldLength: sqrt(_cells.length).toInt(),
-      cells: _cells,
-      cellsToFlip: List<bool>.generate(_cells.length, (index) => false),
+      canUseSolution: _solutionsNumber > 0,
+      fieldLength: sqrt(level.cells.length).toInt(),
+      cells: [...level.cells].map((cell) => cell.isBlack).toList(),
+      cellsToFlip: List<bool>.generate(level.cells.length, (index) => false),
     );
   }
 
 // -------- PUBLIC --------//
 
   void newInstance(String newLevelId) {
-    int levelFieldLength = sqrt(_cells.length).toInt();
-    _levelId = newLevelId;
-    _init();
-    int newLevelFieldLength = sqrt(_level.cells.length).toInt();
-    List<bool> cellsToFlip = levelFieldLength == newLevelFieldLength
+    int previousFieldLength = sqrt(_state.cells.length).toInt();
+    List<bool> previousCells = _state.cells;
+    _init(newLevelId);
+    int newFieldLength = sqrt(_level.cells.length).toInt();
+    List<bool> cellsToFlip = previousFieldLength == newFieldLength
         // если предыдущий и следующий уровни одинаковой размерности
-        ? _cellsToFlipToReset()
+        ? _cellsToFlip(
+            cells: previousCells,
+            newCells: _initCells,
+          )
         // если предыдущий и следующий уровни разной размерности
         : List<bool>.generate(
-            newLevelFieldLength * newLevelFieldLength, (index) => false);
-    _isInit = true;
+            newFieldLength * newFieldLength, (index) => false);
     _state = _state.copyWith(
-      fieldLength: newLevelFieldLength,
-      cells: _cells,
+      fieldLength: newFieldLength,
       cellsToFlip: cellsToFlip,
       canUseSingleFlips: _canUseSingleFlips,
       canUseSolution: _canUseSolution,
@@ -82,32 +71,22 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void useSolution() {
-    // блокируем кнопки
-    _state = _state.copyWith(
-      isSolutionOn: true,
-      canUseSingleFlips: false,
-      canUseSolution: false,
+    List<bool> cellsToFlip = _cellsToFlip(
+      cells: _state.cells,
+      newCells: _initCells,
     );
-    // обнуляем поле
-    List<bool> cellsToFlip =
-        List<bool>.generate(_currentCells.length, (index) => false);
-    for (int i = 0; i < _currentCells.length; i++) {
-      if (_currentCells[i] !=
-          [..._level.cells].map((cell) => cell.isBlack).toList()[i]) {
-        cellsToFlip[i] = true;
-      }
-    }
     _solutionsDecrement();
-    _moves = 0;
     int flashCellIndex = _cellIndexByCoordinates(
       _level.solution[_moves].x,
       _level.solution[_moves].y,
     );
-    _isInit = true;
     _state = _state.copyWith(
-      moves: _moves.toString(),
+      moves: '0',
       cellsToFlip: cellsToFlip,
-      cells: _cells,
+      isSolutionOn: true,
+      canUseSingleFlips: false,
+      canUseSolution: false,
+      cells: _initCells,
       flashCellIndex: flashCellIndex,
       solutionsNumber: _solutionsNumber.toString(),
     );
@@ -117,21 +96,20 @@ class GameViewModel extends ChangeNotifier {
   void useSingleFlip() {
     _state = _state.copyWith(
       isSingleFlipOn: !_state.isSingleFlipOn,
-    );
-    _state = _state.copyWith(
       canUseSolution: _canUseSolution,
     );
     notifyListeners();
   }
 
   void restartLevel() {
-    List<bool> cellsToFlip = _cellsToFlipToReset();
-    _moves = 0;
-    _isInit = true;
+    List<bool> cellsToFlip = _cellsToFlip(
+      cells: _state.cells,
+      newCells: _initCells,
+    );
     _state = _state.copyWith(
-      moves: _moves.toString(),
+      moves: '0',
       cellsToFlip: cellsToFlip,
-      cells: _cells,
+      cells: _initCells,
       isSingleFlipOn: false,
       isSolutionOn: false,
     );
@@ -143,12 +121,19 @@ class GameViewModel extends ChangeNotifier {
       HapticFeedback.heavyImpact();
       if (_state.isSingleFlipOn) {
         // поворот одной ячейки
-        _moves++;
-        List<bool> cellsToFlip = _singleFlip(index);
+        _singleFlipsDecrement();
+        List<bool> flippedCells = _singleFlip(
+          index: index,
+          cells: _state.cells,
+        );
+        List<bool> cellsToFlip = _cellsToFlip(
+          cells: _state.cells,
+          newCells: flippedCells,
+        );
         _state = _state.copyWith(
-          moves: _moves.toString(),
+          moves: (_moves + 1).toString(),
           singleFlips: _singleFlipsNumber.toString(),
-          cells: _cells,
+          cells: flippedCells,
           cellsToFlip: cellsToFlip,
           isSingleFlipOn: false,
         );
@@ -156,11 +141,17 @@ class GameViewModel extends ChangeNotifier {
         _blockCells();
       } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
         // поворот в режиме решения
-        _moves++;
-        List<bool> cellsToFlip = _normalFlip(index);
+        List<bool> flippedCells = _normalFlip(
+          index: index,
+          cells: _state.cells,
+        );
+        List<bool> cellsToFlip = _cellsToFlip(
+          cells: _state.cells,
+          newCells: flippedCells,
+        );
         _state = _state.copyWith(
-          moves: _moves.toString(),
-          cells: _cells,
+          moves: (_moves + 1).toString(),
+          cells: flippedCells,
           cellsToFlip: cellsToFlip,
         );
         if (_level.solution.length - 1 >= _moves) {
@@ -180,11 +171,17 @@ class GameViewModel extends ChangeNotifier {
         // если нажать не на ту ячейку в режиме решения
       } else {
         // обычный поворот вместе с соседними ячейками
-        _moves++;
-        List<bool> cellsToFlip = _normalFlip(index);
+        List<bool> flippedCells = _normalFlip(
+          index: index,
+          cells: _state.cells,
+        );
+        List<bool> cellsToFlip = _cellsToFlip(
+          cells: _state.cells,
+          newCells: flippedCells,
+        );
         _state = _state.copyWith(
-          moves: _moves.toString(),
-          cells: _cells,
+          moves: (_moves + 1).toString(),
+          cells: flippedCells,
           cellsToFlip: cellsToFlip,
         );
         notifyListeners();
@@ -192,7 +189,7 @@ class GameViewModel extends ChangeNotifier {
       }
     }
     Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
-      if (!_cells.contains(false)) {
+      if (!_state.cells.contains(false)) {
         _state = _state.copyWith(isWin: true);
         notifyListeners();
       }
@@ -201,28 +198,34 @@ class GameViewModel extends ChangeNotifier {
 
 // -------- NON PUBLIC --------//
 
-  List<bool> _cellsToFlipToReset() {
+  int get _moves {
+    return int.parse(_state.moves);
+  }
+
+  String get _levelId => _state.levelId;
+
+  LevelEntity get _level {
+    return _state.chapter.levels.firstWhere((level) => level.id == _levelId);
+  }
+
+  List<bool> get _initCells {
+    LevelEntity level =
+        _state.chapter.levels.firstWhere((level) => level.id == _state.levelId);
+    return [...level.cells].map((cell) => cell.isBlack).toList();
+  }
+
+  List<bool> _cellsToFlip({
+    required List<bool> cells,
+    required List<bool> newCells,
+  }) {
     List<bool> cellsToFlip =
-        List<bool>.generate(_currentCells.length, (index) => false);
-    for (int i = 0; i < _currentCells.length; i++) {
-      if (_currentCells[i] !=
-          [..._level.cells].map((cell) => cell.isBlack).toList()[i]) {
+        List<bool>.generate(cells.length, (index) => false);
+    for (int i = 0; i < cells.length; i++) {
+      if (cells[i] != newCells[i]) {
         cellsToFlip[i] = true;
       }
     }
     return cellsToFlip;
-  }
-
-  List<bool> get _cells {
-    if (_isInit) {
-      _currentCells = [..._level.cells].map((cell) => cell.isBlack).toList();
-      _isInit = false;
-    }
-    return _currentCells;
-  }
-
-  int get _levelNumber {
-    return _chapter.levelIndex(_levelId);
   }
 
   int get _singleFlipsNumber {
@@ -257,43 +260,40 @@ class GameViewModel extends ChangeNotifier {
     return _level.cells.indexOf(_cell);
   }
 
-  List<bool> _singleFlip(int index) {
-    List<bool> cellsToFlip =
-        List<bool>.generate(_cells.length, (index) => false);
-    _cells[index] = !_cells[index];
-    cellsToFlip[index] = true;
-    _singleFlipsDecrement();
-    return cellsToFlip;
+  List<bool> _singleFlip({
+    required int index,
+    required List<bool> cells,
+  }) {
+    List<bool> flippedCells = [...cells];
+    flippedCells[index] = !flippedCells[index];
+    return flippedCells;
   }
 
-  List<bool> _normalFlip(int index) {
-    List<bool> cellsToFlip =
-        List<bool>.generate(_cells.length, (index) => false);
+  List<bool> _normalFlip({
+    required int index,
+    required List<bool> cells,
+  }) {
+    List<bool> flippedCells = [...cells];
     int x = _level.cells[index].x;
     int y = _level.cells[index].y;
-    _cells[index] = !_cells[index];
-    cellsToFlip[index] = true;
+    flippedCells[index] = !flippedCells[index];
     try {
-      _cells[_cellIndexByCoordinates(x, y - 1)] =
-          !_cells[_cellIndexByCoordinates(x, y - 1)];
-      cellsToFlip[_cellIndexByCoordinates(x, y - 1)] = true;
+      index = _cellIndexByCoordinates(x, y - 1);
+      flippedCells[index] = !flippedCells[index];
     } catch (error) {}
     try {
-      _cells[_cellIndexByCoordinates(x, y + 1)] =
-          !_cells[_cellIndexByCoordinates(x, y + 1)];
-      cellsToFlip[_cellIndexByCoordinates(x, y + 1)] = true;
+      index = _cellIndexByCoordinates(x, y + 1);
+      flippedCells[index] = !flippedCells[index];
     } catch (error) {}
     try {
-      _cells[_cellIndexByCoordinates(x - 1, y)] =
-          !_cells[_cellIndexByCoordinates(x - 1, y)];
-      cellsToFlip[_cellIndexByCoordinates(x - 1, y)] = true;
+      index = _cellIndexByCoordinates(x - 1, y);
+      flippedCells[index] = !flippedCells[index];
     } catch (error) {}
     try {
-      _cells[_cellIndexByCoordinates(x + 1, y)] =
-          !_cells[_cellIndexByCoordinates(x + 1, y)];
-      cellsToFlip[_cellIndexByCoordinates(x + 1, y)] = true;
+      index = _cellIndexByCoordinates(x + 1, y);
+      flippedCells[index] = !flippedCells[index];
     } catch (error) {}
-    return cellsToFlip;
+    return flippedCells;
   }
 
   void _blockCells() {
