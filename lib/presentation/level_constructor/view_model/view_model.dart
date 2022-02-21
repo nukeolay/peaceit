@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/usecases/get_levels.dart';
-import 'package:darkit/internal/service_locator.dart';
 
 class ConstructorViewModel extends ChangeNotifier {
   ConstructorViewModelState _state = ConstructorViewModelState();
@@ -15,36 +13,38 @@ class ConstructorViewModel extends ChangeNotifier {
 
   final String _levelId;
   int _moves = 0;
-  late final LevelEntity _level;
+  late LevelEntity _level;
   late List<CellEntity> _cells;
   late List<CellEntity> _inputCells;
 
   bool _isInit = true;
 
   ConstructorViewModel(this._levelId) {
-    _init();
+    if (_isInit) {
+      _init();
+      _isInit = false;
+    }
   }
 
   void _init() {
-    if (_isInit) {
-      _level = BlankLevels.levels.firstWhere((level) => level.id == _levelId);
-      _cells = [
-        ..._level.cells.map(
-          (cell) => CellEntity(
-            cell.x,
-            cell.y,
-            cell.isBlack,
-          ),
-        )
-      ];
-      _inputCells = [];
-      _state = _state.copyWith(
-        moves: _moves.toString(),
-        cells: _level.cells,
-        fieldLength: sqrt(_level.cells.length).toInt(),
-      );
-      _isInit = false;
-    }
+    _level = BlankLevels.levels.firstWhere((level) => level.id == _levelId);
+    _cells = [
+      ..._level.cells.map(
+        (cell) => CellEntity(
+          cell.x,
+          cell.y,
+          cell.isBlack,
+        ),
+      )
+    ];
+    _moves = 0;
+    _inputCells = [];
+    _state = _state.copyWith(
+      moves: _moves.toString(),
+      cells: _level.cells,
+      inputCells: _inputCells,
+      fieldLength: sqrt(_level.cells.length).toInt(),
+    );
   }
 
   void flipCard(CellEntity cell) {
@@ -79,6 +79,11 @@ class ConstructorViewModel extends ChangeNotifier {
 
   CellEntity _cellIndexByCoordinates(int x, int y) {
     return _cells.firstWhere((cell) => cell.x == x && cell.y == y);
+  }
+
+  void reset() {
+    _init();
+    notifyListeners();
   }
 }
 
