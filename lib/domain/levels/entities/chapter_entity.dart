@@ -22,7 +22,7 @@ class ChapterEntity {
   int get levelsNumber => levels.length;
 
   int get completedLevelsNumber =>
-      levels.where((level) => level.rating > 0).length;
+      levels.where((level) => level.moves > 0).length;
 
   double get completedRatio => completedLevelsNumber / levelsNumber;
 
