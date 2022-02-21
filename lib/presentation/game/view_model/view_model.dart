@@ -18,7 +18,7 @@ import 'package:flutter/services.dart';
 
 class GameViewModel extends ChangeNotifier {
   GameViewModelState _state = GameViewModelState();
-
+  // ! TODO переписать без _isInit
   GameViewModelState get state => _state;
 
   String _levelId;

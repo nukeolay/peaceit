@@ -7,7 +7,7 @@ class ResetLevels {
   Future<List<LevelEntity>> call() async {
     final List<LevelEntity> _levels = _levelsRepository.levels;
     final List<LevelEntity> _newLevels =
-        _levels.map((level) => level.copyWith(rating: 0)).toList();
+        _levels.map((level) => level.copyWith(moves: 0)).toList();
     await _levelsRepository.save(_newLevels);
     return _levelsRepository.levels;
   }

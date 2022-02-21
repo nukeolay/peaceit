@@ -39,7 +39,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
     _previousCompleteRatio = _chapter.completedRatio;
     if (_newRating > _previousRating) {
       serviceLocator<CompleteLevel>().call(
-        _level.copyWith(rating: _newRating),
+        _level.copyWith(moves: _moves),
       );
     }
 
@@ -67,7 +67,6 @@ class LevelCompletedViewModel extends ChangeNotifier {
   }
 
   int get _newRating {
-    _level.bestResult;
     if (_moves <= _level.bestResult) return 3;
     if (_moves <= _level.goodResult) return 2;
     return 1;
@@ -120,7 +119,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
   }
 
   bool get _isEndGame {
-    if (serviceLocator<GetLevels>().call().any((level) => level.rating == 0)) {
+    if (serviceLocator<GetLevels>().call().any((level) => level.moves == 0)) {
       return false;
     } else {
       return true;

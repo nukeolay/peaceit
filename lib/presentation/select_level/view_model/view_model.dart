@@ -15,17 +15,16 @@ class SelectLevelViewModel extends ChangeNotifier {
   final String _chapterId;
 
   SelectLevelViewModel(this._chapterId) {
-    _init(_chapterId);
+    _init();
   }
 
   final List<LevelEntity> _levels = [];
 
-  void _init(String chapterId) {
-    // TODO убрать аргумент, chapterId и так доступен, не нужно его сюда передавать. Так же сделать в ждругих init
+  void _init() {
     _levels.clear();
     _levels.addAll(serviceLocator<GetLevels>()
         .call()
-        .where((level) => level.chapterId == chapterId));
+        .where((level) => level.chapterId == _chapterId));
     _state = _state.copyWith(
       levels: _levelIds,
       levelsNumber: _levelsNumber,
@@ -38,7 +37,7 @@ class SelectLevelViewModel extends ChangeNotifier {
   }
 
   void _updateState() {
-    _init(_chapterId);
+    _init();
     notifyListeners();
   }
 
@@ -78,7 +77,7 @@ class SelectLevelViewModel extends ChangeNotifier {
         result.add(true); // если это первый уровень
       } else {
         // если предыдущий уровень пройден
-        result.add(_levels[levelIndex - 1].rating > 0);
+        result.add(_levels[levelIndex - 1].moves > 0);
       }
     }
     return result;

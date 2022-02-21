@@ -8,8 +8,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c1n1',
         chapterId: '1',
-        bestResult: 1,
-        goodResult: 4,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -27,8 +25,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c1n2',
         chapterId: '1',
-        bestResult: 1,
-        goodResult: 4,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -46,8 +42,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c1n3',
         chapterId: '1',
-        bestResult: 1,
-        goodResult: 4,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -65,8 +59,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c1n4',
         chapterId: '1',
-        bestResult: 1,
-        goodResult: 4,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -91,8 +83,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c1n5',
         chapterId: '1',
-        bestResult: 1,
-        goodResult: 4,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -117,8 +107,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c1n6',
         chapterId: '1',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -140,8 +128,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n1',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -167,8 +153,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n2',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -194,8 +178,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n3',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -221,8 +203,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n4',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -248,8 +228,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n5',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -275,8 +253,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n6',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -302,8 +278,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n7',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -322,8 +296,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n8',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -342,8 +314,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n9',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -362,8 +332,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n10',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -382,8 +350,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n11',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -402,8 +368,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n12',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -422,8 +386,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c2n13',
         chapterId: '2',
-        bestResult: 2,
-        goodResult: 5,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -442,8 +404,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c2n14',
         chapterId: '2',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -472,8 +432,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n1',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -493,8 +451,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n2',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -514,8 +470,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n3',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -535,8 +489,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n4',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -556,8 +508,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n5',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -577,8 +527,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n6',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -598,8 +546,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n7',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -619,8 +565,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n8',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -640,8 +584,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n9',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -661,8 +603,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n10',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -682,8 +622,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3c3n11',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -703,8 +641,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n12',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -731,8 +667,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n13',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -759,8 +693,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n14',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -787,8 +719,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n15',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -815,8 +745,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n16',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -843,8 +771,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c3n17',
         chapterId: '3',
-        bestResult: 3,
-        goodResult: 6,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -871,8 +797,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4c4n18',
         chapterId: '3',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -903,8 +827,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3s4n1',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -925,8 +847,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3s4n2',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -948,8 +868,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n3',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -977,8 +895,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n4',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -1006,8 +922,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n5',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -1035,8 +949,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n6',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -1064,8 +976,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n7',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -1093,8 +1003,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n8',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -1123,8 +1031,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n9',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -1152,8 +1058,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s4n10',
         chapterId: '4',
-        bestResult: 4,
-        goodResult: 7,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -1182,8 +1086,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3s5n1',
         chapterId: '5',
-        bestResult: 5,
-        goodResult: 8,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1),
@@ -1205,8 +1107,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x3s5n2',
         chapterId: '5',
-        bestResult: 5,
-        goodResult: 8,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1, true),
@@ -1228,8 +1128,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x5s5n3',
         chapterId: '5',
-        bestResult: 5,
-        goodResult: 8,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -1267,8 +1165,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x5s5n4',
         chapterId: '5',
-        bestResult: 5,
-        goodResult: 8,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
@@ -1306,8 +1202,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x4s6n1',
         chapterId: '6',
-        bestResult: 6,
-        goodResult: 9,
         cells: [
           CellEntity(1, 1),
           CellEntity(2, 1, true),
@@ -1337,8 +1231,6 @@ class DefaultLevels {
     LevelEntity(
         id: 'x5s10n1',
         chapterId: '10',
-        bestResult: 10,
-        goodResult: 13,
         cells: [
           CellEntity(1, 1, true),
           CellEntity(2, 1),
