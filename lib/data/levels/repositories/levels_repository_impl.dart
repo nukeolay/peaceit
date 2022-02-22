@@ -3,7 +3,6 @@ import 'package:darkit/data/levels/prefs/levels_prefs_util.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:darkit/domain/levels/repositories/levels_repository.dart';
 
-
 class LevelsRepositoryImpl implements LevelsRepository {
   final LevelsPrefsUtil _prefsLevelsUtil;
   late List<LevelEntity> _levels;

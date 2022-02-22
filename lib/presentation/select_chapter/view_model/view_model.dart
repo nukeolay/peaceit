@@ -1,6 +1,6 @@
-import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:flutter/material.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/internal/service_locator.dart';
 import 'package:darkit/domain/hints/usecases/reset_hints.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';

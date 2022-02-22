@@ -1,10 +1,9 @@
 import 'dart:ui';
 
-import 'package:darkit/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
+import 'package:darkit/core/theme/app_theme.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
@@ -90,8 +89,10 @@ class CustomAlertDialog extends StatelessWidget {
                         child: TextButton(
                           onPressed: () => {rightButtonFunction()},
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                context.read<AppTheme>().buttonTextColor.withOpacity(0.8)),
+                            backgroundColor: MaterialStateProperty.all(context
+                                .read<AppTheme>()
+                                .buttonTextColor
+                                .withOpacity(0.8)),
                           ),
                           child: Text(
                             rightButtontext,

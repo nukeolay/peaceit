@@ -1,4 +1,3 @@
-import 'package:darkit/domain/levels/usecases/complete_level.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +17,7 @@ import 'package:darkit/domain/levels/repositories/levels_repository.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/levels/usecases/get_levels.dart';
 import 'package:darkit/domain/levels/usecases/reset_levels.dart';
+import 'package:darkit/domain/levels/usecases/complete_level.dart';
 
 final GetIt serviceLocator = GetIt.instance;
 

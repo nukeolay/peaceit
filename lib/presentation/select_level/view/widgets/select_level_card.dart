@@ -1,10 +1,10 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:flutter/material.dart';
-// ignore: implementation_imports
-import 'package:provider/src/provider.dart';
 
 class SelectLevelCard extends StatelessWidget {
   const SelectLevelCard({

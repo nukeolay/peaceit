@@ -31,8 +31,9 @@ class LevelEntity {
   }
 
   int cellIndexByCoordinates(int x, int y) {
-    CellEntity _cell = cells.firstWhere((cell) => cell.x == x && cell.y == y);
-    return cells.indexOf(_cell);
+    CellEntity cell = cells.firstWhere((cell) => cell.x == x && cell.y == y,
+        orElse: () => const CellEntity(999, 999));
+    return cells.indexOf(cell);
   }
 
   LevelEntity copyWith({

@@ -1,7 +1,6 @@
 class LevelsPrefsModel {
   late Map<String, int> completedLevels;
-  // {String levelId : int moves}
-
+  
   LevelsPrefsModel({
     required this.completedLevels,
   });

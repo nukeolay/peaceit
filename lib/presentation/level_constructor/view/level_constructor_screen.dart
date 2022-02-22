@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/presentation/game/view/top_bar/widgets/top_info_element.dart';
-import 'package:darkit/presentation/level_constructor/view/constructor_field/constructor_game_field_grid.dart';
 import 'package:darkit/presentation/level_constructor/view_model/view_model.dart';
+import 'package:darkit/presentation/level_constructor/view/widgets/constructor_game_field_grid.dart';
+import 'package:darkit/presentation/level_constructor/view/widgets/top_bar.dart';
+import 'package:darkit/presentation/level_constructor/view/widgets/created_level.dart';
 
 class LevelConstructorScreen extends StatelessWidget {
   const LevelConstructorScreen({Key? key}) : super(key: key);
@@ -22,7 +24,10 @@ class LevelConstructorScreen extends StatelessWidget {
         final _state = _viewModel.state;
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: _viewModel.reset,
+            onPressed: () {
+              HapticFeedback.heavyImpact();
+              _viewModel.reset();
+            },
             child: const Icon(Icons.refresh_rounded),
           ),
           body: Container(
@@ -43,51 +48,13 @@ class LevelConstructorScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TopInfoElement(
-                            topData: _levelId,
-                            bottomData: 'уровень',
-                          ),
-                          TopInfoElement(
-                            topData: _state.moves,
-                            bottomData: 'количество\nходов',
-                          ),
-                        ],
-                      ),
-                    ),
+                    TopBar(levelId: _levelId, state: _state),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'x, y, isBlack',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                ..._state.cells.map(
-                                  (cell) => Text(
-                                    '${cell.x}, ${cell.y}${!cell.isBlack ? ', ${!cell.isBlack}' : ''}',
-                                    style: const TextStyle(fontSize: 12),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          CreatedLevel(state: _state),
                           Expanded(
                             child: LayoutBuilder(
                               builder: (context, constraints) {
