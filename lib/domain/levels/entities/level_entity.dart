@@ -19,6 +19,10 @@ class LevelEntity {
 
   int get goodResult => (bestResult * 1.5).ceil() + 1;
 
+  List<bool> get boolCells {
+    return cells.map((cell) => cell.isBlack).toList();
+  }
+
   int get rating {
     if (moves == 0) return 0;
     if (moves <= bestResult) return 3;
@@ -26,13 +30,36 @@ class LevelEntity {
     return 1;
   }
 
+  int cellIndexByCoordinates(int x, int y) {
+    CellEntity _cell = cells.firstWhere((cell) => cell.x == x && cell.y == y);
+    return cells.indexOf(_cell);
+  }
+
   LevelEntity copyWith({
-    required int moves,
+    int? moves,
+    List<CellEntity>? cells,
   }) {
     return LevelEntity(
       id: id,
       chapterId: chapterId,
-      cells: cells,
+      cells: cells ?? this.cells,
+      solution: solution,
+      moves: moves ?? this.moves,
+    );
+  }
+
+  LevelEntity copyWithBools({
+    required List<bool> cells,
+  }) {
+    List<CellEntity> cellsFromBools = this
+        .cells
+        .map((cell) => CellEntity(
+            cell.x, cell.y, cells[cellIndexByCoordinates(cell.x, cell.y)]))
+        .toList();
+    return LevelEntity(
+      id: id,
+      chapterId: chapterId,
+      cells: cellsFromBools,
       solution: solution,
       moves: moves,
     );
