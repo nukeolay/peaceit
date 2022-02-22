@@ -6,10 +6,11 @@ import 'package:flutter/services.dart';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/internal/service_locator.dart';
+import 'package:darkit/domain/levels/usecases/normal_flip.dart';
+import 'package:darkit/domain/levels/usecases/single_flip.dart';
 import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
 import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/hints/repositories/hints_repository.dart';
@@ -76,7 +77,7 @@ class GameViewModel extends ChangeNotifier {
       newCells: _initCells,
     );
     _solutionsDecrement();
-    int flashCellIndex = _cellIndexByCoordinates(
+    int flashCellIndex = _level.cellIndexByCoordinates(
       _level.solution[_moves].x,
       _level.solution[_moves].y,
     );
@@ -156,7 +157,7 @@ class GameViewModel extends ChangeNotifier {
         );
         if (_level.solution.length - 1 >= _moves) {
           // если еще остались решения
-          int flashCellIndex = _cellIndexByCoordinates(
+          int flashCellIndex = _level.cellIndexByCoordinates(
             _level.solution[_moves].x,
             _level.solution[_moves].y,
           );
@@ -211,13 +212,11 @@ class GameViewModel extends ChangeNotifier {
   List<bool> get _initCells {
     LevelEntity level =
         _state.chapter.levels.firstWhere((level) => level.id == _state.levelId);
-    return [...level.cells].map((cell) => cell.isBlack).toList();
+    return level.boolCells;
   }
 
-  List<bool> _cellsToFlip({
-    required List<bool> cells,
-    required List<bool> newCells,
-  }) {
+  List<bool> _cellsToFlip(
+      {required List<bool> cells, required List<bool> newCells}) {
     List<bool> cellsToFlip =
         List<bool>.generate(cells.length, (index) => false);
     for (int i = 0; i < cells.length; i++) {
@@ -254,46 +253,16 @@ class GameViewModel extends ChangeNotifier {
         !_state.isSolutionOn;
   }
 
-  int _cellIndexByCoordinates(int x, int y) {
-    CellEntity _cell =
-        _level.cells.firstWhere((cell) => cell.x == x && cell.y == y);
-    return _level.cells.indexOf(_cell);
+  List<bool> _singleFlip({required int index, required List<bool> cells}) {
+    return SingleFlip(index: index, level: _level.copyWithBools(cells: cells))
+        .call()
+        .boolCells;
   }
 
-  List<bool> _singleFlip({
-    required int index,
-    required List<bool> cells,
-  }) {
-    List<bool> flippedCells = [...cells];
-    flippedCells[index] = !flippedCells[index];
-    return flippedCells;
-  }
-
-  List<bool> _normalFlip({
-    required int index,
-    required List<bool> cells,
-  }) {
-    List<bool> flippedCells = [...cells];
-    int x = _level.cells[index].x;
-    int y = _level.cells[index].y;
-    flippedCells[index] = !flippedCells[index];
-    try {
-      index = _cellIndexByCoordinates(x, y - 1);
-      flippedCells[index] = !flippedCells[index];
-    } catch (error) {}
-    try {
-      index = _cellIndexByCoordinates(x, y + 1);
-      flippedCells[index] = !flippedCells[index];
-    } catch (error) {}
-    try {
-      index = _cellIndexByCoordinates(x - 1, y);
-      flippedCells[index] = !flippedCells[index];
-    } catch (error) {}
-    try {
-      index = _cellIndexByCoordinates(x + 1, y);
-      flippedCells[index] = !flippedCells[index];
-    } catch (error) {}
-    return flippedCells;
+  List<bool> _normalFlip({required int index, required List<bool> cells}) {
+    return NormalFlip(index: index, level: _level.copyWithBools(cells: cells))
+        .call()
+        .boolCells;
   }
 
   void _blockCells() {
