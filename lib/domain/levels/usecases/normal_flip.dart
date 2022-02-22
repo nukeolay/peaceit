@@ -14,22 +14,14 @@ class NormalFlip {
     int x = level.cells[index].x;
     int y = level.cells[index].y;
     cells[index] = !cells[index];
-    try {
-      index = level.cellIndexByCoordinates(x, y - 1);
-      cells[index] = !cells[index];
-    } catch (error) {}
-    try {
-      index = level.cellIndexByCoordinates(x, y + 1);
-      cells[index] = !cells[index];
-    } catch (error) {}
-    try {
-      index = level.cellIndexByCoordinates(x - 1, y);
-      cells[index] = !cells[index];
-    } catch (error) {}
-    try {
-      index = level.cellIndexByCoordinates(x + 1, y);
-      cells[index] = !cells[index];
-    } catch (error) {}
+    index = level.cellIndexByCoordinates(x, y - 1);
+    if (index != -1) cells[index] = !cells[index];
+    index = level.cellIndexByCoordinates(x, y + 1);
+    if (index != -1) cells[index] = !cells[index];
+    index = level.cellIndexByCoordinates(x - 1, y);
+    if (index != -1) cells[index] = !cells[index];
+    index = level.cellIndexByCoordinates(x + 1, y);
+    if (index != -1) cells[index] = !cells[index];
     return level.copyWithBools(cells: cells);
   }
 }

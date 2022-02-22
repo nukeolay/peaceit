@@ -2,8 +2,7 @@ import 'package:darkit/domain/levels/entities/cell_entity.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
 
 class DefaultLevels {
-  static final List<LevelEntity> levels = [
-    // TODO потом сделать не final, а const
+  static const List<LevelEntity> levels = [
     // ------------------- CHAPTER 1 -------------------
     LevelEntity(
         id: 'x3c1n1',

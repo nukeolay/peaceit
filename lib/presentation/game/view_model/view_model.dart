@@ -203,10 +203,9 @@ class GameViewModel extends ChangeNotifier {
     return int.parse(_state.moves);
   }
 
-  String get _levelId => _state.levelId;
-
   LevelEntity get _level {
-    return _state.chapter.levels.firstWhere((level) => level.id == _levelId);
+    return _state.chapter.levels
+        .firstWhere((level) => level.id == _state.levelId);
   }
 
   List<bool> get _initCells {

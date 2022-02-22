@@ -1,9 +1,9 @@
-import 'package:darkit/presentation/game/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
-import 'package:provider/provider.dart';
+import 'package:darkit/presentation/game/view_model/view_model.dart';
 
 class SolutionDialog extends StatelessWidget {
   final BuildContext contextWithProvider;

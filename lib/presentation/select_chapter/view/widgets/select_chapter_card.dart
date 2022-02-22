@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:darkit/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
-// ignore: implementation_imports
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
+
+import 'package:darkit/core/theme/app_theme.dart';
 
 class SelectChapterCard extends StatelessWidget {
   const SelectChapterCard({

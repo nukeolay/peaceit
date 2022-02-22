@@ -3,87 +3,60 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
 import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:darkit/domain/levels/usecases/normal_flip.dart';
+import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
 
 class ConstructorViewModel extends ChangeNotifier {
-  ConstructorViewModelState _state = ConstructorViewModelState();
+  late ConstructorViewModelState _state;
 
   ConstructorViewModelState get state => _state;
 
-  final String _levelId;
-  int _moves = 0;
-  late LevelEntity _level;
-  late List<CellEntity> _cells;
-  late List<CellEntity> _inputCells;
-
-  ConstructorViewModel(this._levelId) {
-    _init();
+  ConstructorViewModel(String levelId) {
+    _init(levelId);
   }
 
-  void _init() {
-    _level = BlankLevels.levels.firstWhere((level) => level.id == _levelId);
-    _cells = [
-      ..._level.cells.map(
-        (cell) => CellEntity(
-          cell.x,
-          cell.y,
-          cell.isBlack,
-        ),
-      )
-    ];
-    _moves = 0;
-    _inputCells = [];
-    _state = _state.copyWith(
-      moves: _moves.toString(),
-      cells: _level.cells,
-      inputCells: _inputCells,
-      fieldLength: sqrt(_level.cells.length).toInt(),
+  void _init(String levelId) {
+    List<CellEntity> cells = BlankLevels.levels
+        .firstWhere((level) => level.id == levelId)
+        .cells
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
+        .toList();
+    _state = ConstructorViewModelState(
+      levelId: levelId,
+      cells: cells,
+      fieldLength: sqrt(cells.length).toInt(),
     );
   }
 
-  void flipCard(CellEntity cell) {
-    _moves++;
-    _inputCells.add(cell);
-    _normalFlip(cell);
+  int get _moves {
+    return int.parse(_state.moves);
+  }
+
+  void flipCard(int index) {
+    List<CellEntity> inputCells = [..._state.inputCells, _state.cells[index]];
+    LevelEntity level = NormalFlip(
+            index: index, level: _blankLevel.copyWith(cells: _state.cells))
+        .call();
     _state = _state.copyWith(
-      moves: _moves.toString(),
-      inputCells: _inputCells,
-      cells: _cells,
+      moves: (_moves + 1).toString(),
+      inputCells: inputCells,
+      cells: level.cells,
     );
     notifyListeners();
-  }
-
-  void _normalFlip(CellEntity cell) {
-    int x = cell.x;
-    int y = cell.y;
-    _cellIndexByCoordinates(x, y).switchIt();
-    try {
-      _cellIndexByCoordinates(x, y - 1).switchIt();
-    } catch (error) {}
-    try {
-      _cellIndexByCoordinates(x, y + 1).switchIt();
-    } catch (error) {}
-    try {
-      _cellIndexByCoordinates(x - 1, y).switchIt();
-    } catch (error) {}
-    try {
-      _cellIndexByCoordinates(x + 1, y).switchIt();
-    } catch (error) {}
-  }
-
-  CellEntity _cellIndexByCoordinates(int x, int y) {
-    return _cells.firstWhere((cell) => cell.x == x && cell.y == y);
   }
 
   void reset() {
-    _init();
+    _init(_state.levelId);
     notifyListeners();
   }
+
+  LevelEntity get _blankLevel =>
+      BlankLevels.levels.firstWhere((level) => level.id == _state.levelId);
 }
 
 class BlankLevels {
-  static final List<LevelEntity> levels = [
+  static const List<LevelEntity> levels = [
     LevelEntity(id: 'new 3x3', chapterId: 'edt 3x3', cells: [
       CellEntity(1, 1),
       CellEntity(2, 1),

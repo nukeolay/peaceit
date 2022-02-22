@@ -1,9 +1,9 @@
 class CellEntity {
   final int x;
   final int y;
-  bool isBlack; // TODO потом сделать final и поменять switchIt
+  final bool isBlack;
 
-  CellEntity(
+  const CellEntity(
     this.x,
     this.y, [
     this.isBlack = false,
@@ -17,10 +17,6 @@ class CellEntity {
       y,
       isBlack,
     );
-  }
-
-  void switchIt() {
-    isBlack = !isBlack;
   }
 
   @override

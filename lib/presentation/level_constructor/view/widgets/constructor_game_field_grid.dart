@@ -38,7 +38,7 @@ class ConstructorGameField extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 HapticFeedback.heavyImpact();
-                _viewModel.flipCard(_state.cells[index]);
+                _viewModel.flipCard(index);
               },
               child: ConstructorCellWidget(
                 isBlack: _state.cells[index].isBlack,
