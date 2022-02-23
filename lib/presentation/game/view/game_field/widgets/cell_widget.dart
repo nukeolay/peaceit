@@ -79,11 +79,9 @@ class CustomCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _isFlash
-            ? context.read<AppTheme>().accentColor.withOpacity(0.5)
-            : _isBlack
-                ? context.read<AppTheme>().cardFront.withOpacity(0.5)
-                : context.read<AppTheme>().cardBack.withOpacity(0.5),
+        color: _isBlack
+            ? context.read<AppTheme>().cardFront.withOpacity(0.5)
+            : context.read<AppTheme>().cardBack.withOpacity(0.5),
         boxShadow: [
           BoxShadow(
             color: context.read<AppTheme>().cardBack.withOpacity(0.05),
@@ -91,6 +89,13 @@ class CustomCell extends StatelessWidget {
           ),
         ],
       ),
+      child: _isFlash
+          ? Icon(
+              Icons.touch_app_rounded,
+              color: context.read<AppTheme>().accentColor,
+              size: 40,
+            )
+          : null,
     );
   }
 }

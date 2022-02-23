@@ -72,22 +72,23 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void useSolution() {
+    _solutionsDecrement();
     List<bool> cellsToFlip = _cellsToFlip(
       cells: _state.cells,
       newCells: _initCells,
     );
-    _solutionsDecrement();
     int flashCellIndex = _level.cellIndexByCoordinates(
-      _level.solution[_moves].x,
-      _level.solution[_moves].y,
+      _level.solution[0].x,
+      _level.solution[0].y,
     );
     _state = _state.copyWith(
       moves: '0',
       cellsToFlip: cellsToFlip,
+      cells: _initCells,
       isSolutionOn: true,
+      isSingleFlipOn: false,
       canUseSingleFlips: false,
       canUseSolution: false,
-      cells: _initCells,
       flashCellIndex: flashCellIndex,
       solutionsNumber: _solutionsNumber.toString(),
     );

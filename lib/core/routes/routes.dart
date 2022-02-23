@@ -1,7 +1,8 @@
+import 'package:darkit/presentation/tutorial/tutorial_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/presentation/game/view/game_screen.dart';
-import 'package:darkit/presentation/home/home_screen.dart';
+import 'package:darkit/presentation/home/view/home_screen.dart';
 import 'package:darkit/presentation/level_completed/view/level_completed_screen.dart';
 import 'package:darkit/presentation/select_chapter/view/select_chapter_screen.dart';
 import 'package:darkit/presentation/select_level/view/select_level_screen.dart';
@@ -10,6 +11,7 @@ import 'package:darkit/presentation/level_constructor/view/level_constructor_scr
 
 class Routes {
   static const String home = '/home-screen';
+  static const String tutorial = '/tutorial-screen';
   static const String game = '/game-screen';
   static const String levelCompleted = '/level-completed-screen';
   static const String selectLevelMenu = '/select-level-menu-screen';
@@ -24,6 +26,8 @@ class Routes {
         switch (settings.name) {
           case home:
             return const HomeScreen();
+          case tutorial:
+            return const TutorialScreen();
           case game:
             return const GameScreen();
           case levelCompleted:
