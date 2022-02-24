@@ -5,7 +5,7 @@ import 'package:darkit/presentation/game/view/bottom_bar/bottom_bar.dart';
 import 'package:darkit/presentation/game/view/game_field/game_field.dart';
 import 'package:darkit/presentation/game/view/top_bar/top_bar.dart';
 import 'package:darkit/presentation/game/view_model/view_model.dart';
-import 'package:darkit/presentation/game/view/bottom_bar/widgets/pause_dialog.dart';
+import 'package:darkit/presentation/game/view/dialogs/pause_dialog.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
