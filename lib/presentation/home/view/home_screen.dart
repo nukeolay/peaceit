@@ -1,4 +1,3 @@
-import 'package:darkit/presentation/home/view_model/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +7,7 @@ import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/widgets/custom_text_button.dart';
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/presentation/home/view/widgets/editor_menu.dart';
+import 'package:darkit/presentation/home/view_model/view_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -62,7 +62,8 @@ class HomeScreen extends StatelessWidget {
                         function: () {
                           HapticFeedback.heavyImpact();
                           _viewModel.checkIsFirstStart()
-                              ? Navigator.of(context).pushNamed(Routes.tutorial)
+                              ? Navigator.of(context).pushNamed(Routes.tutorial,
+                                  arguments: 'tut6x6n1')
                               : Navigator.of(context)
                                   .pushNamed(Routes.selectChapterMenu);
                         },

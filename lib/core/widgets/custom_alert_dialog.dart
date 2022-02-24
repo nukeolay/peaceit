@@ -11,8 +11,8 @@ class CustomAlertDialog extends StatelessWidget {
     required this.width,
     required this.height,
     required this.text,
-    required this.leftButtontext,
-    required this.leftButtonFunction,
+    this.leftButtontext,
+    this.leftButtonFunction,
     required this.rightButtontext,
     required this.rightButtonFunction,
   }) : super(key: key);
@@ -20,8 +20,8 @@ class CustomAlertDialog extends StatelessWidget {
   final double width;
   final double height;
   final String text;
-  final String leftButtontext;
-  final Function leftButtonFunction;
+  final String? leftButtontext;
+  final Function? leftButtonFunction;
   final String rightButtontext;
   final Function rightButtonFunction;
 
@@ -67,25 +67,28 @@ class CustomAlertDialog extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: TextButton(
-                          onPressed: () => {leftButtonFunction()},
-                          child: Text(
-                            leftButtontext,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: context.read<AppTheme>().buttonTextColor,
+                      if (leftButtontext != null)
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: TextButton(
+                            onPressed: () => {leftButtonFunction!()},
+                            child: Text(
+                              leftButtontext!,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: context.read<AppTheme>().buttonTextColor,
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       Flexible(
-                        fit: FlexFit.tight,
+                        fit: leftButtontext != null
+                            ? FlexFit.tight
+                            : FlexFit.loose,
                         child: TextButton(
                           onPressed: () => {rightButtonFunction()},
                           style: ButtonStyle(

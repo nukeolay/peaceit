@@ -1,4 +1,3 @@
-import 'package:darkit/presentation/tutorial/tutorial_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkit/presentation/game/view/game_screen.dart';
@@ -8,6 +7,7 @@ import 'package:darkit/presentation/select_chapter/view/select_chapter_screen.da
 import 'package:darkit/presentation/select_level/view/select_level_screen.dart';
 import 'package:darkit/presentation/game_finished/game_finished_screen.dart';
 import 'package:darkit/presentation/level_constructor/view/level_constructor_screen.dart';
+import 'package:darkit/presentation/tutorial/view/tutorial_screen.dart';
 
 class Routes {
   static const String home = '/home-screen';

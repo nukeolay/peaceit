@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/presentation/game/view/dialogs/pause_dialog.dart';
+import 'package:darkit/presentation/tutorial/view/dialogs/pause_dialog.dart';
 
 class PauseButton extends StatelessWidget {
   const PauseButton({Key? key}) : super(key: key);

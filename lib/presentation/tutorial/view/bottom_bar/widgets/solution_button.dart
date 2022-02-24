@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/presentation/game/view_model/view_model.dart';
-import 'package:darkit/presentation/game/view/dialogs/solution_dialog.dart';
+import 'package:darkit/presentation/tutorial/view_model/view_model.dart';
+import 'package:darkit/presentation/tutorial/view/dialogs/solution_dialog.dart';
 
 class SolutionButton extends StatelessWidget {
   const SolutionButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = context.watch<GameViewModel>();
+    final _viewModel = context.watch<TutorialViewModel>();
     final _state = _viewModel.state;
     return Column(
       children: [
