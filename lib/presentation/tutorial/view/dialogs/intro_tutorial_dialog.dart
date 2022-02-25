@@ -14,10 +14,10 @@ class IntroTutorialDialog extends StatelessWidget {
     final double _width = MediaQuery.of(context).size.width;
     return CustomAlertDialog(
       centerMainText: false,
-      height: _width / 1.5,
+      height: _width / 1.3,
       width: _width / 1.1,
       text:
-          'Цель игры - сделать все клетки темными за минимальное количество ходов.\n\nПопробуй нажать на клетки, чтобы увидель как это работает',
+          'Цель игры - сделать все клетки темными за минимальное количество ходов.\n\nПопробуй понажимать на клетки, чтобы понять как это работает.',
       leftButtontext: 'Пропустить обучение',
       leftButtonFunction: () {
         HapticFeedback.heavyImpact();

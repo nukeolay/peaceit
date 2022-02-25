@@ -61,7 +61,7 @@ class CustomAlertDialog extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         if (icon != null)
+                        if (icon != null)
                           Container(
                             padding: const EdgeInsets.all(12.0),
                             alignment: Alignment.center,
@@ -85,7 +85,6 @@ class CustomAlertDialog extends StatelessWidget {
                             ),
                           ),
                         ),
-                       
                       ],
                     ),
                   ),

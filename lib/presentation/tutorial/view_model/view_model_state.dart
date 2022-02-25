@@ -1,11 +1,14 @@
 class TutorialViewModelState {
   final bool showIntroTutoriaDialog;
   final bool showSolutionTutoriaDialog;
+  final bool showSingleFlipTutoriaDialog;
   final bool solutionUsed;
   final String levelId;
   final String? nextLevelId;
   final String levelNumber;
   final String moves;
+  final int rating;
+  final int bestResult;
   final String singleFlips;
   final bool canUseSingleFlips;
   final bool isSingleFlipOn;
@@ -22,11 +25,14 @@ class TutorialViewModelState {
   TutorialViewModelState({
     this.showIntroTutoriaDialog = true,
     this.showSolutionTutoriaDialog = false,
+    this.showSingleFlipTutoriaDialog = false,
     this.solutionUsed = false,
     this.levelId = '',
     this.nextLevelId,
     this.levelNumber = '',
     this.moves = '0',
+    this.rating = 0,
+    this.bestResult = 0,
     this.singleFlips = '',
     this.canUseSingleFlips = false,
     this.isSingleFlipOn = false,
@@ -44,11 +50,14 @@ class TutorialViewModelState {
   TutorialViewModelState copyWith({
     bool? showIntroTutoriaDialog,
     bool? showSolutionTutoriaDialog,
+    bool? showSingleFlipTutoriaDialog,
     bool? solutionUsed,
     String? levelId,
     String? nextLevelId,
     String? levelNumber,
     String? moves,
+    int? rating,
+    int? bestResult,
     String? singleFlips,
     bool? canUseSingleFlips,
     bool? isSingleFlipOn,
@@ -67,11 +76,15 @@ class TutorialViewModelState {
           showIntroTutoriaDialog ?? this.showIntroTutoriaDialog,
       showSolutionTutoriaDialog:
           showSolutionTutoriaDialog ?? this.showSolutionTutoriaDialog,
+      showSingleFlipTutoriaDialog:
+          showSingleFlipTutoriaDialog ?? this.showSingleFlipTutoriaDialog,
       solutionUsed: solutionUsed ?? this.solutionUsed,
       levelId: levelId ?? this.levelId,
       nextLevelId: nextLevelId,
       levelNumber: levelNumber ?? this.levelNumber,
       moves: moves ?? this.moves,
+      rating: rating ?? this.rating,
+      bestResult: bestResult ?? this.bestResult,
       singleFlips: singleFlips ?? this.singleFlips,
       canUseSingleFlips: canUseSingleFlips ?? this.canUseSingleFlips,
       isSingleFlipOn: isSingleFlipOn ?? this.isSingleFlipOn,
@@ -87,4 +100,27 @@ class TutorialViewModelState {
       isEndTutorial: isEndTutorial ?? false,
     );
   }
+
+  // @override
+  // String toString() {
+  //   return 'showIntroTutoriaDialog: \n
+  //   this.showSolutionTutoriaDialog: \n
+  //   this.solutionUsed: \n
+  //   this.levelId: \n
+  //   this.nextLevelId: \n
+  //   this.levelNumber: \n
+  //   this.moves: \n
+  //   this.singleFlips: \n
+  //   this.canUseSingleFlips: \n
+  //   this.isSingleFlipOn: \n
+  //   this.solutionsNumber: \n
+  //   this.canUseSolution: \n
+  //   this.isSolutionOn: \n
+  //   this.fieldLength: \n
+  //   this.cells = const [],
+  //   this.cellsToFlip = const [],
+  //   this.flashCellIndex = -1,
+  //   this.isWin = false,
+  //   this.isEndTutorial = false,';
+  // }
 }
