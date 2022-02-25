@@ -45,11 +45,15 @@ class _GameFieldState extends State<GameField> {
         if (_state.isWin) {
           // октрываем экран levelCompleted
           String? _newLevelId = (await Navigator.of(context)
-              .pushNamed(Routes.levelCompleted, arguments: {
+              .pushNamed(Routes.tutorialLevelCompleted, arguments: {
             'levelId': _state.levelId,
-            'moves': _state.moves,
+            'nextLevelId': _state.nextLevelId,
           })) as String?;
-          if (_newLevelId != null) {
+          if (_newLevelId == null) {
+            Navigator.of(context).pushReplacementNamed(
+              Routes.selectChapterMenu,
+            );
+          } else {
             _isInit = true; // нужно чтобы пересчитывать размер ширины ячейки
             _viewModel.newInstance(_newLevelId);
           }

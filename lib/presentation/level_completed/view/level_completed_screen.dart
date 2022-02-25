@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
 import 'package:darkit/core/theme/app_theme.dart';
+import 'package:darkit/core/widgets/info_card.dart';
+import 'package:darkit/core/widgets/rating_row.dart';
 import 'package:darkit/presentation/level_completed/view_model/view_model.dart';
-import 'package:darkit/presentation/level_completed/view/widgets/info_card.dart';
-import 'package:darkit/presentation/level_completed/view/widgets/rating_row.dart';
+
 
 class LevelCompletedScreen extends StatelessWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
@@ -15,7 +17,8 @@ class LevelCompletedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero).then((_) {
-      precacheImage(const AssetImage('assets/bg.png'), context);
+      precacheImage(
+          const AssetImage(DefaultGameSettings.backGroundImage), context);
     });
     final _arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -38,7 +41,7 @@ class LevelCompletedScreen extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/bg.png'),
+                  image: AssetImage(DefaultGameSettings.backGroundImage),
                   fit: BoxFit.cover,
                 ),
               ),

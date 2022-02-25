@@ -41,6 +41,7 @@ class TutorialViewModel extends ChangeNotifier {
 // -------- PUBLIC --------//
 
   void newInstance(String newLevelId) {
+    // ! TODO прописать условия на случай открытия первого или второго уровня.
     int previousFieldLength = sqrt(_state.cells.length).toInt();
     List<bool> previousCells = _state.cells;
     _init(newLevelId);
@@ -55,6 +56,7 @@ class TutorialViewModel extends ChangeNotifier {
         : List<bool>.generate(
             newFieldLength * newFieldLength, (index) => false);
     _state = _state.copyWith(
+      solutionUsed: _state.solutionUsed,
       fieldLength: newFieldLength,
       cellsToFlip: cellsToFlip,
       canUseSingleFlips: _canUseSingleFlips,
@@ -84,6 +86,7 @@ class TutorialViewModel extends ChangeNotifier {
       _level.solution[0].y,
     );
     _state = _state.copyWith(
+      solutionUsed: true,
       moves: '0',
       cellsToFlip: cellsToFlip,
       cells: _initCells,
@@ -205,7 +208,17 @@ class TutorialViewModel extends ChangeNotifier {
     }
     Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
       if (!_state.cells.contains(false)) {
-        _state = _state.copyWith(isWin: true);
+        if (_state.levelId == 'tut6x6n1' && !state.solutionUsed) {
+          // если пройден первый уровень без подсказки, то открыть уровень tut6x6n2
+          _state = _state.copyWith(isWin: true, nextLevelId: 'tut6x6n2');
+        } else if ((_state.levelId == 'tut6x6n1' && _state.solutionUsed) ||
+            _state.levelId == 'tut6x6n2') {
+          // если пройден первый уровень с подсказкой или пройден второй уровень, то открыть уровень tut6x6n3
+          _state = _state.copyWith(isWin: true, nextLevelId: 'tut6x6n3');
+        } else {
+          // если пройден третий уровень
+          _state = _state.copyWith(isWin: true);
+        }
         notifyListeners();
       }
     });

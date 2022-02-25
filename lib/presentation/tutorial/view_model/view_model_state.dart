@@ -1,7 +1,9 @@
 class TutorialViewModelState {
   final bool showIntroTutoriaDialog;
   final bool showSolutionTutoriaDialog;
+  final bool solutionUsed;
   final String levelId;
+  final String? nextLevelId;
   final String levelNumber;
   final String moves;
   final String singleFlips;
@@ -15,11 +17,14 @@ class TutorialViewModelState {
   final List<bool> cellsToFlip;
   final int flashCellIndex;
   final bool isWin;
+  final bool isEndTutorial;
 
   TutorialViewModelState({
     this.showIntroTutoriaDialog = true,
     this.showSolutionTutoriaDialog = false,
+    this.solutionUsed = false,
     this.levelId = '',
+    this.nextLevelId,
     this.levelNumber = '',
     this.moves = '0',
     this.singleFlips = '',
@@ -33,12 +38,15 @@ class TutorialViewModelState {
     this.cellsToFlip = const [],
     this.flashCellIndex = -1,
     this.isWin = false,
+    this.isEndTutorial = false,
   });
 
   TutorialViewModelState copyWith({
     bool? showIntroTutoriaDialog,
     bool? showSolutionTutoriaDialog,
+    bool? solutionUsed,
     String? levelId,
+    String? nextLevelId,
     String? levelNumber,
     String? moves,
     String? singleFlips,
@@ -52,11 +60,16 @@ class TutorialViewModelState {
     List<bool>? cellsToFlip,
     int? flashCellIndex,
     bool? isWin,
+    bool? isEndTutorial,
   }) {
     return TutorialViewModelState(
-      showIntroTutoriaDialog: showIntroTutoriaDialog ?? this.showIntroTutoriaDialog,
-      showSolutionTutoriaDialog: showSolutionTutoriaDialog ?? this.showSolutionTutoriaDialog,
+      showIntroTutoriaDialog:
+          showIntroTutoriaDialog ?? this.showIntroTutoriaDialog,
+      showSolutionTutoriaDialog:
+          showSolutionTutoriaDialog ?? this.showSolutionTutoriaDialog,
+      solutionUsed: solutionUsed ?? this.solutionUsed,
       levelId: levelId ?? this.levelId,
+      nextLevelId: nextLevelId,
       levelNumber: levelNumber ?? this.levelNumber,
       moves: moves ?? this.moves,
       singleFlips: singleFlips ?? this.singleFlips,
@@ -71,6 +84,7 @@ class TutorialViewModelState {
           List<bool>.generate(this.cells.length, (index) => false),
       flashCellIndex: flashCellIndex ?? -1,
       isWin: isWin ?? false,
+      isEndTutorial: isEndTutorial ?? false,
     );
   }
 }
