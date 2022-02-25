@@ -15,6 +15,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.leftButtonFunction,
     required this.rightButtontext,
     required this.rightButtonFunction,
+    this.centerMainText = true,
   }) : super(key: key);
 
   final double width;
@@ -24,6 +25,7 @@ class CustomAlertDialog extends StatelessWidget {
   final Function? leftButtonFunction;
   final String rightButtontext;
   final Function rightButtonFunction;
+  final bool centerMainText;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class CustomAlertDialog extends StatelessWidget {
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
                     child: Container(
@@ -58,7 +61,8 @@ class CustomAlertDialog extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Text(
                         text,
-                        textAlign: TextAlign.center,
+                        textAlign:
+                            centerMainText ? TextAlign.center : TextAlign.start,
                         style: TextStyle(
                           fontSize: 20,
                           color: context.read<AppTheme>().buttonTextColor,
@@ -74,13 +78,29 @@ class CustomAlertDialog extends StatelessWidget {
                       if (leftButtontext != null)
                         Flexible(
                           fit: FlexFit.tight,
-                          child: TextButton(
-                            onPressed: () => {leftButtonFunction!()},
-                            child: Text(
-                              leftButtontext!,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: context.read<AppTheme>().buttonTextColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: OutlinedButton(
+                              style: ButtonStyle(
+                                side: MaterialStateProperty.all(
+                                  BorderSide(
+                                    color: context
+                                        .read<AppTheme>()
+                                        .buttonTextColor
+                                        .withOpacity(0.8),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () => {leftButtonFunction!()},
+                              child: Text(
+                                leftButtontext!,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color:
+                                      context.read<AppTheme>().buttonTextColor,
+                                ),
                               ),
                             ),
                           ),
@@ -89,19 +109,23 @@ class CustomAlertDialog extends StatelessWidget {
                         fit: leftButtontext != null
                             ? FlexFit.tight
                             : FlexFit.loose,
-                        child: TextButton(
-                          onPressed: () => {rightButtonFunction()},
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(context
-                                .read<AppTheme>()
-                                .buttonTextColor
-                                .withOpacity(0.8)),
-                          ),
-                          child: Text(
-                            rightButtontext,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: context.read<AppTheme>().cardFront,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextButton(
+                            onPressed: () => {rightButtonFunction()},
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(context
+                                  .read<AppTheme>()
+                                  .buttonTextColor
+                                  .withOpacity(0.8)),
+                            ),
+                            child: Text(
+                              rightButtontext,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: context.read<AppTheme>().cardFront,
+                              ),
                             ),
                           ),
                         ),
