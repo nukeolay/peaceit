@@ -42,6 +42,7 @@ class TutorialViewModel extends ChangeNotifier {
 
   void newInstance(String newLevelId) {
     // ! TODO прописать условия на случай открытия первого или второго уровня.
+    int levelNumber = int.parse(_state.levelNumber);
     int previousFieldLength = sqrt(_state.cells.length).toInt();
     List<bool> previousCells = _state.cells;
     _init(newLevelId);
@@ -56,12 +57,20 @@ class TutorialViewModel extends ChangeNotifier {
         : List<bool>.generate(
             newFieldLength * newFieldLength, (index) => false);
     _state = _state.copyWith(
-      solutionUsed: _state.solutionUsed,
+      showIntroTutoriaDialog: false,
+      levelNumber: (levelNumber + 1).toString(),
       fieldLength: newFieldLength,
       cellsToFlip: cellsToFlip,
       canUseSingleFlips: _canUseSingleFlips,
       canUseSolution: _canUseSolution,
     );
+    if (newLevelId == 'tut6x6n3') {
+      _state = _state.copyWith(
+        cellsToFlip: _state.cellsToFlip,
+        solutionUsed: true,
+        nextLevelId: _state.nextLevelId,
+      );
+    }
     notifyListeners();
   }
 
@@ -72,6 +81,11 @@ class TutorialViewModel extends ChangeNotifier {
 
   void closeSolutionTutorialDialog() {
     _state = _state.copyWith(showSolutionTutoriaDialog: false);
+    notifyListeners();
+  }
+
+  void closeSingleFlipTutorialDialog() {
+    _state = _state.copyWith(showSingleFlipTutoriaDialog: false);
     notifyListeners();
   }
 
@@ -113,13 +127,24 @@ class TutorialViewModel extends ChangeNotifier {
       cells: _state.cells,
       newCells: _initCells,
     );
-    _state = _state.copyWith(
-      moves: '0',
-      cellsToFlip: cellsToFlip,
-      cells: _initCells,
-      isSingleFlipOn: false,
-      isSolutionOn: false,
-    );
+    if (_state.levelId == 'tut6x6n3') {
+      _state = _state.copyWith(
+        moves: '0',
+        cellsToFlip: cellsToFlip,
+        cells: _initCells,
+        singleFlips: '0',
+        canUseSingleFlips: false,
+        showSingleFlipTutoriaDialog: false,
+      );
+    } else {
+      _state = _state.copyWith(
+        moves: '0',
+        cellsToFlip: cellsToFlip,
+        cells: _initCells,
+        isSingleFlipOn: false,
+        isSolutionOn: false,
+      );
+    }
     notifyListeners();
   }
 
@@ -143,6 +168,7 @@ class TutorialViewModel extends ChangeNotifier {
           cells: flippedCells,
           cellsToFlip: cellsToFlip,
           isSingleFlipOn: false,
+          canUseSingleFlips: _canUseSingleFlips,
         );
         notifyListeners();
         _blockCells();
@@ -186,7 +212,7 @@ class TutorialViewModel extends ChangeNotifier {
           cells: _state.cells,
           newCells: flippedCells,
         );
-        if (_moves == 2) {
+        if (_moves == 3 && !_state.solutionUsed) {
           _state = _state.copyWith(
             moves: (_moves + 1).toString(),
             cells: flippedCells,
@@ -195,11 +221,21 @@ class TutorialViewModel extends ChangeNotifier {
             canUseSolution: true,
             showSolutionTutoriaDialog: true,
           );
+        } else if (_moves == 2 && _state.solutionUsed) {
+          _state = _state.copyWith(
+            moves: (_moves + 1).toString(),
+            cells: flippedCells,
+            cellsToFlip: cellsToFlip,
+            singleFlips: '50',
+            canUseSingleFlips: true,
+            showSingleFlipTutoriaDialog: true,
+          );
         } else {
           _state = _state.copyWith(
             moves: (_moves + 1).toString(),
             cells: flippedCells,
             cellsToFlip: cellsToFlip,
+            canUseSingleFlips: _canUseSingleFlips,
           );
         }
         notifyListeners();
@@ -210,14 +246,28 @@ class TutorialViewModel extends ChangeNotifier {
       if (!_state.cells.contains(false)) {
         if (_state.levelId == 'tut6x6n1' && !state.solutionUsed) {
           // если пройден первый уровень без подсказки, то открыть уровень tut6x6n2
-          _state = _state.copyWith(isWin: true, nextLevelId: 'tut6x6n2');
+          _state = _state.copyWith(
+            isWin: true,
+            nextLevelId: 'tut6x6n2',
+            rating: _level.copyWith(moves: _moves).rating,
+            bestResult: _level.bestResult,
+          );
         } else if ((_state.levelId == 'tut6x6n1' && _state.solutionUsed) ||
             _state.levelId == 'tut6x6n2') {
           // если пройден первый уровень с подсказкой или пройден второй уровень, то открыть уровень tut6x6n3
-          _state = _state.copyWith(isWin: true, nextLevelId: 'tut6x6n3');
+          _state = _state.copyWith(
+            isWin: true,
+            nextLevelId: 'tut6x6n3',
+            rating: _level.copyWith(moves: _moves).rating,
+            bestResult: _level.bestResult,
+          );
         } else {
           // если пройден третий уровень
-          _state = _state.copyWith(isWin: true);
+          _state = _state.copyWith(
+            isWin: true,
+            rating: _level.copyWith(moves: _moves).rating,
+            bestResult: _level.bestResult,
+          );
         }
         notifyListeners();
       }
@@ -295,7 +345,11 @@ class TutorialViewModel extends ChangeNotifier {
 
   void _blockCells() {
     _canTap = false;
-    Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
+    Timer(
+        const Duration(
+          milliseconds:
+              DefaultGameSettings.flipSpeed + DefaultGameSettings.blockPeriod,
+        ), () {
       _canTap = true;
     });
   }

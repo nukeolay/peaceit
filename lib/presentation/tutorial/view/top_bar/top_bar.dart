@@ -21,7 +21,7 @@ class TopBar extends StatelessWidget {
             children: [
               TopInfoElement(
                 topData: _state.levelNumber,
-                bottomData: 'уровень',
+                bottomData: 'обучающий\nуровень',
               ),
               TopInfoElement(
                 topData: _state.moves,

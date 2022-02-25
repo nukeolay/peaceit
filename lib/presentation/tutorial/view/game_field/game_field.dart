@@ -1,4 +1,3 @@
-import 'package:darkit/presentation/tutorial/view/dialogs/solution_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,6 +7,8 @@ import 'package:darkit/presentation/tutorial/view_model/view_model_state.dart';
 import 'package:darkit/presentation/tutorial/view/game_field/widgets/cell_widget.dart';
 import 'package:darkit/presentation/tutorial/view/game_field/widgets/disable_multitouch.dart';
 import 'package:darkit/presentation/tutorial/view/dialogs/intro_tutorial_dialog.dart';
+import 'package:darkit/presentation/tutorial/view/dialogs/single_flip_tutorial_dialog.dart';
+import 'package:darkit/presentation/tutorial/view/dialogs/solution_tutorial_dialog.dart';
 
 class GameField extends StatefulWidget {
   const GameField({
@@ -48,6 +49,9 @@ class _GameFieldState extends State<GameField> {
               .pushNamed(Routes.tutorialLevelCompleted, arguments: {
             'levelId': _state.levelId,
             'nextLevelId': _state.nextLevelId,
+            'moves': _state.moves,
+            'rating': _state.rating,
+            'bestResult': _state.bestResult,
           })) as String?;
           if (_newLevelId == null) {
             Navigator.of(context).pushReplacementNamed(
@@ -71,6 +75,13 @@ class _GameFieldState extends State<GameField> {
         showDialog(
           context: context,
           builder: (_) => SolutionTutorialDialog(context),
+        );
+      }
+      if (_state.showSingleFlipTutoriaDialog) {
+        _viewModel.closeSingleFlipTutorialDialog();
+        showDialog(
+          context: context,
+          builder: (_) => const SingleFlipTutorialDialog(),
         );
       }
     });

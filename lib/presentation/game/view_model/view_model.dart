@@ -267,7 +267,11 @@ class GameViewModel extends ChangeNotifier {
 
   void _blockCells() {
     _canTap = false;
-    Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
+    Timer(
+        const Duration(
+          milliseconds:
+              DefaultGameSettings.flipSpeed + DefaultGameSettings.blockPeriod,
+        ), () {
       _canTap = true;
     });
   }

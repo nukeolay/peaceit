@@ -14,7 +14,7 @@ class SolutionTutorialDialog extends StatelessWidget {
     return CustomAlertDialog(
       height: _width / 1.5,
       width: _width / 1.1,
-      text: 'Воспользуйся подсказкой, посмотри решение',
+      text: 'Воспользуйся подсказкой, посмотри решение - нажми на мигающую иконку.',
       icon: Icons.lightbulb_outline_rounded,
       rightButtontext: 'OK',
       rightButtonFunction: () {

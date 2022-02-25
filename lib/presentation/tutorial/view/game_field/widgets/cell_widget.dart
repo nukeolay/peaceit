@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 
+import 'package:darkit/core/widgets/cell_pointer.dart';
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/tutorial/view_model/view_model.dart';
@@ -90,13 +91,7 @@ class CustomCell extends StatelessWidget {
           ),
         ],
       ),
-      child: _isFlash
-          ? Icon(
-              Icons.touch_app_rounded,
-              color: context.read<AppTheme>().accentColor,
-              size: 40,
-            )
-          : null,
+      child: _isFlash ? const CellPointer() : null,
     );
   }
 }
