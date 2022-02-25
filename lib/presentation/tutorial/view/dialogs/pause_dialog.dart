@@ -17,8 +17,8 @@ class PauseDialog extends StatelessWidget {
       leftButtontext: 'Выйти',
       leftButtonFunction: () {
         HapticFeedback.heavyImpact();
-        Navigator.popUntil(
-            context, ModalRoute.withName(Routes.selectLevelMenu));
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
       rightButtontext: 'Продолжить',
       rightButtonFunction: () {

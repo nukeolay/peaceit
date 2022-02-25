@@ -21,7 +21,7 @@ class SolutionButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             color: _state.canUseSolution
-                ? context.read<AppTheme>().buttonTextColor
+                ? context.read<AppTheme>().accentColor
                 : context.read<AppTheme>().buttonTextColor.withOpacity(0.2),
           ),
         ),
@@ -40,7 +40,7 @@ class SolutionButton extends StatelessWidget {
             Icons.lightbulb_outline_rounded,
             size: 30,
             color: _state.canUseSolution
-                ? context.read<AppTheme>().buttonTextColor
+                ? context.read<AppTheme>().accentColor
                 : context.read<AppTheme>().buttonTextColor.withOpacity(0.2),
           ),
         ),
