@@ -14,7 +14,8 @@ class SolutionTutorialDialog extends StatelessWidget {
     return CustomAlertDialog(
       height: _width / 1.5,
       width: _width / 1.1,
-      text: 'Воспользуйся подсказкой, посмотри решение\n\n💡',
+      text: 'Воспользуйся подсказкой, посмотри решение',
+      icon: Icons.lightbulb_outline_rounded,
       rightButtontext: 'OK',
       rightButtonFunction: () {
         HapticFeedback.heavyImpact();

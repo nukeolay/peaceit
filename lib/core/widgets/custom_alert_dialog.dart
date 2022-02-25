@@ -11,6 +11,7 @@ class CustomAlertDialog extends StatelessWidget {
     required this.width,
     required this.height,
     required this.text,
+    this.icon,
     this.leftButtontext,
     this.leftButtonFunction,
     required this.rightButtontext,
@@ -21,6 +22,7 @@ class CustomAlertDialog extends StatelessWidget {
   final double width;
   final double height;
   final String text;
+  final IconData? icon;
   final String? leftButtontext;
   final Function? leftButtonFunction;
   final String rightButtontext;
@@ -56,18 +58,35 @@ class CustomAlertDialog extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        text,
-                        textAlign:
-                            centerMainText ? TextAlign.center : TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: context.read<AppTheme>().buttonTextColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         if (icon != null)
+                          Container(
+                            padding: const EdgeInsets.all(12.0),
+                            alignment: Alignment.center,
+                            child: Icon(
+                              icon,
+                              color: context.read<AppTheme>().accentColor,
+                              size: 40,
+                            ),
+                          ),
+                        Container(
+                          padding: const EdgeInsets.all(12.0),
+                          alignment: Alignment.center,
+                          child: Text(
+                            text,
+                            textAlign: centerMainText
+                                ? TextAlign.center
+                                : TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: context.read<AppTheme>().buttonTextColor,
+                            ),
+                          ),
                         ),
-                      ),
+                       
+                      ],
                     ),
                   ),
                   Row(

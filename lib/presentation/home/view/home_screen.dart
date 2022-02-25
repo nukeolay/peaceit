@@ -14,7 +14,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero).then((_) {
-      precacheImage(const AssetImage('assets/bg.png'), context);
+      precacheImage(
+          const AssetImage(DefaultGameSettings.backGroundImage), context);
     });
     double width = MediaQuery.of(context).size.width;
 
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/bg.png'),
+            image: AssetImage(DefaultGameSettings.backGroundImage),
             fit: BoxFit.cover,
           ),
         ),

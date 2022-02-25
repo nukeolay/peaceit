@@ -4,4 +4,5 @@ class DefaultGameSettings {
   static const int flipSpeed = 200;
   static const double chapterCompleteRatio = 0.7;
   static const bool isEditorOn = true; // ! TODO false
+  static const String backGroundImage = 'assets/bg.png';
 }

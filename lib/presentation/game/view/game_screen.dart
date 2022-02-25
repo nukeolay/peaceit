@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/presentation/game/view/bottom_bar/bottom_bar.dart';
 import 'package:darkit/presentation/game/view/game_field/game_field.dart';
 import 'package:darkit/presentation/game/view/top_bar/top_bar.dart';
@@ -13,7 +14,8 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero).then((_) {
-      precacheImage(const AssetImage('assets/bg.png'), context);
+      precacheImage(
+          const AssetImage(DefaultGameSettings.backGroundImage), context);
     });
     String _levelId = ModalRoute.of(context)!.settings.arguments as String;
 
@@ -29,7 +31,7 @@ class GameScreen extends StatelessWidget {
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/bg.png'),
+              image: AssetImage(DefaultGameSettings.backGroundImage),
               fit: BoxFit.cover,
             ),
           ),

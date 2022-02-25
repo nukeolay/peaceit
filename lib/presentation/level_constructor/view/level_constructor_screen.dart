@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/presentation/level_constructor/view_model/view_model.dart';
 import 'package:darkit/presentation/level_constructor/view/widgets/constructor_game_field_grid.dart';
 import 'package:darkit/presentation/level_constructor/view/widgets/top_bar.dart';
@@ -13,7 +14,8 @@ class LevelConstructorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero).then((_) {
-      precacheImage(const AssetImage('assets/bg.png'), context);
+      precacheImage(
+          const AssetImage(DefaultGameSettings.backGroundImage), context);
     });
     String _levelId = ModalRoute.of(context)!.settings.arguments as String;
 
@@ -35,7 +37,7 @@ class LevelConstructorScreen extends StatelessWidget {
             height: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/bg.png'),
+                image: AssetImage(DefaultGameSettings.backGroundImage),
                 fit: BoxFit.cover,
               ),
             ),
