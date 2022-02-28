@@ -12,10 +12,7 @@ class SolutionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _viewModel = contextWithProvider.read<GameViewModel>();
-    final double _width = MediaQuery.of(context).size.width;
     return CustomAlertDialog(
-      height: _width / 2,
-      width: _width / 1.1,
       text: 'Показать решение?',
       leftButtontext: 'Показать',
       leftButtonFunction: () async {
