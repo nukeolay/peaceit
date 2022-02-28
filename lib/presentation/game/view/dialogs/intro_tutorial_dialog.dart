@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
 
 class IntroTutorialDialog extends StatelessWidget {
@@ -18,12 +17,6 @@ class IntroTutorialDialog extends StatelessWidget {
       width: _width / 1.1,
       text:
           'Цель игры - сделать все клетки темными за минимальное количество ходов.\n\nПопробуй понажимать на клетки, чтобы понять как это работает.',
-      leftButtontext: 'Пропустить обучение',
-      leftButtonFunction: () {
-        HapticFeedback.heavyImpact();
-        Navigator.of(context).pop();
-        Navigator.of(context).pushReplacementNamed(Routes.selectChapterMenu);
-      },
       rightButtontext: 'OK',
       rightButtonFunction: () {
         HapticFeedback.heavyImpact();

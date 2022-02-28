@@ -11,6 +11,14 @@ class GameViewModelState {
   final String solutionsNumber;
   final bool canUseSolution;
   final bool isSolutionOn;
+  final bool showTutorialIntro;
+  final bool showTutorialSingleFlips;
+  final bool showTutorialSolutions;
+  final bool flashSingleFlips;
+  final bool flashSolutions;
+  final bool isTutorialIntroShown;
+  final bool isTutorialSingleFlipsShown;
+  final bool isTutorialSolutionsShown;
   final int fieldLength;
   final List<bool> cells;
   final List<bool> cellsToFlip;
@@ -28,6 +36,14 @@ class GameViewModelState {
     this.solutionsNumber = '',
     this.canUseSolution = false,
     this.isSolutionOn = false,
+    this.showTutorialIntro = false,
+    this.showTutorialSingleFlips = false,
+    this.showTutorialSolutions = false,
+    this.flashSingleFlips = false,
+    this.flashSolutions = false,
+    this.isTutorialIntroShown = false,
+    this.isTutorialSingleFlipsShown = false,
+    this.isTutorialSolutionsShown = false,
     this.fieldLength = 0,
     this.cells = const [],
     this.cellsToFlip = const [],
@@ -45,6 +61,14 @@ class GameViewModelState {
     String? solutionsNumber,
     bool? canUseSolution,
     bool? isSolutionOn,
+    bool? showTutorialIntro,
+    bool? showTutorialSingleFlips,
+    bool? showTutorialSolutions,
+    bool? flashSingleFlips,
+    bool? flashSolutions,
+    bool? isTutorialIntroShown,
+    bool? isTutorialSingleFlipsShown,
+    bool? isTutorialSolutionsShown,
     int? fieldLength,
     List<bool>? cells,
     List<bool>? cellsToFlip,
@@ -62,6 +86,18 @@ class GameViewModelState {
       solutionsNumber: solutionsNumber ?? this.solutionsNumber,
       canUseSolution: canUseSolution ?? this.canUseSolution,
       isSolutionOn: isSolutionOn ?? this.isSolutionOn,
+      showTutorialIntro: showTutorialIntro ?? this.showTutorialIntro,
+      showTutorialSingleFlips:
+          showTutorialSingleFlips ?? this.showTutorialSingleFlips,
+      showTutorialSolutions:
+          showTutorialSolutions ?? this.showTutorialSolutions,
+      flashSingleFlips: flashSingleFlips ?? this.flashSingleFlips,
+      flashSolutions: flashSolutions ?? this.flashSolutions,
+      isTutorialIntroShown: isTutorialIntroShown ?? this.isTutorialIntroShown,
+      isTutorialSingleFlipsShown:
+          isTutorialSingleFlipsShown ?? this.isTutorialSingleFlipsShown,
+      isTutorialSolutionsShown:
+          isTutorialSolutionsShown ?? this.isTutorialSolutionsShown,
       fieldLength: fieldLength ?? this.fieldLength,
       cells: cells ?? this.cells,
       cellsToFlip: cellsToFlip ??

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:async';
 
+import 'package:darkit/domain/hints/usecases/update_hints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,9 @@ import 'package:darkit/domain/levels/entities/level_entity.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:darkit/domain/tutorial/usecases/get_tutorial.dart';
+import 'package:darkit/domain/tutorial/usecases/update_tutorial.dart';
+import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
 import 'package:darkit/presentation/game/view_model/view_model_state.dart';
 
 class GameViewModel extends ChangeNotifier {
@@ -28,6 +32,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void _init(String levelId) {
+    TutorialEntity tutorial = serviceLocator<GetTutorial>().call();
     ChapterEntity chapter = serviceLocator<GetChapters>().call().firstWhere(
         (chapter) => chapter.levels.any((level) => level.id == levelId));
     LevelEntity level =
@@ -40,6 +45,12 @@ class GameViewModel extends ChangeNotifier {
       canUseSingleFlips: _singleFlipsNumber > 0,
       solutionsNumber: _solutionsNumber.toString(),
       canUseSolution: _solutionsNumber > 0,
+      showTutorialIntro: !tutorial.intro,
+      flashSingleFlips: false,
+      flashSolutions: false,
+      isTutorialIntroShown: tutorial.intro,
+      isTutorialSingleFlipsShown: tutorial.singleFlips,
+      isTutorialSolutionsShown: tutorial.solutions,
       fieldLength: sqrt(level.cells.length).toInt(),
       cells: [...level.cells].map((cell) => cell.isBlack).toList(),
       cellsToFlip: List<bool>.generate(level.cells.length, (index) => false),
@@ -47,6 +58,45 @@ class GameViewModel extends ChangeNotifier {
   }
 
 // -------- PUBLIC --------//
+
+  void closeIntroTutorialDialog() {
+    _state = _state.copyWith(showTutorialIntro: false);
+    serviceLocator<UpdateTutorial>().call(intro: true);
+    notifyListeners();
+  }
+
+  void closeSingleFlipTutorialDialog() async {
+    // если SingleFlips уже нет, а подсказку нужно показать, то добавить 1 SingleFlip
+    int lightCellsNumber = _state.cells
+        .map((cell) => cell ? 0 : 1)
+        .reduce((value, element) => value + element);
+    if (_singleFlipsNumber < lightCellsNumber) {
+      await serviceLocator<UpdateHints>().call(singleFlips: 3);
+    }
+    _state = _state.copyWith(
+      isTutorialSingleFlipsShown: true,
+      showTutorialSingleFlips: false,
+      singleFlips: _singleFlipsNumber.toString(),
+      canUseSingleFlips: _canUseSingleFlips,
+    );
+    serviceLocator<UpdateTutorial>().call(singleFlips: true);
+    notifyListeners();
+  }
+
+  void closeSolutionTutorialDialog() async {
+    // если solutions уже нет, а подсказку нужно показать, то добавить 1 solution
+    if (_solutionsNumber == 0) {
+      await serviceLocator<UpdateHints>().call(solutionsNumber: 1);
+    }
+    _state = _state.copyWith(
+      isTutorialSolutionsShown: true,
+      showTutorialSolutions: false,
+      solutionsNumber: _solutionsNumber.toString(),
+      canUseSolution: _canUseSolution,
+    );
+    serviceLocator<UpdateTutorial>().call(solutions: true);
+    notifyListeners();
+  }
 
   void newInstance(String newLevelId) {
     int previousFieldLength = sqrt(_state.cells.length).toInt();
@@ -98,6 +148,10 @@ class GameViewModel extends ChangeNotifier {
   void useSingleFlip() {
     _state = _state.copyWith(
       isSingleFlipOn: !_state.isSingleFlipOn,
+      // canUseSolution: _canUseSolution,
+    );
+    _state = _state.copyWith(
+      // isSingleFlipOn: !_state.isSingleFlipOn,
       canUseSolution: _canUseSolution,
     );
     notifyListeners();
@@ -138,6 +192,8 @@ class GameViewModel extends ChangeNotifier {
           cells: flippedCells,
           cellsToFlip: cellsToFlip,
           isSingleFlipOn: false,
+          canUseSingleFlips: _canUseSingleFlips,
+          canUseSolution: _canUseSolution,
         );
         notifyListeners();
         _blockCells();
@@ -181,10 +237,36 @@ class GameViewModel extends ChangeNotifier {
           cells: _state.cells,
           newCells: flippedCells,
         );
+        bool showTutorialSolutions = false;
+        bool showTutorialSingleFlips = false;
+        bool flashSolutions = false;
+        bool flashSingleFlips = false;
+        int lightCellsNumber = flippedCells
+            .map((cell) => cell ? 0 : 1)
+            .reduce((value, element) => value + element);
+        // если четыре флипа то показать подсказку по решению при уловии что после этого флипа уровень не пройден
+        if (_moves == 3 &&
+            !_state.isTutorialSolutionsShown &&
+            lightCellsNumber != 0) {
+          showTutorialSolutions = true;
+          flashSolutions = true;
+        }
+        // если solution уже был показан и количество светлых ячеек 3, 2 или 1 и эта подсказка еще не была показана, то показать подсказку по флипам
+        if (lightCellsNumber <= 3 &&
+            lightCellsNumber != 0 &&
+            _state.isTutorialSolutionsShown &&
+            !_state.isTutorialSingleFlipsShown) {
+          showTutorialSingleFlips = true;
+          flashSingleFlips = true;
+        }
         _state = _state.copyWith(
           moves: (_moves + 1).toString(),
           cells: flippedCells,
           cellsToFlip: cellsToFlip,
+          showTutorialSolutions: showTutorialSolutions,
+          showTutorialSingleFlips: showTutorialSingleFlips,
+          flashSingleFlips: flashSingleFlips,
+          flashSolutions: flashSolutions,
         );
         notifyListeners();
         _blockCells();
@@ -248,9 +330,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   bool get _canUseSolution {
-    return _solutionsNumber > 0 &&
-        !_state.isSingleFlipOn &&
-        !_state.isSolutionOn;
+    return _solutionsNumber > 0 && !_state.isSolutionOn;
   }
 
   List<bool> _singleFlip({required int index, required List<bool> cells}) {

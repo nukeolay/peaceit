@@ -1,3 +1,6 @@
+import 'package:darkit/presentation/game/view/dialogs/intro_tutorial_dialog.dart';
+import 'package:darkit/presentation/game/view/dialogs/single_flip_tutorial_dialog.dart';
+import 'package:darkit/presentation/game/view/dialogs/solution_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,6 +55,27 @@ class _GameFieldState extends State<GameField> {
             _viewModel.newInstance(_newLevelId);
           }
         }
+      }
+      if (_state.showTutorialIntro) {
+        _viewModel.closeIntroTutorialDialog();
+        showDialog(
+          context: context,
+          builder: (_) => IntroTutorialDialog(context),
+        );
+      }
+      if (_state.showTutorialSolutions) {
+        _viewModel.closeSolutionTutorialDialog();
+        showDialog(
+          context: context,
+          builder: (_) => SolutionTutorialDialog(context),
+        );
+      }
+      if (_state.showTutorialSingleFlips) {
+        _viewModel.closeSingleFlipTutorialDialog();
+        showDialog(
+          context: context,
+          builder: (_) => const SingleFlipTutorialDialog(),
+        );
       }
     });
     super.didChangeDependencies();
