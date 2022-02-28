@@ -6,6 +6,7 @@ import 'package:darkit/domain/hints/usecases/reset_hints.dart';
 import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 import 'package:darkit/domain/levels/usecases/get_chapers.dart';
 import 'package:darkit/domain/levels/usecases/reset_levels.dart';
+import 'package:darkit/domain/tutorial/usecases/reset_tutorial.dart';
 import 'package:darkit/presentation/select_chapter/view_model/view_model_state.dart';
 
 class SelectChapterViewModel extends ChangeNotifier {
@@ -42,6 +43,7 @@ class SelectChapterViewModel extends ChangeNotifier {
   }
 
   Future<void> reset() async {
+    await serviceLocator<ResetTutorial>().call();
     await serviceLocator<ResetLevels>().call();
     await serviceLocator<ResetHints>().call();
     _updateState();
