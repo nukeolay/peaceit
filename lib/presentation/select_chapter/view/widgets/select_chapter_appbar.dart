@@ -10,13 +10,10 @@ class SelectChapterAppbar extends StatelessWidget {
   const SelectChapterAppbar({Key? key}) : super(key: key);
 
   void _showRemoveDataDialog(BuildContext context) {
-    double _width = MediaQuery.of(context).size.width;
     final _viewModel = context.read<SelectChapterViewModel>();
     showDialog(
       context: context,
       builder: (context) => CustomAlertDialog(
-        height: _width / 2,
-        width: _width / 1.1,
         text: 'Сбросить данные?\nВсе уровни нужно будет проходить заново.',
         leftButtontext: 'Сбросить',
         leftButtonFunction: () async {

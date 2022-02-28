@@ -8,8 +8,6 @@ import 'package:darkit/core/theme/app_theme.dart';
 class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
     Key? key,
-    required this.width,
-    required this.height,
     required this.text,
     this.icon,
     this.leftButtontext,
@@ -19,8 +17,6 @@ class CustomAlertDialog extends StatelessWidget {
     this.centerMainText = true,
   }) : super(key: key);
 
-  final double width;
-  final double height;
   final String text;
   final IconData? icon;
   final String? leftButtontext;
@@ -31,34 +27,37 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Align(
-        alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              height: height,
-              width: width,
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                boxShadow: [
-                  BoxShadow(
-                    color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-                    blurRadius: 6.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Material(
+        type: MaterialType.transparency,
+        child: Align(
+          alignment: Alignment.center,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 4.0,
+                ),
+                decoration: BoxDecoration(
+                  color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          context.read<AppTheme>().cardBack.withOpacity(0.05),
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         if (icon != null)
@@ -87,70 +86,72 @@ class CustomAlertDialog extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (leftButtontext != null)
-                        Flexible(
-                          fit: FlexFit.tight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                  BorderSide(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        if (leftButtontext != null)
+                          Flexible(
+                            fit: FlexFit.tight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OutlinedButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all(
+                                    BorderSide(
+                                      color: context
+                                          .read<AppTheme>()
+                                          .buttonTextColor
+                                          .withOpacity(0.8),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () => {leftButtonFunction!()},
+                                child: Text(
+                                  leftButtontext!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
                                     color: context
                                         .read<AppTheme>()
-                                        .buttonTextColor
-                                        .withOpacity(0.8),
+                                        .buttonTextColor,
                                   ),
                                 ),
                               ),
-                              onPressed: () => {leftButtonFunction!()},
+                            ),
+                          ),
+                        Flexible(
+                          fit: leftButtontext != null
+                              ? FlexFit.tight
+                              : FlexFit.loose,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextButton(
+                              onPressed: () => {rightButtonFunction()},
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    context
+                                        .read<AppTheme>()
+                                        .buttonTextColor
+                                        .withOpacity(0.8)),
+                              ),
                               child: Text(
-                                leftButtontext!,
+                                rightButtontext,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  color:
-                                      context.read<AppTheme>().buttonTextColor,
+                                  color: context.read<AppTheme>().cardFront,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      Flexible(
-                        fit: leftButtontext != null
-                            ? FlexFit.tight
-                            : FlexFit.loose,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextButton(
-                            onPressed: () => {rightButtonFunction()},
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(context
-                                  .read<AppTheme>()
-                                  .buttonTextColor
-                                  .withOpacity(0.8)),
-                            ),
-                            child: Text(
-                              rightButtontext,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: context.read<AppTheme>().cardFront,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

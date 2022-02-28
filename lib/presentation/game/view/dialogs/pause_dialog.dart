@@ -9,10 +9,7 @@ class PauseDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return CustomAlertDialog(
-      height: width / 2,
-      width: width / 1.1,
       text: 'ПАУЗА',
       leftButtontext: 'Выйти',
       leftButtonFunction: () {
