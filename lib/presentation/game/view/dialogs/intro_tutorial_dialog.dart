@@ -13,7 +13,7 @@ class IntroTutorialDialog extends StatelessWidget {
     return CustomAlertDialog(
       centerMainText: false,
       text:
-          'Цель игры - сделать все клетки темными за минимальное количество ходов.\n\nПопробуй понажимать на клетки, чтобы понять как это работает.',
+          'Цель игры - сделать все клетки "мирными" за минимальное количество ходов.\n\nПопробуй понажимать на клетки, чтобы понять как это работает.',
       rightButtontext: 'OK',
       rightButtonFunction: () {
         HapticFeedback.heavyImpact();

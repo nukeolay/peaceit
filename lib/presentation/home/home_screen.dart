@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/core/widgets/custom_text_button.dart';
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/presentation/home/widgets/editor_menu.dart';
 
@@ -33,36 +34,55 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
+                // const SizedBox(height: 50),
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    Navigator.of(context).pushNamed(Routes.selectChapterMenu);
+                  },
                   child: Container(
-                    padding: const EdgeInsets.all(30.0),
-                    width: width,
-                    child: FittedBox(
-                      child: Text(
-                        '[dark it]',
-                        style: TextStyle(
-                          color: context
+                    padding: const EdgeInsets.all(20.0),
+                    width: width / 1.2,
+                    height: width / 1.2,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        SvgPicture.asset('assets/dove.svg'),
+                        Shimmer.fromColors(
+                          baseColor: Colors.transparent,
+                          highlightColor: context
                               .read<AppTheme>()
-                              .buttonTextColor
-                              .withOpacity(0.5),
+                              .cardBack
+                              .withOpacity(0.3),
+                          child: SvgPicture.asset('assets/dove.svg'),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 50),
-                CustomTextButton(
-                  text: 'Играть',
-                  function: () {
-                    HapticFeedback.heavyImpact();
-
-                    Navigator.of(context).pushNamed(Routes.selectChapterMenu);
-                  },
+                Text(
+                  '[peace it]',
+                  style: TextStyle(
+                    color: context
+                        .read<AppTheme>()
+                        .buttonTextColor
+                        .withOpacity(0.7),
+                    fontSize: 50,
+                  ),
                 ),
+                // const SizedBox(height: 50),
+                // CustomTextButton(
+                //   text: 'Играть',
+                //   function: () {
+                //     HapticFeedback.heavyImpact();
+
+                //     Navigator.of(context).pushNamed(Routes.selectChapterMenu);
+                //   },
+                // ),
                 if (DefaultGameSettings.isEditorOn) const EditorMenu(),
-                const Spacer(),
+                // const Spacer(),
               ],
             ),
           ),

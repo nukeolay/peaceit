@@ -33,6 +33,7 @@ class SelectLevelSreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: ListView(
+                shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 children: const [
                   SelectLevelAppbar(),

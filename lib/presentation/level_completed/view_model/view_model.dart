@@ -123,6 +123,6 @@ class LevelCompletedViewModel extends ChangeNotifier {
       return false;
     } else {
       return true;
-    } // ! TODO проверить
+    }
   }
 }
