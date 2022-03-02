@@ -40,6 +40,7 @@ class GameViewModel extends ChangeNotifier {
     _state = GameViewModelState(
       chapter: chapter,
       levelId: levelId,
+      isBoss: chapter.levels.length == chapter.levelIndex(levelId) + 1,
       levelNumber: (chapter.levelIndex(levelId) + 1).toString(),
       singleFlips: _singleFlipsNumber.toString(),
       canUseSingleFlips: _singleFlipsNumber > 0,
@@ -245,14 +246,16 @@ class GameViewModel extends ChangeNotifier {
             .map((cell) => cell ? 0 : 1)
             .reduce((value, element) => value + element);
         // если четыре флипа то показать подсказку по решению при уловии что после этого флипа уровень не пройден
-        if (_moves == 3 &&
+        if (!_state.isBoss &&
+            _moves == 3 &&
             !_state.isTutorialSolutionsShown &&
             lightCellsNumber != 0) {
           showTutorialSolutions = true;
           flashSolutions = true;
         }
         // если solution уже был показан и количество светлых ячеек 3, 2 или 1 и эта подсказка еще не была показана, то показать подсказку по флипам
-        if (lightCellsNumber <= 3 &&
+        if (!_state.isBoss &&
+            lightCellsNumber <= 3 &&
             lightCellsNumber != 0 &&
             _state.isTutorialSolutionsShown &&
             !_state.isTutorialSingleFlipsShown) {

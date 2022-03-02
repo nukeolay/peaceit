@@ -3,6 +3,7 @@ import 'package:darkit/domain/levels/entities/chapter_entity.dart';
 class GameViewModelState {
   final ChapterEntity chapter;
   final String levelId;
+  final bool isBoss;
   final String levelNumber;
   final String moves;
   final String singleFlips;
@@ -28,6 +29,7 @@ class GameViewModelState {
   GameViewModelState({
     required this.chapter,
     this.levelId = '',
+    this.isBoss = false,
     this.levelNumber = '',
     this.moves = '0',
     this.singleFlips = '',
@@ -53,6 +55,7 @@ class GameViewModelState {
 
   GameViewModelState copyWith({
     String? levelId,
+    bool? isBoss,
     String? levelNumber,
     String? moves,
     String? singleFlips,
@@ -78,6 +81,7 @@ class GameViewModelState {
     return GameViewModelState(
       chapter: chapter,
       levelId: levelId ?? this.levelId,
+      isBoss: isBoss ?? this.isBoss,
       levelNumber: levelNumber ?? this.levelNumber,
       moves: moves ?? this.moves,
       singleFlips: singleFlips ?? this.singleFlips,

@@ -18,10 +18,10 @@ class InfoCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-            color: context.read<AppTheme>().cardBack.withOpacity(0.1),
+            color: context.read<AppTheme>().cardFront.withOpacity(0.2),
             boxShadow: [
               BoxShadow(
-                color: context.read<AppTheme>().cardBack.withOpacity(0.05),
+                color: context.read<AppTheme>().cardFront.withOpacity(0.05),
                 blurRadius: 6.0,
               ),
             ],

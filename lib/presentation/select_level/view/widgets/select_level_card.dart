@@ -49,7 +49,8 @@ class SelectLevelCard extends StatelessWidget {
                       itemBuilder: (context, index) => Center(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: cells[index].isBlack
+                            color: !cells[index]
+                                    .isBlack // ! TODO "!" чтобы поменять цвет местами
                                 ? context
                                     .read<AppTheme>()
                                     .cardFront

@@ -1,14 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
 
-import 'package:darkit/core/widgets/cell_pointer.dart';
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/game/view_model/view_model.dart';
 import 'package:darkit/presentation/game/view_model/view_model_state.dart';
+import 'package:darkit/presentation/game/view/game_field/widgets/cell_pointer.dart';
 
 class CellWidget extends StatefulWidget {
   final int _index;
@@ -80,7 +81,7 @@ class CustomCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _isBlack
+        color: !_isBlack // ! TODO "!" чтобы поменять цвет
             ? context.read<AppTheme>().cardFront.withOpacity(0.5)
             : context.read<AppTheme>().cardBack.withOpacity(0.5),
         boxShadow: [
@@ -90,7 +91,21 @@ class CustomCell extends StatelessWidget {
           ),
         ],
       ),
-      child: _isFlash ? const CellPointer() : null,
+      // child: _isFlash ? const CellPointer() : null, // ! TODO
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: _isBlack
+                ? SvgPicture.asset('assets/dove.svg')
+                : Opacity(
+                    child: SvgPicture.asset('assets/tank.svg'),
+                    opacity: 0.7,
+                  ),
+          ),
+          if (_isFlash) const Center(child: CellPointer()),
+        ],
+      ),
     );
   }
 }

@@ -6,10 +6,9 @@ import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/routes/routes.dart';
 import 'package:darkit/core/utils/utils.dart';
 import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/core/widgets/info_card.dart';
-import 'package:darkit/core/widgets/rating_row.dart';
+import 'package:darkit/presentation/level_completed/view/widgets/rating_row.dart';
+import 'package:darkit/presentation/level_completed/view/widgets/info_card.dart';
 import 'package:darkit/presentation/level_completed/view_model/view_model.dart';
-
 
 class LevelCompletedScreen extends StatelessWidget {
   const LevelCompletedScreen({Key? key}) : super(key: key);
