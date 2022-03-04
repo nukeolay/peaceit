@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
@@ -14,14 +15,14 @@ class SelectChapterAppbar extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => CustomAlertDialog(
-        text: 'Сбросить данные?\nВсе уровни нужно будет проходить заново.',
-        leftButtontext: 'Сбросить',
+        text: 'reset_data_dialog'.tr(),
+        leftButtontext: 'button_reset'.tr(),
         leftButtonFunction: () async {
           HapticFeedback.heavyImpact();
           await _viewModel.reset();
           Navigator.of(context).pop();
         },
-        rightButtontext: 'Отмена',
+        rightButtontext: 'button_cancel'.tr(),
         rightButtonFunction: () {
           HapticFeedback.heavyImpact();
           Navigator.of(context).pop();
@@ -51,7 +52,7 @@ class SelectChapterAppbar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'ВЫБОР ГЛАВЫ',
+            'chapters'.tr(),
             style: TextStyle(
               color: context.read<AppTheme>().buttonTextColor,
               fontSize: 20,
@@ -66,7 +67,7 @@ class SelectChapterAppbar extends StatelessWidget {
               Icons.delete_forever_rounded,
               color: context.read<AppTheme>().buttonTextColor,
             ),
-            tooltip: 'сбросить данные',
+            tooltip: 'tooltip_reset'.tr(),
             onPressed: () {
               HapticFeedback.heavyImpact();
               _showRemoveDataDialog(context);

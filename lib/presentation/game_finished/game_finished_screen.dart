@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/theme/app_theme.dart';
@@ -45,7 +46,7 @@ class GameFinishedScreen extends StatelessWidget {
                       width: width,
                       child: FittedBox(
                         child: Text(
-                          '[you`ve made it dark]',
+                          'end_game'.tr(),
                           style: TextStyle(
                             color: context
                                 .read<AppTheme>()
@@ -57,7 +58,7 @@ class GameFinishedScreen extends StatelessWidget {
                     ),
                   ),
                   CustomTextButton(
-                    text: 'К выбору главы',
+                    text: 'button_finish'.tr(),
                     function: () {
                       HapticFeedback.heavyImpact();
                       Navigator.popUntil(context,

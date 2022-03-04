@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/routes/routes.dart';
@@ -63,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '[peace it]',
+                  'title'.tr(),
                   style: TextStyle(
                     color: context
                         .read<AppTheme>()
@@ -72,17 +73,7 @@ class HomeScreen extends StatelessWidget {
                     fontSize: 50,
                   ),
                 ),
-                // const SizedBox(height: 50),
-                // CustomTextButton(
-                //   text: 'Играть',
-                //   function: () {
-                //     HapticFeedback.heavyImpact();
-
-                //     Navigator.of(context).pushNamed(Routes.selectChapterMenu);
-                //   },
-                // ),
                 if (DefaultGameSettings.isEditorOn) const EditorMenu(),
-                // const Spacer(),
               ],
             ),
           ),

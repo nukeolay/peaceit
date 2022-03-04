@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/constants/default_game_settings.dart';
 import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/core/utils/utils.dart';
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/level_completed/view/widgets/rating_row.dart';
 import 'package:darkit/presentation/level_completed/view/widgets/info_card.dart';
@@ -53,7 +54,7 @@ class LevelCompletedScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'уровень пройден за ${_state.moves} ${Utils.wordEnding(_state.moves)}',
+                          'level_completed_in'.plural(_state.moves),
                           style: const TextStyle(fontSize: 16),
                         ),
                       ),
@@ -69,7 +70,8 @@ class LevelCompletedScreen extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: Text(
-                                    'чтобы получить 3 звезды,\nпройди этот уровень за ${_state.bestResult} ${Utils.wordEnding(_state.bestResult)}',
+                                    'level_best_result'
+                                        .plural(_state.bestResult),
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(fontSize: 16),
                                   ),
@@ -82,7 +84,7 @@ class LevelCompletedScreen extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        'открыта новая глава',
+                                        'new_chapter_opened'.tr(),
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: context
@@ -110,7 +112,7 @@ class LevelCompletedScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        'получен просмотр решения',
+                                        'new_hint_solution'.tr(),
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: context
@@ -136,7 +138,7 @@ class LevelCompletedScreen extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 5),
                                       Text(
-                                        'получен одиночный поворот',
+                                        'new_hint_single_flip'.tr(),
                                         style: TextStyle(
                                             fontSize: 16,
                                             color: context
@@ -159,7 +161,7 @@ class LevelCompletedScreen extends StatelessWidget {
                               Navigator.pop(context, _state.levelId);
                             },
                             icon: const Icon(
-                              Icons.replay_rounded,
+                              kIsWeb ? Icons.replay : Icons.replay_rounded,
                               size: 40,
                               color: Colors.white,
                             ),

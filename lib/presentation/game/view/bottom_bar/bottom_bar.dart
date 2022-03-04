@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/presentation/game/view/bottom_bar/widgets/solution_button.dart';
@@ -43,7 +44,7 @@ class BottomBar extends StatelessWidget {
                   ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        'BOSS LEVEL',
+                        'boss_level'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,

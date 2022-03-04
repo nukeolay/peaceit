@@ -1,0 +1,42 @@
+{
+    "title": "[peace it]",
+    "tutorial_info": "The goal is to make all cells \"peaceful\" within minimal moves number.\n\nLet`s try to flip cells to see how it works.",
+    "tutorial_flips": "If you are unable to complete the level and there are no hints left to view the solution, you can flip single cell.\n\nClick on the blinking icon and then on the cell you want to flip..\n\nTry it, it's easy!",
+    "tutorial_solution": "Use the hint, solve this level by clicking on the flashing icon.",
+    "tutorial_dialog_solution": "Solve this level?",
+    "reset_data_dialog": "Reset data?\nAll game progress will be lost.",
+    "boss_level": "BOSS",
+    "pause": "PAUSE",
+    "chapters": "CHAPTERS",
+    "end_game": "[you`ve peaced it]",
+    "level": "level",
+    "levels": "LEVELS",
+    "moves_number": "moves",
+    "new_chapter_opened": "new chapter opened",
+    "new_hint_solution": "got \"solve level\" hint",
+    "new_hint_single_flip": "got \"single flip\" hint",
+    "button_solve": "Solve",
+    "button_cancel": "Cancel",
+    "button_ok": "OK",
+    "button_exit": "Exit",
+    "button_continue": "Continue",
+    "button_reset": "Reset",
+    "button_finish": "Select chapter",
+    "tooltip_single_flip": "flip single cell",
+    "tooltip_solution": "solve level",
+    "tooltip_reset": "reset progress",
+    "level_completed_in": {
+        "one": "level completed in {} move",
+        "two": "level completed in {} moves",
+        "few": "level completed in {} moves",
+        "many": "level completed in {} moves",
+        "other": "level completed in {} moves"
+    },
+    "level_best_result": {
+        "one": "to get 3 stars,\ncomplete this level in {} move",
+        "two": "to get 3 stars,\ncomplete this level in {} moves",
+        "few": "to get 3 stars,\ncomplete this level in {} moves",
+        "many": "to get 3 stars,\ncomplete this level in {} moves",
+        "other": "to get 3 stars,\ncomplete this level in {} moves"
+    }
+}

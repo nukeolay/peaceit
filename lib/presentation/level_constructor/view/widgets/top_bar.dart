@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
 import 'package:darkit/presentation/game/view/top_bar/widgets/top_info_element.dart';
@@ -23,11 +24,11 @@ class TopBar extends StatelessWidget {
         children: [
           TopInfoElement(
             topData: _levelId,
-            bottomData: 'уровень',
+            bottomData: 'level'.tr(),
           ),
           TopInfoElement(
             topData: _state.moves,
-            bottomData: 'количество\nходов',
+            bottomData: 'moves_number'.tr(),
           ),
         ],
       ),

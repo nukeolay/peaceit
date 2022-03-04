@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/theme/app_theme.dart';
 import 'package:darkit/core/routes/custom_route.dart';
@@ -19,8 +20,11 @@ class DarkItApp extends StatelessWidget {
       ],
       child: Consumer<AppTheme>(
         builder: (context, appTheme, _) => MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           debugShowCheckedModeBanner: false,
-          title: '[dark it]',
+          title: '[peace it]',
           theme: ThemeData(
             primarySwatch: Colors.grey,
             scaffoldBackgroundColor: appTheme.background,
