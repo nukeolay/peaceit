@@ -12,7 +12,7 @@ class PauseDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAlertDialog(
       text: 'pause'.tr(),
-      leftButtontext: 'exit'.tr(),
+      leftButtontext: 'button_exit'.tr(),
       leftButtonFunction: () {
         HapticFeedback.heavyImpact();
         Navigator.popUntil(
