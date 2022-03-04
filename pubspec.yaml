@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.2
+  easy_localization: ^3.0.0
   flip_card: ^0.6.0
   shared_preferences: ^2.0.13
   get_it: ^7.2.0
@@ -78,6 +79,7 @@ flutter:
     - assets/bg.png
     - assets/dove.svg
     - assets/tank.svg
+    - assets/translations/
 
   #   - images/a_dot_ham.jpeg
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:darkit/core/widgets/custom_alert_dialog.dart';
 
@@ -12,9 +13,8 @@ class IntroTutorialDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAlertDialog(
       centerMainText: false,
-      text:
-          'Цель игры - сделать все клетки "мирными" за минимальное количество ходов.\n\nПопробуй понажимать на клетки, чтобы понять как это работает.',
-      rightButtontext: 'OK',
+      text: 'tutorial_info'.tr(),
+      rightButtontext: 'button_ok'.tr(),
       rightButtonFunction: () {
         HapticFeedback.heavyImpact();
         Navigator.of(context).pop();

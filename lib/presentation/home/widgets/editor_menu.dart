@@ -12,7 +12,7 @@ class EditorMenu extends StatelessWidget {
       children: [
         const SizedBox(height: 10),
         CustomTextButton(
-          text: 'Редактор 3x3',
+          text: 'Editor 3x3',
           function: () {
             HapticFeedback.heavyImpact();
             Navigator.of(context)
@@ -21,7 +21,7 @@ class EditorMenu extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomTextButton(
-          text: 'Редактор 4x4',
+          text: 'Editor 4x4',
           function: () {
             HapticFeedback.heavyImpact();
             Navigator.of(context)
@@ -30,7 +30,7 @@ class EditorMenu extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomTextButton(
-          text: 'Редактор 5x5',
+          text: 'Editor 5x5',
           function: () {
             HapticFeedback.heavyImpact();
             Navigator.of(context)
@@ -39,7 +39,7 @@ class EditorMenu extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomTextButton(
-          text: 'Редактор 6x6',
+          text: 'Editor 6x6',
           function: () {
             HapticFeedback.heavyImpact();
             Navigator.of(context)
