@@ -84,15 +84,9 @@ class CustomCell extends StatelessWidget {
         color: !_isBlack // ! TODO "!" чтобы поменять цвет
             ? context.read<AppTheme>().cardFront.withOpacity(0.5)
             : context.read<AppTheme>().cardBack.withOpacity(0.5),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: context.read<AppTheme>().cardBack.withOpacity(0.05),
-        //     blurRadius: 6.0,
-        //   ),
-        // ],
       ),
-      // child: _isFlash ? const CellPointer() : null, // ! TODO
       child: Stack(
+        alignment: Alignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
