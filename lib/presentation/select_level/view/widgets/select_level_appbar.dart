@@ -32,18 +32,15 @@ class SelectLevelAppbar extends StatelessWidget {
             ),
           ),
           Container(
-            width: constraints.maxWidth * 0.5,
+            width: constraints.maxWidth * 0.6,
             padding: const EdgeInsets.all(8.0),
-            child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                'levels'.tr(),
-                style: TextStyle(
-                  color: context.read<AppTheme>().buttonTextColor,
-                  fontSize: 20,
-                ),
-                textAlign: TextAlign.center,
+            child: Text(
+              'levels'.tr(),
+              style: TextStyle(
+                color: context.read<AppTheme>().buttonTextColor,
+              fontSize: constraints.maxWidth * 0.06,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Container(

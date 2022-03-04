@@ -26,7 +26,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
-      child: const DarkItApp(),
+      child: const PeaceItApp(),
     ),
   );
 }

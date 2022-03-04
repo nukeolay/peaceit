@@ -55,17 +55,15 @@ class SelectChapterAppbar extends StatelessWidget {
             ),
           ),
           Container(
-            width: constraints.maxWidth * 0.5,
+            width: constraints.maxWidth * 0.6,
             padding: const EdgeInsets.all(8.0),
-            child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                'chapters'.tr(),
-                style: TextStyle(
-                  color: context.read<AppTheme>().buttonTextColor,
-                ),
-                textAlign: TextAlign.center,
+            child: Text(
+              'chapters'.tr(),
+              style: TextStyle(
+                color: context.read<AppTheme>().buttonTextColor,
+                fontSize: constraints.maxWidth * 0.06,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           Container(
