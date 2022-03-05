@@ -1,4 +1,4 @@
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
+import 'package:peaceit/domain/levels/entities/cell_entity.dart';
 
 class SelectLevelViewModelState {
   final List<String> levels;

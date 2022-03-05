@@ -1,4 +1,4 @@
-import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
 
 class SingleFlip {
   int index;

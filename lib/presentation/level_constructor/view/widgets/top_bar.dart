@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
-import 'package:darkit/presentation/game/view/top_bar/widgets/top_info_element.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/view_model_state.dart';
+import 'package:peaceit/presentation/game/view/top_bar/widgets/top_info_element.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({
     Key? key,
     required String levelId,
     required ConstructorViewModelState state,
-  }) : _levelId = levelId, _state = state, super(key: key);
+  })  : _levelId = levelId,
+        _state = state,
+        super(key: key);
 
   final String _levelId;
   final ConstructorViewModelState _state;

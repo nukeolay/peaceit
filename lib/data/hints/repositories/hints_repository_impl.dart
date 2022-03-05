@@ -1,7 +1,7 @@
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/data/hints/prefs/hints_prefs_util.dart';
-import 'package:darkit/domain/hints/entities/hints_entity.dart';
-import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/data/hints/prefs/hints_prefs_util.dart';
+import 'package:peaceit/domain/hints/entities/hints_entity.dart';
+import 'package:peaceit/domain/hints/repositories/hints_repository.dart';
 
 class HintsRepositoryImpl implements HintsRepository {
   final HintsPrefsUtil _prefsHintsUtil;

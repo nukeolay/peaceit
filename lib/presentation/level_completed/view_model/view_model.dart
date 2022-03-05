@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/internal/service_locator.dart';
-import 'package:darkit/domain/hints/usecases/single_flips_increment.dart';
-import 'package:darkit/domain/hints/usecases/solutions_number_increment.dart';
-import 'package:darkit/domain/levels/entities/chapter_entity.dart';
-import 'package:darkit/domain/levels/usecases/complete_level.dart';
-import 'package:darkit/domain/levels/usecases/get_chapers.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/usecases/get_levels.dart';
-import 'package:darkit/presentation/level_completed/view_model/view_model_state.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/internal/service_locator.dart';
+import 'package:peaceit/domain/hints/usecases/single_flips_increment.dart';
+import 'package:peaceit/domain/hints/usecases/solutions_number_increment.dart';
+import 'package:peaceit/domain/levels/entities/chapter_entity.dart';
+import 'package:peaceit/domain/levels/usecases/complete_level.dart';
+import 'package:peaceit/domain/levels/usecases/get_chapers.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/usecases/get_levels.dart';
+import 'package:peaceit/presentation/level_completed/view_model/view_model_state.dart';
 
 class LevelCompletedViewModel extends ChangeNotifier {
   LevelCompletedViewModelState _state = LevelCompletedViewModelState();

@@ -1,14 +1,14 @@
-import 'package:darkit/presentation/game/view/dialogs/intro_tutorial_dialog.dart';
-import 'package:darkit/presentation/game/view/dialogs/single_flip_tutorial_dialog.dart';
-import 'package:darkit/presentation/game/view/dialogs/solution_tutorial_dialog.dart';
+import 'package:peaceit/presentation/game/view/dialogs/intro_tutorial_dialog.dart';
+import 'package:peaceit/presentation/game/view/dialogs/single_flip_tutorial_dialog.dart';
+import 'package:peaceit/presentation/game/view/dialogs/solution_tutorial_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/presentation/game/view/game_field/widgets/cell_widget.dart';
-import 'package:darkit/presentation/game/view/game_field/widgets/disable_multitouch.dart';
-import 'package:darkit/presentation/game/view_model/view_model.dart';
-import 'package:darkit/presentation/game/view_model/view_model_state.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/presentation/game/view/game_field/widgets/cell_widget.dart';
+import 'package:peaceit/presentation/game/view/game_field/widgets/disable_multitouch.dart';
+import 'package:peaceit/presentation/game/view_model/view_model.dart';
+import 'package:peaceit/presentation/game/view_model/view_model_state.dart';
 
 class GameField extends StatefulWidget {
   const GameField({

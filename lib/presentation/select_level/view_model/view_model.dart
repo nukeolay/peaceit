@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/usecases/get_levels.dart';
-import 'package:darkit/presentation/select_level/view_model/view_model_state.dart';
-import 'package:darkit/internal/service_locator.dart';
+import 'package:peaceit/domain/levels/entities/cell_entity.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/usecases/get_levels.dart';
+import 'package:peaceit/presentation/select_level/view_model/view_model_state.dart';
+import 'package:peaceit/internal/service_locator.dart';
 
 class SelectLevelViewModel extends ChangeNotifier {
   SelectLevelViewModelState _state = SelectLevelViewModelState();

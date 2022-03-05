@@ -1,4 +1,4 @@
-import 'package:darkit/domain/levels/entities/chapter_entity.dart';
+import 'package:peaceit/domain/levels/entities/chapter_entity.dart';
 
 class GameViewModelState {
   final ChapterEntity chapter;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/widgets/custom_alert_dialog.dart';
+import 'package:peaceit/core/widgets/custom_alert_dialog.dart';
 
 class SingleFlipTutorialDialog extends StatelessWidget {
   const SingleFlipTutorialDialog({Key? key}) : super(key: key);
@@ -11,8 +11,7 @@ class SingleFlipTutorialDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomAlertDialog(
       centerMainText: false,
-      text:
-          'tutorial_flips'.tr(),
+      text: 'tutorial_flips'.tr(),
       icon: Icons.flip,
       rightButtontext: 'button_ok'.tr(),
       rightButtonFunction: () {

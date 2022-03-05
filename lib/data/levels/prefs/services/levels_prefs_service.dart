@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:darkit/data/levels/prefs/model/levels_prefs_model.dart';
+import 'package:peaceit/data/levels/prefs/model/levels_prefs_model.dart';
 
 class LevelsPrefsService {
   final SharedPreferences _prefs;

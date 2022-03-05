@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/presentation/select_level/view_model/view_model.dart';
-import 'package:darkit/presentation/select_level/view/widgets/levels_grid.dart';
-import 'package:darkit/presentation/select_level/view/widgets/select_level_appbar.dart';
-import 'package:darkit/core/constants/default_game_settings.dart';
+import 'package:peaceit/presentation/select_level/view_model/view_model.dart';
+import 'package:peaceit/presentation/select_level/view/widgets/levels_grid.dart';
+import 'package:peaceit/presentation/select_level/view/widgets/select_level_appbar.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
 
 class SelectLevelSreen extends StatelessWidget {
   const SelectLevelSreen({Key? key}) : super(key: key);

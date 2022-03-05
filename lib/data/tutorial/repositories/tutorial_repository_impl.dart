@@ -1,6 +1,6 @@
-import 'package:darkit/data/tutorial/prefs/tutorial_prefs_util.dart';
-import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
-import 'package:darkit/domain/tutorial/repositories/tutorial_repository.dart';
+import 'package:peaceit/data/tutorial/prefs/tutorial_prefs_util.dart';
+import 'package:peaceit/domain/tutorial/entities/tutorial_entity.dart';
+import 'package:peaceit/domain/tutorial/repositories/tutorial_repository.dart';
 
 class TutorialRepositoryImpl implements TutorialRepository {
   final TutorialPrefsUtil _prefsTutorialUtil;
