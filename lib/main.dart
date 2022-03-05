@@ -15,7 +15,7 @@ void main() async {
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light, // android
-      statusBarBrightness: Brightness.light, // ios
+      statusBarBrightness: Brightness.dark, // ios
     ),
   );
   runApp(
