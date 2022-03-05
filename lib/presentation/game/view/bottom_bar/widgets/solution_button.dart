@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/presentation/game/view_model/view_model.dart';
-import 'package:darkit/presentation/game/view/dialogs/solution_dialog.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/presentation/game/view_model/view_model.dart';
+import 'package:peaceit/presentation/game/view/dialogs/solution_dialog.dart';
 
 class SolutionButton extends StatefulWidget {
   const SolutionButton({Key? key}) : super(key: key);

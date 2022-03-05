@@ -1,7 +1,7 @@
-import 'package:darkit/data/tutorial/mapper/tutorial_mapper.dart';
-import 'package:darkit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
-import 'package:darkit/data/tutorial/prefs/services/tutorial_prefs_service.dart';
-import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
+import 'package:peaceit/data/tutorial/mapper/tutorial_mapper.dart';
+import 'package:peaceit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
+import 'package:peaceit/data/tutorial/prefs/services/tutorial_prefs_service.dart';
+import 'package:peaceit/domain/tutorial/entities/tutorial_entity.dart';
 
 class TutorialPrefsUtil {
   final TutorialPrefsService _prefsTutorialService;

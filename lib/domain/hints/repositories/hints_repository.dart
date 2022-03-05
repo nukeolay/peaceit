@@ -1,4 +1,4 @@
-import 'package:darkit/domain/hints/entities/hints_entity.dart';
+import 'package:peaceit/domain/hints/entities/hints_entity.dart';
 
 abstract class HintsRepository {
   HintsEntity get hints;

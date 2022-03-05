@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:darkit/data/hints/prefs/model/hints_prefs_model.dart';
+import 'package:peaceit/data/hints/prefs/model/hints_prefs_model.dart';
 
 class HintsPrefsService {
   final SharedPreferences _prefs;

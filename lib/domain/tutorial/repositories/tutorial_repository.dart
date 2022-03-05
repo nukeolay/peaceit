@@ -1,4 +1,4 @@
-import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
+import 'package:peaceit/domain/tutorial/entities/tutorial_entity.dart';
 
 abstract class TutorialRepository {
   TutorialEntity get tutorial;

@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/core/widgets/custom_alert_dialog.dart';
-import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/core/widgets/custom_alert_dialog.dart';
+import 'package:peaceit/presentation/select_chapter/view_model/view_model.dart';
 
 class SelectChapterAppbar extends StatelessWidget {
   const SelectChapterAppbar({Key? key}) : super(key: key);

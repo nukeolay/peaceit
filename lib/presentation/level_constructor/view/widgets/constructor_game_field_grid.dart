@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/presentation/game/view/game_field/widgets/disable_multitouch.dart';
-import 'package:darkit/presentation/level_constructor/view_model/view_model.dart';
-import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
-import 'package:darkit/presentation/level_constructor/view/widgets/constructor_cell_widget.dart';
+import 'package:peaceit/presentation/game/view/game_field/widgets/disable_multitouch.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/view_model.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/view_model_state.dart';
+import 'package:peaceit/presentation/level_constructor/view/widgets/constructor_cell_widget.dart';
 
 class ConstructorGameField extends StatelessWidget {
   const ConstructorGameField({

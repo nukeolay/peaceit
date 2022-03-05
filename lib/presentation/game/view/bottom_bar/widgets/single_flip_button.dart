@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/presentation/game/view_model/view_model.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/presentation/game/view_model/view_model.dart';
 
 class SingleFlipButton extends StatefulWidget {
   const SingleFlipButton({Key? key}) : super(key: key);

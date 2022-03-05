@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:darkit/presentation/select_level/view_model/view_model.dart';
-import 'package:darkit/presentation/select_level/view/widgets/select_level_card.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/domain/levels/entities/cell_entity.dart';
+import 'package:peaceit/presentation/select_level/view_model/view_model.dart';
+import 'package:peaceit/presentation/select_level/view/widgets/select_level_card.dart';
 
 class LevelsGrid extends StatelessWidget {
   const LevelsGrid({Key? key}) : super(key: key);

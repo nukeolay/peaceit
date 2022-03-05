@@ -1,24 +1,24 @@
 import 'dart:math';
 import 'dart:async';
 
-import 'package:darkit/domain/hints/usecases/update_hints.dart';
+import 'package:peaceit/domain/hints/usecases/update_hints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/internal/service_locator.dart';
-import 'package:darkit/domain/levels/usecases/normal_flip.dart';
-import 'package:darkit/domain/levels/usecases/single_flip.dart';
-import 'package:darkit/domain/hints/usecases/single_flips_decrement.dart';
-import 'package:darkit/domain/hints/usecases/solutions_number_decrement.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/entities/chapter_entity.dart';
-import 'package:darkit/domain/levels/usecases/get_chapers.dart';
-import 'package:darkit/domain/hints/repositories/hints_repository.dart';
-import 'package:darkit/domain/tutorial/usecases/get_tutorial.dart';
-import 'package:darkit/domain/tutorial/usecases/update_tutorial.dart';
-import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
-import 'package:darkit/presentation/game/view_model/view_model_state.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/internal/service_locator.dart';
+import 'package:peaceit/domain/levels/usecases/normal_flip.dart';
+import 'package:peaceit/domain/levels/usecases/single_flip.dart';
+import 'package:peaceit/domain/hints/usecases/single_flips_decrement.dart';
+import 'package:peaceit/domain/hints/usecases/solutions_number_decrement.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/entities/chapter_entity.dart';
+import 'package:peaceit/domain/levels/usecases/get_chapers.dart';
+import 'package:peaceit/domain/hints/repositories/hints_repository.dart';
+import 'package:peaceit/domain/tutorial/usecases/get_tutorial.dart';
+import 'package:peaceit/domain/tutorial/usecases/update_tutorial.dart';
+import 'package:peaceit/domain/tutorial/entities/tutorial_entity.dart';
+import 'package:peaceit/presentation/game/view_model/view_model_state.dart';
 
 class GameViewModel extends ChangeNotifier {
   late GameViewModelState _state;

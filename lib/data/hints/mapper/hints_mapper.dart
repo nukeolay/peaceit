@@ -1,5 +1,5 @@
-import 'package:darkit/data/hints/prefs/model/hints_prefs_model.dart';
-import 'package:darkit/domain/hints/entities/hints_entity.dart';
+import 'package:peaceit/data/hints/prefs/model/hints_prefs_model.dart';
+import 'package:peaceit/domain/hints/entities/hints_entity.dart';
 
 class HintsMapper {
   static HintsEntity fromPrefs(HintsPrefsModel hintsPrefsModel) {

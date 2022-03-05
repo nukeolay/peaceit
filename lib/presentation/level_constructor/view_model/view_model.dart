@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
-import 'package:darkit/domain/levels/usecases/normal_flip.dart';
-import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
-import 'package:darkit/presentation/level_constructor/view_model/blank_levels.dart';
+import 'package:peaceit/domain/levels/entities/cell_entity.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/usecases/normal_flip.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/view_model_state.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/blank_levels.dart';
 
 class ConstructorViewModel extends ChangeNotifier {
   late ConstructorViewModelState _state;

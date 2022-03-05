@@ -1,5 +1,5 @@
-import 'package:darkit/domain/levels/entities/cell_entity.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/entities/cell_entity.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
 
 class BlankLevels {
   static const List<LevelEntity> levels = [

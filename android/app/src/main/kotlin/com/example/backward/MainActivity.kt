@@ -1,4 +1,4 @@
-package com.qumyz.darkit
+package com.qumyz.peaceit
 
 import io.flutter.embedding.android.FlutterActivity
 

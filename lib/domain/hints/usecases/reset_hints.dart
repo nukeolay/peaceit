@@ -1,6 +1,6 @@
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/domain/hints/entities/hints_entity.dart';
-import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/domain/hints/entities/hints_entity.dart';
+import 'package:peaceit/domain/hints/repositories/hints_repository.dart';
 
 class ResetHints {
   final HintsRepository _hintsRepository;

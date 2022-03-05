@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/internal/service_locator.dart' as di;
-import 'package:darkit/internal/application.dart';
+import 'package:peaceit/internal/service_locator.dart' as di;
+import 'package:peaceit/internal/application.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,8 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light, // android
+      statusBarBrightness: Brightness.light, // ios
     ),
   );
   runApp(

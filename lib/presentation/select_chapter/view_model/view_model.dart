@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/internal/service_locator.dart';
-import 'package:darkit/domain/hints/usecases/reset_hints.dart';
-import 'package:darkit/domain/levels/entities/chapter_entity.dart';
-import 'package:darkit/domain/levels/usecases/get_chapers.dart';
-import 'package:darkit/domain/levels/usecases/reset_levels.dart';
-import 'package:darkit/domain/tutorial/usecases/reset_tutorial.dart';
-import 'package:darkit/presentation/select_chapter/view_model/view_model_state.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/internal/service_locator.dart';
+import 'package:peaceit/domain/hints/usecases/reset_hints.dart';
+import 'package:peaceit/domain/levels/entities/chapter_entity.dart';
+import 'package:peaceit/domain/levels/usecases/get_chapers.dart';
+import 'package:peaceit/domain/levels/usecases/reset_levels.dart';
+import 'package:peaceit/domain/tutorial/usecases/reset_tutorial.dart';
+import 'package:peaceit/presentation/select_chapter/view_model/view_model_state.dart';
 
 class SelectChapterViewModel extends ChangeNotifier {
   SelectChapterViewModelState _state = SelectChapterViewModelState();

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/core/theme/app_theme.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
 
 class ConstructorCellWidget extends StatelessWidget {
   final bool isBlack;

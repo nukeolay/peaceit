@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:darkit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
+import 'package:peaceit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TutorialPrefsService {

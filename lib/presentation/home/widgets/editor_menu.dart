@@ -1,5 +1,5 @@
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/core/widgets/custom_text_button.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/core/widgets/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

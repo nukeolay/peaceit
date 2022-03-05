@@ -1,6 +1,6 @@
-import 'package:darkit/core/constants/default_levels.dart';
-import 'package:darkit/data/levels/prefs/model/levels_prefs_model.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/core/constants/default_levels.dart';
+import 'package:peaceit/data/levels/prefs/model/levels_prefs_model.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
 
 class LevelsMapper {
   static List<LevelEntity> fromPrefs(LevelsPrefsModel levelsPrefsModel) {

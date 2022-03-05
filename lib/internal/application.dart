@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/core/routes/custom_route.dart';
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/presentation/home/home_screen.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/core/routes/custom_route.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/presentation/home/home_screen.dart';
 
 class PeaceItApp extends StatelessWidget {
   const PeaceItApp({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
-import 'package:darkit/presentation/select_chapter/view/widgets/chapters_grid.dart';
-import 'package:darkit/presentation/select_chapter/view/widgets/select_chapter_appbar.dart';
-import 'package:darkit/core/constants/default_game_settings.dart';
+import 'package:peaceit/presentation/select_chapter/view_model/view_model.dart';
+import 'package:peaceit/presentation/select_chapter/view/widgets/chapters_grid.dart';
+import 'package:peaceit/presentation/select_chapter/view/widgets/select_chapter_appbar.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
 
 class SelectChapterScreen extends StatelessWidget {
   const SelectChapterScreen({Key? key}) : super(key: key);

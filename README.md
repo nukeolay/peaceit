@@ -1,3 +1,3 @@
-# darkit
+# peaceit
 
 simple puzzle game

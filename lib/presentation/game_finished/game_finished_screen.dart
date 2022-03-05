@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/core/widgets/custom_text_button.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/core/widgets/custom_text_button.dart';
 
 class GameFinishedScreen extends StatelessWidget {
   const GameFinishedScreen({Key? key}) : super(key: key);

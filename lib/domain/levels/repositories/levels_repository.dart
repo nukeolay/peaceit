@@ -1,4 +1,4 @@
-import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
 
 abstract class LevelsRepository {
   List<LevelEntity> get levels;

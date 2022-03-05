@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/presentation/game/view/bottom_bar/widgets/solution_button.dart';
-import 'package:darkit/presentation/game/view/bottom_bar/widgets/single_flip_button.dart';
-import 'package:darkit/presentation/game/view/bottom_bar/widgets/pause_button.dart';
-import 'package:darkit/presentation/game/view/bottom_bar/widgets/restart_button.dart';
-import 'package:darkit/presentation/game/view_model/view_model.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/presentation/game/view/bottom_bar/widgets/solution_button.dart';
+import 'package:peaceit/presentation/game/view/bottom_bar/widgets/single_flip_button.dart';
+import 'package:peaceit/presentation/game/view/bottom_bar/widgets/pause_button.dart';
+import 'package:peaceit/presentation/game/view/bottom_bar/widgets/restart_button.dart';
+import 'package:peaceit/presentation/game/view_model/view_model.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -42,8 +42,8 @@ class BottomBar extends StatelessWidget {
               ),
               child: isBoss
                   ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
                         'boss_level'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -51,7 +51,7 @@ class BottomBar extends StatelessWidget {
                           color: context.read<AppTheme>().buttonTextColor,
                         ),
                       ),
-                  )
+                    )
                   : Row(
                       children: const [
                         SingleFlipButton(),

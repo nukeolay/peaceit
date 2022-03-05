@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/presentation/select_chapter/view_model/view_model.dart';
-import 'package:darkit/presentation/select_chapter/view/widgets/select_chapter_card.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/presentation/select_chapter/view_model/view_model.dart';
+import 'package:peaceit/presentation/select_chapter/view/widgets/select_chapter_card.dart';
 
 class ChaptersGrid extends StatelessWidget {
   const ChaptersGrid({Key? key}) : super(key: key);

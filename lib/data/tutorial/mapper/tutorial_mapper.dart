@@ -1,5 +1,5 @@
-import 'package:darkit/domain/tutorial/entities/tutorial_entity.dart';
-import 'package:darkit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
+import 'package:peaceit/domain/tutorial/entities/tutorial_entity.dart';
+import 'package:peaceit/data/tutorial/prefs/model/tutorial_prefs_model.dart';
 
 class TutorialMapper {
   static TutorialEntity fromPrefs(TutorialPrefsModel tutorialPrefsModel) {

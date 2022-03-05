@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:darkit/core/theme/app_theme.dart';
-import 'package:darkit/core/routes/routes.dart';
-import 'package:darkit/core/constants/default_game_settings.dart';
-import 'package:darkit/presentation/home/widgets/editor_menu.dart';
+import 'package:peaceit/core/theme/app_theme.dart';
+import 'package:peaceit/core/routes/routes.dart';
+import 'package:peaceit/core/constants/default_game_settings.dart';
+import 'package:peaceit/presentation/home/widgets/editor_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

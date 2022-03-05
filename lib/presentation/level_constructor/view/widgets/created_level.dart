@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:darkit/presentation/level_constructor/view_model/view_model_state.dart';
+import 'package:peaceit/presentation/level_constructor/view_model/view_model_state.dart';
 
 class CreatedLevel extends StatelessWidget {
   const CreatedLevel({
     Key? key,
     required ConstructorViewModelState state,
-  }) : _state = state, super(key: key);
+  })  : _state = state,
+        super(key: key);
 
   final ConstructorViewModelState _state;
 

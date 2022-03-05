@@ -1,7 +1,7 @@
-import 'package:darkit/data/levels/mapper/levels_mapper.dart';
-import 'package:darkit/data/levels/prefs/model/levels_prefs_model.dart';
-import 'package:darkit/data/levels/prefs/services/levels_prefs_service.dart';
-import 'package:darkit/domain/levels/entities/level_entity.dart';
+import 'package:peaceit/data/levels/mapper/levels_mapper.dart';
+import 'package:peaceit/data/levels/prefs/model/levels_prefs_model.dart';
+import 'package:peaceit/data/levels/prefs/services/levels_prefs_service.dart';
+import 'package:peaceit/domain/levels/entities/level_entity.dart';
 
 class LevelsPrefsUtil {
   final LevelsPrefsService _levelsPrefsService;

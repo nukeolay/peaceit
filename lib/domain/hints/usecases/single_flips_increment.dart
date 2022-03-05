@@ -1,5 +1,5 @@
-import 'package:darkit/domain/hints/entities/hints_entity.dart';
-import 'package:darkit/domain/hints/repositories/hints_repository.dart';
+import 'package:peaceit/domain/hints/entities/hints_entity.dart';
+import 'package:peaceit/domain/hints/repositories/hints_repository.dart';
 
 class SingleFlipsIncrement {
   final HintsRepository _hintsRepository;
