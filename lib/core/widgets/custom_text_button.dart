@@ -39,7 +39,7 @@ class CustomTextButton extends StatelessWidget {
             child: Text(
               text,
               style: TextStyle(
-                  color: context.read<AppTheme>().background, fontSize: 26),
+                  color: context.read<AppTheme>().cardFront, fontSize: 26),
             ),
             onPressed: () => {function()},
             style: ButtonStyle(
