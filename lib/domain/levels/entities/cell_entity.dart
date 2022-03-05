@@ -1,27 +1,27 @@
 class CellEntity {
   final int x;
   final int y;
-  final bool isBlack;
+  final bool isPeace;
 
   const CellEntity(
     this.x,
     this.y, [
-    this.isBlack = false,
+    this.isPeace = false,
   ]);
 
   CellEntity copyWith({
-    required bool isBlack,
+    required bool isPeace,
   }) {
     return CellEntity(
       x,
       y,
-      isBlack,
+      isPeace,
     );
   }
 
   @override
   String toString() {
-    return 'Cell[x: $x, y: $y, isBlack: $isBlack]';
+    return 'Cell[x: $x, y: $y, isPeace: $isPeace]';
   }
 
   @override

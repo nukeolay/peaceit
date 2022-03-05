@@ -20,7 +20,7 @@ class LevelEntity {
   int get goodResult => (bestResult * 1.5).ceil() + 1;
 
   List<bool> get boolCells {
-    return cells.map((cell) => cell.isBlack).toList();
+    return cells.map((cell) => cell.isPeace).toList();
   }
 
   int get rating {

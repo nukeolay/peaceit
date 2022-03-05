@@ -41,7 +41,7 @@ class ConstructorGameField extends StatelessWidget {
                 _viewModel.flipCard(index);
               },
               child: ConstructorCellWidget(
-                isBlack: _state.cells[index].isBlack,
+                isPeace: _state.cells[index].isPeace,
                 x: _state.cells[index].x,
                 y: _state.cells[index].y,
               ),
