@@ -20,7 +20,7 @@ class CreatedLevel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'x, y, isBlack',
+            'x, y, isPeace',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ class CreatedLevel extends StatelessWidget {
           ),
           ..._state.cells.map(
             (cell) => Text(
-              '${cell.x}, ${cell.y}${!cell.isBlack ? ', ${!cell.isBlack}' : ''}',
+              '${cell.x}, ${cell.y}${!cell.isPeace ? ', ${!cell.isPeace}' : ''}',
               style: const TextStyle(fontSize: 12),
               textAlign: TextAlign.start,
             ),

@@ -51,7 +51,7 @@ class GameFinishedScreen extends StatelessWidget {
                             color: context
                                 .read<AppTheme>()
                                 .buttonTextColor
-                                .withOpacity(0.5),
+                                .withOpacity(0.7),
                           ),
                         ),
                       ),

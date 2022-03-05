@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _CellWidgetState extends State<CellWidget> {
   late GameViewModel _viewModel;
   late FlipCardController _controller;
   late GameViewModelState _state;
-  late bool _isBlack;
+  late bool _isPeace;
   bool _isInit = true;
 
   @override
@@ -36,7 +37,7 @@ class _CellWidgetState extends State<CellWidget> {
     _state = _viewModel.state;
     if (_isInit) {
       _controller = FlipCardController();
-      _isBlack = _state.cells[widget._index];
+      _isPeace = _state.cells[widget._index];
       _isInit = false;
     }
     if (_state.cellsToFlip[widget._index]) _controller.toggleCard();
@@ -58,8 +59,8 @@ class _CellWidgetState extends State<CellWidget> {
             speed: DefaultGameSettings.flipSpeed,
             controller: _controller,
             flipOnTouch: false,
-            front: CustomCell(_isBlack, _isFlash),
-            back: CustomCell(!_isBlack, _isFlash),
+            front: CustomCell(_isPeace, _isFlash),
+            back: CustomCell(!_isPeace, _isFlash),
           ),
         ),
       ),
@@ -68,11 +69,11 @@ class _CellWidgetState extends State<CellWidget> {
 }
 
 class CustomCell extends StatelessWidget {
-  final bool _isBlack;
+  final bool _isPeace;
   final bool _isFlash;
 
   const CustomCell(
-    this._isBlack,
+    this._isPeace,
     this._isFlash, {
     Key? key,
   }) : super(key: key);
@@ -81,16 +82,24 @@ class CustomCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: !_isBlack // ! TODO "!" чтобы поменять цвет
+        color: !_isPeace
             ? context.read<AppTheme>().cardFront.withOpacity(0.5)
             : context.read<AppTheme>().cardBack.withOpacity(0.5),
+        boxShadow: [
+          BoxShadow(
+            color: !_isPeace
+                ? context.read<AppTheme>().cardFront.withOpacity(0.1)
+                : context.read<AppTheme>().cardBack.withOpacity(0.1),
+            blurRadius: 6.0,
+          ),
+        ],
       ),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: _isBlack
+            child: _isPeace
                 ? SvgPicture.asset('assets/dove.svg')
                 : Opacity(
                     child: SvgPicture.asset('assets/tank.svg'),

@@ -21,7 +21,7 @@ class ConstructorViewModel extends ChangeNotifier {
     List<CellEntity> cells = BlankLevels.levels
         .firstWhere((level) => level.id == levelId)
         .cells
-        .map((cell) => CellEntity(cell.x, cell.y, cell.isBlack))
+        .map((cell) => CellEntity(cell.x, cell.y, cell.isPeace))
         .toList();
     _state = ConstructorViewModelState(
       levelId: levelId,

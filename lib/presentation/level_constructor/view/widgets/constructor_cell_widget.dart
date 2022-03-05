@@ -8,12 +8,12 @@ import 'package:peaceit/core/constants/default_game_settings.dart';
 import 'package:peaceit/core/theme/app_theme.dart';
 
 class ConstructorCellWidget extends StatelessWidget {
-  final bool isBlack;
+  final bool isPeace;
   final int x;
   final int y;
 
   const ConstructorCellWidget({
-    required this.isBlack,
+    required this.isPeace,
     required this.x,
     required this.y,
     Key? key,
@@ -28,8 +28,8 @@ class ConstructorCellWidget extends StatelessWidget {
         child: FlipCard(
           speed: DefaultGameSettings.flipSpeed,
           flipOnTouch: false,
-          front: CustomCell(!isBlack, 'x: $x\ny: $y'),
-          back: CustomCell(isBlack, 'x: $x\ny: $y'),
+          front: CustomCell(!isPeace, 'x: $x\ny: $y'),
+          back: CustomCell(isPeace, 'x: $x\ny: $y'),
         ),
       ),
     );
@@ -37,11 +37,11 @@ class ConstructorCellWidget extends StatelessWidget {
 }
 
 class CustomCell extends StatelessWidget {
-  final bool _isBlack;
+  final bool _isPeace;
   final String _text;
 
   const CustomCell(
-    this._isBlack,
+    this._isPeace,
     this._text, {
     Key? key,
   }) : super(key: key);
@@ -51,7 +51,7 @@ class CustomCell extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: _isBlack
+        color: _isPeace
             ? context.read<AppTheme>().cardFront.withOpacity(0.5)
             : context.read<AppTheme>().cardBack.withOpacity(0.5),
         boxShadow: [

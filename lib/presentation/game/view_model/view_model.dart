@@ -53,7 +53,7 @@ class GameViewModel extends ChangeNotifier {
       isTutorialSingleFlipsShown: tutorial.singleFlips,
       isTutorialSolutionsShown: tutorial.solutions,
       fieldLength: sqrt(level.cells.length).toInt(),
-      cells: [...level.cells].map((cell) => cell.isBlack).toList(),
+      cells: [...level.cells].map((cell) => cell.isPeace).toList(),
       cellsToFlip: List<bool>.generate(level.cells.length, (index) => false),
     );
   }
