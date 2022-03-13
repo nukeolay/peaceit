@@ -74,9 +74,9 @@ class SelectChapterViewModel extends ChangeNotifier {
     for (ChapterEntity _chapter in _chapters) {
       int chapterIndex = _chapters.indexOf(_chapter);
       if (chapterIndex == 0) {
-        result.add(true); // если это первая глава
+        result.add(true); // if this is first chapter
       } else {
-        // если предыдущая глава пройдена не менее чем на 70%
+        // if previous chapter completed more than 70% (DefaultGameSettings.chapterCompleteRatio)
         result.add(_chapters[chapterIndex - 1].completedRatio >=
             DefaultGameSettings.chapterCompleteRatio);
       }

@@ -67,10 +67,10 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void closeSingleFlipTutorialDialog() async {
-    // если SingleFlips уже нет, а подсказку нужно показать, то добавить 1 SingleFlip
     int lightCellsNumber = _state.cells
         .map((cell) => cell ? 0 : 1)
         .reduce((value, element) => value + element);
+    // if _singleFlipsNumber < lightCellsNumber, but user have to see this hint for the first time, then add 3 singleFlips
     if (_singleFlipsNumber < lightCellsNumber) {
       await serviceLocator<UpdateHints>().call(singleFlips: 3);
     }
@@ -85,7 +85,7 @@ class GameViewModel extends ChangeNotifier {
   }
 
   void closeSolutionTutorialDialog() async {
-    // если solutions уже нет, а подсказку нужно показать, то добавить 1 solution
+    // if _solutionsNumber == 0, but user have to see this hint for the first time, then add 3 solutionsNumber
     if (_solutionsNumber == 0) {
       await serviceLocator<UpdateHints>().call(solutionsNumber: 1);
     }
@@ -105,12 +105,12 @@ class GameViewModel extends ChangeNotifier {
     _init(newLevelId);
     int newFieldLength = sqrt(_level.cells.length).toInt();
     List<bool> cellsToFlip = previousFieldLength == newFieldLength
-        // если предыдущий и следующий уровни одинаковой размерности
+        // if new and previous levels has similar gamefield size, then cells will animate to build new level
         ? _cellsToFlip(
             cells: previousCells,
             newCells: _initCells,
           )
-        // если предыдущий и следующий уровни разной размерности
+        // if new and previous levels has different gamefield size
         : List<bool>.generate(
             newFieldLength * newFieldLength, (index) => false);
     _state = _state.copyWith(
@@ -149,10 +149,8 @@ class GameViewModel extends ChangeNotifier {
   void useSingleFlip() {
     _state = _state.copyWith(
       isSingleFlipOn: !_state.isSingleFlipOn,
-      // canUseSolution: _canUseSolution,
     );
     _state = _state.copyWith(
-      // isSingleFlipOn: !_state.isSingleFlipOn,
       canUseSolution: _canUseSolution,
     );
     notifyListeners();
@@ -177,7 +175,7 @@ class GameViewModel extends ChangeNotifier {
     if (_canTap) {
       HapticFeedback.heavyImpact();
       if (_state.isSingleFlipOn) {
-        // поворот одной ячейки
+        // SINGLE FLIP
         _singleFlipsDecrement();
         List<bool> flippedCells = _singleFlip(
           index: index,
@@ -199,7 +197,7 @@ class GameViewModel extends ChangeNotifier {
         notifyListeners();
         _blockCells();
       } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
-        // поворот в режиме решения
+        // FLIP IN SOLUTION MODE
         List<bool> flippedCells = _normalFlip(
           index: index,
           cells: _state.cells,
@@ -214,7 +212,7 @@ class GameViewModel extends ChangeNotifier {
           cellsToFlip: cellsToFlip,
         );
         if (_level.solution.length - 1 >= _moves) {
-          // если еще остались решения
+          // if there is more cells to flip in solution mode
           int flashCellIndex = _level.cellIndexByCoordinates(
             _level.solution[_moves].x,
             _level.solution[_moves].y,
@@ -227,9 +225,9 @@ class GameViewModel extends ChangeNotifier {
         notifyListeners();
         _blockCells();
       } else if (_state.isSolutionOn) {
-        // если нажать не на ту ячейку в режиме решения
+        // IF PRESS WRONG CELL IN SOLUTION MODE
       } else {
-        // обычный поворот вместе с соседними ячейками
+        // REGULAR FLIP
         List<bool> flippedCells = _normalFlip(
           index: index,
           cells: _state.cells,
@@ -245,7 +243,7 @@ class GameViewModel extends ChangeNotifier {
         int lightCellsNumber = flippedCells
             .map((cell) => cell ? 0 : 1)
             .reduce((value, element) => value + element);
-        // если четыре флипа то показать подсказку по решению при уловии что после этого флипа уровень не пройден
+        // if player did 4 flips and did not complete level, then show hint Solution
         if (!_state.isBoss &&
             _moves == 3 &&
             !_state.isTutorialSolutionsShown &&
@@ -253,7 +251,7 @@ class GameViewModel extends ChangeNotifier {
           showTutorialSolutions = true;
           flashSolutions = true;
         }
-        // если solution уже был показан и количество светлых ячеек 3, 2 или 1 и эта подсказка еще не была показана, то показать подсказку по флипам
+        // if solution was shown and dark cells number is less or equal than 3 and single flip hint was not shown, then show single flip tutorial
         if (!_state.isBoss &&
             lightCellsNumber <= 3 &&
             lightCellsNumber != 0 &&

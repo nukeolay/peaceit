@@ -34,7 +34,7 @@ class LevelCompletedViewModel extends ChangeNotifier {
     _chapter = serviceLocator<GetChapters>()
         .call()
         .firstWhere((chapter) => chapter.id == _level.chapterId);
-    // сохранить прогресс, проверив нужно ли обновить рейтинг
+    // save progress and check if rating needs to be updated
     _previousRating = _level.rating;
     _previousCompleteRatio = _chapter.completedRatio;
     if (_newRating > _previousRating) {

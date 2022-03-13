@@ -74,9 +74,9 @@ class SelectLevelViewModel extends ChangeNotifier {
     for (var level in _levels) {
       final levelIndex = _levels.indexOf(level);
       if (levelIndex == 0) {
-        result.add(true); // если это первый уровень
+        result.add(true); // if this is the first level
       } else {
-        // если предыдущий уровень пройден
+        // if previous level is completed
         result.add(_levels[levelIndex - 1].moves > 0);
       }
     }
