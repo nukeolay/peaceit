@@ -6,7 +6,7 @@ The problem is that the cells are not flipped one at a time, but together with n
 The first levels are really easy to complete, but the more levels you pass, the more difficult they becomes.
 Get and use hints, go through difficult boss levels.
 
-## Technologies that involved:
+## Technologies:
 
 - Dart
 - Flutter
