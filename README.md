@@ -12,8 +12,10 @@ Get and use hints, go through difficult boss levels.
 - Dart
 - Flutter
 - Provider
-- GetIt
 - Clean Architecture (Domain, Data and Presentation layers)
+- GetIt
 
 ## Try it here:
-<br>- <a href="https://apps.apple.com/us/app/peace-it/id1613042804">App Store</a><br>- <a href="https://play.google.com/store/apps/details?id=com.qumyz.peaceit">Google Play</a><br>
+
+- <a href="https://apps.apple.com/us/app/peace-it/id1613042804">App Store</a>
+- <a href="https://play.google.com/store/apps/details?id=com.qumyz.peaceit">Google Play</a>
