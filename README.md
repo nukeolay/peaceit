@@ -1,7 +1,6 @@
 # peace it
 
-📲 <a href="https://github.com/nukeolay/peaceit">**peace it**</a>
-<br>Original puzzle game created with Flutter framework.
+Original puzzle game created with Flutter framework.
 The goal is to make all cells "peaceful" within minimal moves number, by turning them over. Seems easy?
 The problem is that the cells are not flipped one at a time, but together with nearest cells.
 The first levels are really easy to complete, but the more levels you pass, the more difficult they becomes.
