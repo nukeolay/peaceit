@@ -12,6 +12,7 @@ Get and use hints, go through difficult boss levels.
 - Flutter
 - Provider
 - Clean Architecture (Domain, Data and Presentation layers)
+- MVVM
 - GetIt
 
 ## Try it here:
