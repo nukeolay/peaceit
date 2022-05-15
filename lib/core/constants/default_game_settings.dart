@@ -5,5 +5,5 @@ class DefaultGameSettings {
   static const int blockPeriod = 1;
   static const double chapterCompleteRatio = 0.7;
   static const bool isEditorOn = false; // ! TODO check before release, has to be false
-  static const String backGroundImage = 'assets/bg.png';
+  static const String backGroundImage = 'assets/bg.jpg';
 }

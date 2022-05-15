@@ -41,7 +41,7 @@ class _GameFieldState extends State<GameField> {
       _isInit = false;
     }
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (true) {
         if (_state.isWin) {
           // opening levelCompleted
@@ -51,7 +51,7 @@ class _GameFieldState extends State<GameField> {
             'moves': _state.moves,
           })) as String?;
           if (_newLevelId != null) {
-            _isInit = true; // neded to culculate cell size
+            _isInit = true; // needed to culculate cell size
             _viewModel.newInstance(_newLevelId);
           }
         }
