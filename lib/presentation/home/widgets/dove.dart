@@ -38,13 +38,6 @@ class _DoveAnimatedState extends State<DoveAnimated>
       padding: const EdgeInsets.all(20.0),
       width: width / 1.2,
       height: width / 1.2,
-      // child: RotationTransition(
-      //   turns: CurvedAnimation(
-      //     parent: _animationController,
-      //     curve: Curves.slowMiddle,
-      //   ),
-      //   child: SvgPicture.asset('assets/dove.svg'),
-      // ),
       child: ScaleTransition(
         scale: CurvedAnimation(
           parent: _animationController,

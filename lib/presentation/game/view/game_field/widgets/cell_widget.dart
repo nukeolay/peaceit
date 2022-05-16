@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -100,9 +99,9 @@ class CustomCell extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: _isPeace
-                ? SvgPicture.asset('assets/dove.svg')
+                ? Image.asset('assets/dove.png')
                 : Opacity(
-                    child: SvgPicture.asset('assets/tank.svg'),
+                    child: Image.asset('assets/tank.png'),
                     opacity: 0.7,
                   ),
           ),

@@ -76,7 +76,8 @@ flutter:
   assets:
     - assets/bg.jpg
     - assets/dove.svg
-    - assets/tank.svg
+    - assets/dove.png
+    - assets/tank.png
     - assets/translations/
 
   #   - images/a_dot_ham.jpeg
