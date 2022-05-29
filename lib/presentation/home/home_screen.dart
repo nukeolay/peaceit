@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:peaceit/presentation/home/widgets/dove.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
-
+import 'package:peaceit/presentation/home/widgets/art_by.dart';
+import 'package:peaceit/presentation/home/widgets/dove.dart';
 import 'package:peaceit/core/theme/app_theme.dart';
 import 'package:peaceit/core/routes/routes.dart';
 import 'package:peaceit/core/constants/default_game_settings.dart';
@@ -41,18 +41,23 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const DoveAnimated(),
-                  Text(
-                    'title'.tr(),
-                    style: TextStyle(
-                      color: context
-                          .read<AppTheme>()
-                          .buttonTextColor
-                          .withOpacity(0.7),
-                      fontSize: 50,
+                  const Expanded(flex: 5, child: DoveAnimated()),
+                  Expanded(
+                    child: Text(
+                      'title'.tr(),
+                      style: TextStyle(
+                        color: context
+                            .read<AppTheme>()
+                            .buttonTextColor
+                            .withOpacity(0.7),
+                        fontSize: 50,
+                      ),
                     ),
                   ),
                   if (DefaultGameSettings.isEditorOn) const EditorMenu(),
+                  const Expanded(
+                    child: ArtBy(),
+                  ),
                 ],
               ),
             ),

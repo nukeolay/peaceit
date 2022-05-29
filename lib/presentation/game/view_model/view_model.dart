@@ -176,101 +176,15 @@ class GameViewModel extends ChangeNotifier {
       HapticFeedback.heavyImpact();
       if (_state.isSingleFlipOn) {
         // SINGLE FLIP
-        _singleFlipsDecrement();
-        List<bool> flippedCells = _singleFlip(
-          index: index,
-          cells: _state.cells,
-        );
-        List<bool> cellsToFlip = _cellsToFlip(
-          cells: _state.cells,
-          newCells: flippedCells,
-        );
-        _state = _state.copyWith(
-          moves: (_moves + 1).toString(),
-          singleFlips: _singleFlipsNumber.toString(),
-          cells: flippedCells,
-          cellsToFlip: cellsToFlip,
-          isSingleFlipOn: false,
-          canUseSingleFlips: _canUseSingleFlips,
-          canUseSolution: _canUseSolution,
-        );
-        notifyListeners();
-        _blockCells();
+        _singleFlipAction(index);
       } else if (_state.isSolutionOn && index == _state.flashCellIndex) {
         // FLIP IN SOLUTION MODE
-        List<bool> flippedCells = _normalFlip(
-          index: index,
-          cells: _state.cells,
-        );
-        List<bool> cellsToFlip = _cellsToFlip(
-          cells: _state.cells,
-          newCells: flippedCells,
-        );
-        _state = _state.copyWith(
-          moves: (_moves + 1).toString(),
-          cells: flippedCells,
-          cellsToFlip: cellsToFlip,
-        );
-        if (_level.solution.length - 1 >= _moves) {
-          // if there is more cells to flip in solution mode
-          int flashCellIndex = _level.cellIndexByCoordinates(
-            _level.solution[_moves].x,
-            _level.solution[_moves].y,
-          );
-          _state = _state.copyWith(
-            cellsToFlip: cellsToFlip,
-            flashCellIndex: flashCellIndex,
-          );
-        }
-        notifyListeners();
-        _blockCells();
+        _flipInSolutionModeAction(index);
       } else if (_state.isSolutionOn) {
         // IF PRESS WRONG CELL IN SOLUTION MODE
       } else {
         // REGULAR FLIP
-        List<bool> flippedCells = _normalFlip(
-          index: index,
-          cells: _state.cells,
-        );
-        List<bool> cellsToFlip = _cellsToFlip(
-          cells: _state.cells,
-          newCells: flippedCells,
-        );
-        bool showTutorialSolutions = false;
-        bool showTutorialSingleFlips = false;
-        bool flashSolutions = false;
-        bool flashSingleFlips = false;
-        int lightCellsNumber = flippedCells
-            .map((cell) => cell ? 0 : 1)
-            .reduce((value, element) => value + element);
-        // if player did 4 flips and did not complete level, then show hint Solution
-        if (!_state.isBoss &&
-            _moves == 3 &&
-            !_state.isTutorialSolutionsShown &&
-            lightCellsNumber != 0) {
-          showTutorialSolutions = true;
-          flashSolutions = true;
-        }
-        // if solution was shown and dark cells number is less or equal than 3 and single flip hint was not shown, then show single flip tutorial
-        if (!_state.isBoss &&
-            lightCellsNumber <= 3 &&
-            lightCellsNumber != 0 &&
-            _state.isTutorialSolutionsShown &&
-            !_state.isTutorialSingleFlipsShown) {
-          showTutorialSingleFlips = true;
-          flashSingleFlips = true;
-        }
-        _state = _state.copyWith(
-          moves: (_moves + 1).toString(),
-          cells: flippedCells,
-          cellsToFlip: cellsToFlip,
-          showTutorialSolutions: showTutorialSolutions,
-          showTutorialSingleFlips: showTutorialSingleFlips,
-          flashSingleFlips: flashSingleFlips,
-          flashSolutions: flashSolutions,
-        );
-        notifyListeners();
-        _blockCells();
+        _regularFlipAction(index);
       }
     }
     Timer(const Duration(milliseconds: DefaultGameSettings.flipSpeed + 10), () {
@@ -282,6 +196,104 @@ class GameViewModel extends ChangeNotifier {
   }
 
 // -------- NON PUBLIC --------//
+
+  void _regularFlipAction(int index) {
+    List<bool> flippedCells = _normalFlip(
+      index: index,
+      cells: _state.cells,
+    );
+    List<bool> cellsToFlip = _cellsToFlip(
+      cells: _state.cells,
+      newCells: flippedCells,
+    );
+    bool showTutorialSolutions = false;
+    bool showTutorialSingleFlips = false;
+    bool flashSolutions = false;
+    bool flashSingleFlips = false;
+    int lightCellsNumber = flippedCells
+        .map((cell) => cell ? 0 : 1)
+        .reduce((value, element) => value + element);
+    // if player did 4 flips and did not complete level, then show hint Solution
+    if (!_state.isBoss &&
+        _moves == 3 &&
+        !_state.isTutorialSolutionsShown &&
+        lightCellsNumber != 0) {
+      showTutorialSolutions = true;
+      flashSolutions = true;
+    }
+    // if solution was shown and dark cells number is less or equal than 3 and single flip hint was not shown, then show single flip tutorial
+    if (!_state.isBoss &&
+        lightCellsNumber <= 3 &&
+        lightCellsNumber != 0 &&
+        _state.isTutorialSolutionsShown &&
+        !_state.isTutorialSingleFlipsShown) {
+      showTutorialSingleFlips = true;
+      flashSingleFlips = true;
+    }
+    _state = _state.copyWith(
+      moves: (_moves + 1).toString(),
+      cells: flippedCells,
+      cellsToFlip: cellsToFlip,
+      showTutorialSolutions: showTutorialSolutions,
+      showTutorialSingleFlips: showTutorialSingleFlips,
+      flashSingleFlips: flashSingleFlips,
+      flashSolutions: flashSolutions,
+    );
+    notifyListeners();
+    _blockCells();
+  }
+
+  void _singleFlipAction(int index) {
+    _singleFlipsDecrement();
+    List<bool> flippedCells = _singleFlip(
+      index: index,
+      cells: _state.cells,
+    );
+    List<bool> cellsToFlip = _cellsToFlip(
+      cells: _state.cells,
+      newCells: flippedCells,
+    );
+    _state = _state.copyWith(
+      moves: (_moves + 1).toString(),
+      singleFlips: _singleFlipsNumber.toString(),
+      cells: flippedCells,
+      cellsToFlip: cellsToFlip,
+      isSingleFlipOn: false,
+      canUseSingleFlips: _canUseSingleFlips,
+      canUseSolution: _canUseSolution,
+    );
+    notifyListeners();
+    _blockCells();
+  }
+
+  void _flipInSolutionModeAction(int index) {
+    List<bool> flippedCells = _normalFlip(
+      index: index,
+      cells: _state.cells,
+    );
+    List<bool> cellsToFlip = _cellsToFlip(
+      cells: _state.cells,
+      newCells: flippedCells,
+    );
+    _state = _state.copyWith(
+      moves: (_moves + 1).toString(),
+      cells: flippedCells,
+      cellsToFlip: cellsToFlip,
+    );
+    if (_level.solution.length - 1 >= _moves) {
+      // if there is more cells to flip in solution mode
+      int flashCellIndex = _level.cellIndexByCoordinates(
+        _level.solution[_moves].x,
+        _level.solution[_moves].y,
+      );
+      _state = _state.copyWith(
+        cellsToFlip: cellsToFlip,
+        flashCellIndex: flashCellIndex,
+      );
+    }
+    notifyListeners();
+    _blockCells();
+  }
 
   int get _moves {
     return int.parse(_state.moves);
@@ -350,9 +362,8 @@ class GameViewModel extends ChangeNotifier {
     _canTap = false;
     Timer(
         const Duration(
-          milliseconds:
-              DefaultGameSettings.flipSpeed + DefaultGameSettings.blockPeriod,
-        ), () {
+            milliseconds: DefaultGameSettings.flipSpeed +
+                DefaultGameSettings.blockPeriod), () {
       _canTap = true;
     });
   }
